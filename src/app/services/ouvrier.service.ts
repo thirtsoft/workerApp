@@ -29,6 +29,10 @@ export class OuvrierService {
     return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchOuvrierOrderByIdDesc`);
   }
 
+  public getAllOuvrierBySelectedIsTrue(): Observable<Ouvrier[]> {
+    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchOuvrierBySelectedIsTrue`);
+  }
+
   public getOuvrierById(chauffId: number): Observable<Ouvrier> {
     return this.http.get<Ouvrier>(`${this.apiServerUrl}/ouvriers/findById/${chauffId}`);
   }

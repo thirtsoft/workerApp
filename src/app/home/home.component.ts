@@ -337,6 +337,7 @@ export class HomeComponent implements OnInit {
   getListOfOuvriers() {
     this.ouvService.getAllOuvriers().subscribe((res) => {
       this.ouvriersList = res;
+      console.log(this.ouvriersList);
       this.slidepage = {
         slidesToShow: 5,
         slidesToScroll: 1,

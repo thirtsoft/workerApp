@@ -98,13 +98,28 @@
 
                     <div class="specialities-slider slider">
                         <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig3">
-                            <div ngxSlickItem *ngFor="let slide of slides" class="speicality-item text-center">
+                            <!--  <div ngxSlickItem *ngFor="let slide of slides" class="speicality-item text-center">
                                 <div class="">
                                     <div class="speicality-img">
                                         <img src="{{slide.img}}" class="img-fluid" alt="Speciality">
                                         <span><i class="fa fa-circle" aria-hidden="true"></i></span>
                                     </div>
                                     <p>{{slide.name}}</p>
+                                </div>
+                            </div> -->
+
+                            <div ngxSlickItem *ngFor="let slide of metiersList" class="speicality-item text-center">
+                                <div class="">
+                                    <div class="speicality-img">
+                                        <!--    <img src="assets/img/specialities/specialities-01.png" class="img-fluid" alt="Metier"> -->
+                                        <img class="img-fluid" alt="Metier" src="{{
+                                            this.ouvService.apiServerUrl +
+                                            '/metiers/photoMetierInFolder/' +
+                                            slide.id
+                                            }}">
+                                        <span><i class="fa fa-circle" aria-hidden="true"></i></span>
+                                    </div>
+                                    <p>{{slide.designation}}</p>
                                 </div>
                             </div>
                         </ngx-slick-carousel>
@@ -127,7 +142,7 @@
     <section class="section section-doctor">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-2">
                     <div class="section-header ">
                         <h2>Engagez un ouvrier</h2>
                         <p>Lorem Ipsum is simply dummy text </p>
@@ -138,10 +153,10 @@
                         <a href="javascript:;">Lire plus..</a>
                     </div>
                 </div>
-                <div class="col-lg-8">
+                <div class="col-lg-10">
                     <div class="doctor-slider">
                         <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfigure">
-                            <div class="slick-slide" *ngFor="let doctor of doctors;let i=index">
+                            <!--  <div class="slick-slide" *ngFor="let doctor of doctors;let i=index">
                                 <div ngxSlickItem>
                                     <div class="profile-widget" style="width: 100%; display: inline-block;">
                                         <div class="doc-img">
@@ -181,6 +196,62 @@
                                             <div class="row row-sm">
                                                 <div class="col-6">
                                                     <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}" class="btn view-btn" tabindex="-1">View Profile</a>
+                                                </div>
+                                                <div class="col-6">
+                                                    <a [routerLink]="'/patients/booking'" [queryParams]="{id: doctor.id}" class="btn book-btn" tabindex="-1">Book
+                                                        Now</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="slick-slide" *ngFor="let doctor of ouvriersList;let i=index">
+                                <div ngxSlickItem>
+                                    <div class="profile-widget" style="width: 100%; display: inline-block;">
+                                        <div class="doc-img">
+                                            <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}" tabindex="-1">
+                                                <!-- <img class="img-fluid" alt="User Image" [src]="doctor.profile"> -->
+                                                <img class="img-fluid w-100" alt="User Image" src="{{
+                                                    this.ouvService.apiServerUrl +
+                                                    '/ouvriers/photoOuvrierInFolder/' +
+                                                    doctor.id
+                                                    }}">
+                                            </a>
+                                            <a href="javascript:void(0)" class="fav-btn" tabindex="-1">
+                                                <i class="far fa-bookmark"></i>
+                                            </a>
+                                        </div>
+                                        <div class="pro-content">
+                                            <h3 class="title">
+                                                <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}" tabindex="-1">{{doctor.firstName}}-{{doctor.lastName}}</a>
+                                                <i class="fas fa-check-circle verified"></i>
+                                            </h3>
+                                            <p class="speciality">{{doctor.education}}</p>
+                                            <div class="rating">
+                                                <i class="fas fa-star filled"></i>
+                                                <i class="fas fa-star filled"></i>
+                                                <i class="fas fa-star filled"></i>
+                                                <i class="fas fa-star filled"></i>
+                                                <i class="fas fa-star"></i>
+                                                <span class="d-inline-block average-rating">({{doctor.reference}})</span>
+                                            </div>
+                                            <ul class="available-info">
+                                                <li>
+                                                    <i class="fas fa-map-marker-alt"></i> {{doctor.addressActuel}}
+                                                </li>
+                                                <li>
+                                                    <i class="far fa-clock"></i> {{doctor.disponibity}}
+                                                </li>
+                                                <li>
+                                                    <i class="far fa-money-bill-alt"></i> {{doctor.pretentionSalaire}}
+                                                    <a href="javascript:void(0)" tooltip="Lorem Ipsum" placement="top"><i class="fas fa-info-circle"></i></a>
+                                                </li>
+                                            </ul>
+                                            <div class="row row-sm">
+                                                <div class="col-6">
+                                                    <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}" class="btn view-btn" tabindex="-1">Voir Profile</a>
                                                 </div>
                                                 <div class="col-6">
                                                     <a [routerLink]="'/patients/booking'" [queryParams]="{id: doctor.id}" class="btn book-btn" tabindex="-1">Book
