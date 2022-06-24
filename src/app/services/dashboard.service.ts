@@ -1,0 +1,81 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Annonce } from '../models/annonce';
+import { Rating } from '../models/rating';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DashboardService {
+
+  public apiServerUrl = environment.apiBaseUrl;
+
+  constructor(private http: HttpClient) {
+  }
+
+  public countNumberOfAnnonces(): Observable<any>  {
+    return this.http.get(`${this.apiServerUrl}/annonces/NumbersOfAnnonces`);
+  }
+
+  public countNumberOfAnnonceByStatusPending(): Observable<any>  {
+    return this.http.get(`${this.apiServerUrl}/annonces/NumbersOfAnnonceByStatusPending`);
+  }
+
+  public countNumberOfAnnonceByStatusValidated(): Observable<any>  {
+    return this.http.get(`${this.apiServerUrl}/annonces/NumbersOfAnnonceByStatusValidated`);
+  }
+
+  public countNumberOfAnnonceByInMonth(): Observable<any>  {
+    return this.http.get(`${this.apiServerUrl}/annonces/NumbersOfAnnonceInMonth`);
+  }
+  public countNumberOfAnnoncesInYear(): Observable<any>  {
+    return this.http.get(`${this.apiServerUrl}/annonces/NumbersOfAnnonceInYear`);
+  }
+
+  public countNumbersOfAnnoncePeerMonth(): Observable<Annonce[]>  {
+    return this.http.get<Annonce[]>(`${this.apiServerUrl}/annonces/numberOfAnnonceByMonth`);
+  }
+
+  public countNumbersOfAnnoncePeerYear(): Observable<Annonce[]>  {
+    return this.http.get<Annonce[]>(`${this.apiServerUrl}/annonces/numberOfAnnonceByYear`);
+  }
+
+  public countNumberOfReservationByStatusPending(): Observable<any>  {
+    return this.http.get(`${this.apiServerUrl}/reservations/NumbersOfReservationByStatusPending`);
+  }
+
+  public countNumbersOfReservationInYear(): Observable<any>  {
+    return this.http.get(`${this.apiServerUrl}/reservations/NumbersOfReservationInYear`);
+  }
+
+  public countNumberOfChauffeurs(): Observable<any> {
+    return this.http.get(`${this.apiServerUrl}/chauffeurs/NumbersOfChauffeurs`);
+  }
+
+  public countNumbersOfChauffeursPeerMonth(): Observable<any> {
+    return this.http.get(`${this.apiServerUrl}/chauffeurs/numberOfChauffeurPeerMonth`);
+  }
+
+  public countNumbersOfChauffeursPeerYear(): Observable<any> {
+    return this.http.get(`${this.apiServerUrl}/chauffeurs/numberOfChauffeurPeerYeer`);
+  }
+
+  public countNumberOfRecruteurs(): Observable<any> {
+    return this.http.get(`${this.apiServerUrl}/utilisateurs/NumbersOfRecruteurs`);
+  }
+
+  public countNumberOfNotification(): Observable<Rating[]> {
+    return this.http.get<Rating[]>(`${this.apiServerUrl}/notifications/countNumberOfNotification`);
+  }
+
+  public countNumberOfNotificationByProductId(noteId: string): Observable<Rating> {
+    return this.http.get<Rating>(`${this.apiServerUrl}/notifications/countNumberOfNotificationByProductId/${noteId}`);
+  }
+
+  public countNumberOfEmails(): Observable<any> {
+    return this.http.get(`${this.apiServerUrl}/emails/countNumberOfEmailInMonth`);
+  }
+
+}

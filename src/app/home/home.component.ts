@@ -6,6 +6,10 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { SlickCarouselComponent } from 'ngx-slick-carousel';
+import { MetierService } from '../services/metier.service';
+import { OuvrierService } from '../services/ouvrier.service';
+import { Ouvrier } from '../models/ouvrier';
+import { Metier } from '../models/metier';
 declare const $: any;
 
 export interface Doctors {
@@ -28,9 +32,15 @@ export class HomeComponent implements OnInit {
   @ViewChild('slickModal3') slickModal3: SlickCarouselComponent;
   specialityList: any = [];
   doctors: any = [];
+  ouvriersList: any = [];
+  metiersList: any = [];
   slidepage: any;
   employeeCtrl = new FormControl();
+  ouvrierCtrl = new FormControl();
+  metierCtrl = new FormControl();
   filteredEmployee: Observable<Doctors[]>;
+  filteredOuvriers: Observable<Ouvrier[]>;
+  filteredMetiers: Observable<Ouvrier[]>;
   blogs: any = [];
   keyword = 'name';
   searchDoctor = [];
@@ -85,9 +95,12 @@ export class HomeComponent implements OnInit {
       name: 'Switzerland',
     },
   ];
+  
   constructor(
     public router: Router,
-    public commonService: CommonServiceService
+    public commonService: CommonServiceService,
+    public ouvService: OuvrierService,
+    public metService: MetierService
   ) {
     this.filteredEmployee = this.employeeCtrl.valueChanges.pipe(
       startWith(''),
@@ -95,6 +108,14 @@ export class HomeComponent implements OnInit {
         employee ? this._filterEmployees(employee) : this.doctors.slice()
       )
     );
+
+    this.filteredOuvriers = this.ouvrierCtrl.valueChanges.pipe(
+      startWith(''),
+      map((ouvrier) =>
+        ouvrier ? this._filterOuvriers(ouvrier) : this.ouvriersList.slice()
+      )
+    );
+
   }
 
   ngOnInit() {
@@ -102,6 +123,8 @@ export class HomeComponent implements OnInit {
     this.getspeciality();
     this.getDoctors();
     this.getblogs();
+    this.getListOfMetiers();
+    this.getListOfOuvriers();
 
     // User's voice slider
     $('.testi-slider').each(function () {
@@ -158,6 +181,13 @@ export class HomeComponent implements OnInit {
     const filterValue = value.toLowerCase();
     return this.doctors.filter(
       (state) => state.doctor_name.toLowerCase().indexOf(filterValue) === 0
+    );
+  }
+
+  private _filterOuvriers(value: string): Ouvrier[] {
+    const filterValue = value.toLowerCase();
+    return this.ouvriersList.filter(
+      (state) => state.ouvrier_name.toLowerCase().indexOf(filterValue) === 0
     );
   }
 
@@ -298,6 +328,50 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  getListOfMetiers() {
+    this.metService.getMetiers().subscribe((res) => {
+      this.metiersList = res;
+    });
+  }
+
+  getListOfOuvriers() {
+    this.ouvService.getAllOuvriers().subscribe((res) => {
+      this.ouvriersList = res;
+      console.log(this.ouvriersList);
+      this.slidepage = {
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+            },
+          },
+        ],
+      };
+      this.countries = [];
+      this.doctors.forEach((index, i) => {
+        this.countries.push({
+          id: index.id,
+          name: index.ouvrier_name,
+        });
+      });
+    });
+  }
+
   getDoctors() {
     this.commonService.getDoctors().subscribe((res) => {
       this.doctors = res;
@@ -346,6 +420,7 @@ export class HomeComponent implements OnInit {
     this.router.navigateByUrl('/patients/doctor-profile?id=' + filter[0].id);
     // do something with selected item
   }
+
 
   onChangeSearch(search: string) {
     // fetch remote data from here

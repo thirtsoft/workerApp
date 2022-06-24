@@ -37,7 +37,7 @@ import { Home7footerComponent } from './common/home7footer/home7footer.component
     HttpClientModule,
     SlickCarouselModule,
     ToastrModule.forRoot(),
-    HttpClientInMemoryWebApiModule.forRoot(DataService),
+ //   HttpClientInMemoryWebApiModule.forRoot(DataService),
     BrowserAnimationsModule,
     FormsModule,
     NgbModule,
