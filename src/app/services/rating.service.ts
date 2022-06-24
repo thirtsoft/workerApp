@@ -14,7 +14,6 @@ export class RatingService {
 
 //  public apiServerUrl = "https://server-chauffeur.herokuapp.com/sen-chauffeurs/v1";
 
-
   id: any;
   artId: any;
 
@@ -35,7 +34,7 @@ export class RatingService {
     return this.http.get<Rating[]>(`${this.apiServerUrl}/ratings/searchTop3RatingOrderByCreatedDateDesc`);
   }
 
-  public getTop4RatingByChauffeurIdOrderByCreatedDateDesc(chauffId: number): Observable<Rating[]> {
+  public getTop4RatingByOuvrierIdOrderByCreatedDateDesc(chauffId: number): Observable<Rating[]> {
     return this.http.get<Rating[]>(`${this.apiServerUrl}/ratings/searchTop4RatingOrderByCreatedDateDescByOuvrierId/${chauffId}`);
   }
 
@@ -63,8 +62,8 @@ export class RatingService {
     return this.http.get<any>(`${this.apiServerUrl}/ratings/countNumberOfRatings`);
   }
 
-  public countNumberOfRatingOfOuvriers(): Observable<any> {
-    return this.http.get<any>(`${this.apiServerUrl}/ratings/countNumberOfRatingByOuvrierId`);
+  public countNumberOfRatingOfOuvriers(ouvId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/ratings/countNumberOfRatingByOuvrierId/${ouvId}`);
   }
 
   public deleteRating(noteId: number): Observable<void> {

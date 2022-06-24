@@ -21,7 +21,7 @@ export class OuvrierService {
   constructor(private http: HttpClient) {
   }
   /*************************** Ouvrier ********************/
-  public getOuvriers(): Observable<Ouvrier[]> {
+  public getAllOuvriers(): Observable<Ouvrier[]> {
     return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/all`);
   }
 
@@ -31,6 +31,10 @@ export class OuvrierService {
 
   public getOuvrierById(chauffId: number): Observable<Ouvrier> {
     return this.http.get<Ouvrier>(`${this.apiServerUrl}/ouvriers/findById/${chauffId}`);
+  }
+
+  createFav(params) {
+    return this.http.post(this.apiServerUrl + 'favourites', params);
   }
 
   public addOuvrier(ouv: Ouvrier): Observable<Ouvrier> {
@@ -102,7 +106,7 @@ export class OuvrierService {
 
   }
 
-  public getPhotoChauffeur() {
+  public getPhotoOuvrier() {
     return this.http.get(`${this.apiServerUrl}/ouvriers/photoOuvrier`);
   }
 
@@ -122,11 +126,11 @@ export class OuvrierService {
     return this.http.get(`${this.apiServerUrl}/ouvriers/cvOuvrier`);
   }
 
-  public countNumberOfouvriers(): Observable<any> {
+  public countNumberOfOuvriers(): Observable<any> {
     return this.http.get(`${this.apiServerUrl}/ouvriers/NumbersOfOuvriers`);
   }
 
-  public getAllouvriersByPageables(page,size): Observable<Ouvrier[]> {
+  public getAllOuvriersByPageables(page,size): Observable<Ouvrier[]> {
     return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/allOuvriers?page=${page}&size=${size}`).pipe(
       map(
         response => response
@@ -134,7 +138,7 @@ export class OuvrierService {
     )
   }
 
-  public getouvriersByAddressId(id,page,size): Observable<Ouvrier[]> {
+  public getOuvriersByAddressId(id,page,size): Observable<Ouvrier[]> {
     return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/address?id=${id}&page=${page}&size=${size}`).pipe(
       map(
         response => response
@@ -142,7 +146,7 @@ export class OuvrierService {
     )
   }
 
-  public getouvriersByKey(word,page,size): Observable<Ouvrier[]> {
+  public getOuvriersByKey(word,page,size): Observable<Ouvrier[]> {
     return this.http.get<Ouvrier[]>(this.apiServerUrl+"/ouvriers/Ouvrierkey?disponibility="+word+"&page="+page+"&size="+size).pipe(
       map(
         response => response
@@ -150,7 +154,7 @@ export class OuvrierService {
     )
   }
 
-  public getouvriersLength(): Observable<number> {
+  public getOuvriersLength(): Observable<number> {
     return this.http.get<number>(`${this.apiServerUrl}/ouvriers/OuvrierDtoSize`).pipe(
       map(
         response => response
@@ -158,7 +162,7 @@ export class OuvrierService {
     )
   }
 
-  public getouvriersLengthByAddressId(id): Observable<number> {
+  public getOuvriersLengthByAddressId(id): Observable<number> {
     return this.http.get<number>(`${this.apiServerUrl}/ouvriers/ctaddressIdSize?id=${id}`).pipe(
       map(
         response => response
@@ -166,7 +170,15 @@ export class OuvrierService {
     )
   }
 
-  public getouvriersLengthByKey(word): Observable<number> {
+  public getOuvriersLengthByMetierId(id): Observable<number> {
+    return this.http.get<number>(`${this.apiServerUrl}/ouvriers/ctaddressIdSize?id=${id}`).pipe(
+      map(
+        response => response
+      )
+    )
+  }
+
+  public getOuvriersLengthByKey(word): Observable<number> {
     return this.http.get<number>(`${this.apiServerUrl}/ouvriers/keySize?disponibility=${word}`).pipe(
       map(
         response => response
@@ -174,7 +186,7 @@ export class OuvrierService {
     )
   }
 
-  public addChauffeurWithPhotoAndCvFileInFolder(formData: FormData): Observable<any> {
+  public addOuvrierWithPhotoAndCvFileInFolder(formData: FormData): Observable<any> {
     const req = new HttpRequest('POST', `${this.apiServerUrl}/ouvriers/createWithFilesInFolder/`, formData, {
       reportProgress: true,
       responseType: 'text'

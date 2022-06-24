@@ -4,26 +4,20 @@
         <div class="container-fluid">
             <div class="banner-wrapper">
                 <div class="banner-header text-center">
-                    <h1>Search Doctor, Make an Appointment</h1>
-                    <p>Discover the best doctors, clinic & hospital the city nearest to you.</p>
+                    <h1>Chercher un Ouvrier, Pour votre service</h1>
+                    <p>Trouver un ouvrier pour vous servir, partout dans le Sénégal.</p>
                 </div>
 
                 <!-- Search -->
                 <div class="search-box">
                     <form>
                         <div class="form-group search-location">
-                        <input type="text" class="form-control" placeholder="Search Location">
-                            <span class="form-text">Based on your Location</span>
+                            <input type="text" class="form-control" placeholder="Search Location">
+                            <span class="form-text">Basé dans votre Localité</span>
                         </div>
                         <div class="form-group search-info">
-                            <!-- <input type="text" class="form-control"
-                            placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc"/>
-                        <span class="form-text">Ex : Dental or Sugar Check up etc</span> -->
-                            <ng-autocomplete [data]="countries" type="text" class="form-control"
-                                [searchKeyword]="keyword" placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" (selected)='selectEvent($event)'
-                                (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                                historyIdentifier="countries" [itemTemplate]="itemTemplate"
-                                [notFoundTemplate]="notFoundTemplate">
+                            <ng-autocomplete [data]="countries" type="text" class="form-control" [searchKeyword]="keyword" placeholder="Chercher un ouvrier selon votre besoin Etc" (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                                historyIdentifier="countries" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
                             </ng-autocomplete>
 
                             <ng-template #itemTemplate let-item>
@@ -33,11 +27,10 @@
                             <ng-template #notFoundTemplate let-notFound>
                                 <div [innerHTML]="notFound"></div>
                             </ng-template>
-							<span class="form-text">Ex : Dental or Sugar Check up etc</span>
+                            <span class="form-text">Ex : Plombier ou Electricien etc</span>
                         </div>
-                        <button type="submit" class="btn btn-primary search-btn mt-0"
-                            [routerLink]="'/patients/search-doctor'"><i class="fas fa-search"></i>
-                            <span>Search</span></button>
+                        <button type="submit" class="btn btn-primary search-btn mt-0" [routerLink]="'/patients/search-doctor'"><i class="fas fa-search"></i>
+                            <span>Chercher</span></button>
                     </form>
                 </div>
                 <!-- /Search -->
@@ -46,7 +39,7 @@
         </div>
     </section>
     <!-- /Home Banner -->
-    <section class="section home-tile-section">
+    <!--  <section class="section home-tile-section">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-9 m-auto">
@@ -81,7 +74,7 @@
                                 <img src="assets/img/lab-image.jpg" alt="" class="img-fluid">
                                 <div class="doctor-book-card-content tile-card-content-1">
                                     <div>
-                                    <h3 class="card-title mb-0">Find a Lab</h3>
+                                        <h3 class="card-title mb-0">Find a Lab</h3>
                                         <a href="javascript:void(0);" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">Coming Soon</a>
                                     </div>
                                 </div>
@@ -91,14 +84,13 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- Clinic and Specialities -->
     <section class="section section-specialities">
         <div class="container-fluid">
             <div class="section-header text-center">
-                <h2>Clinic and Specialities</h2>
-                <p class="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua.</p>
+                <h2>Ouvriers et Spécialités</h2>
+                <p class="sub-title">Découvriez nos profiles d'Ouvriers, plusieurs spécialistes.</p>
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-9">
@@ -137,18 +129,13 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="section-header ">
-                        <h2>Book Our Doctor</h2>
+                        <h2>Engagez un ouvrier</h2>
                         <p>Lorem Ipsum is simply dummy text </p>
                     </div>
                     <div class="about-content">
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a
-                            page
-                            when looking at its layout. The point of using Lorem Ipsum.</p>
-                        <p>web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem
-                            ipsum'
-                            will uncover many web sites still in their infancy. Various versions have evolved over the
-                            years, sometimes</p>
-                        <a href="javascript:;">Read More..</a>
+                        <p>Nous vous proposons plusieurs profiles d'Ouvriers qui vous accompagnerons dans vos travaux.</p>
+                        <p>Des Ouvriers compétents, rigoureux, et sérieux prets à se déplacer chez vous et vous faire votre réparation en un clien d'oeil</p>
+                        <a href="javascript:;">Lire plus..</a>
                     </div>
                 </div>
                 <div class="col-lg-8">
@@ -158,8 +145,7 @@
                                 <div ngxSlickItem>
                                     <div class="profile-widget" style="width: 100%; display: inline-block;">
                                         <div class="doc-img">
-                                            <a [routerLink]="'/patients/doctor-profile'"
-                                                [queryParams]="{id: doctor.id}" tabindex="-1">
+                                            <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}" tabindex="-1">
                                                 <img class="img-fluid" alt="User Image" [src]="doctor.profile">
                                             </a>
                                             <a href="javascript:void(0)" class="fav-btn" tabindex="-1">
@@ -168,9 +154,7 @@
                                         </div>
                                         <div class="pro-content">
                                             <h3 class="title">
-                                                <a [routerLink]="'/patients/doctor-profile'"
-                                                    [queryParams]="{id: doctor.id}"
-                                                    tabindex="-1">{{doctor.doctor_name}}</a>
+                                                <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}" tabindex="-1">{{doctor.doctor_name}}</a>
                                                 <i class="fas fa-check-circle verified"></i>
                                             </h3>
                                             <p class="speciality">{{doctor.Education}}</p>
@@ -196,14 +180,10 @@
                                             </ul>
                                             <div class="row row-sm">
                                                 <div class="col-6">
-                                                    <a [routerLink]="'/patients/doctor-profile'"
-                                                        [queryParams]="{id: doctor.id}" class="btn view-btn"
-                                                        tabindex="-1">View Profile</a>
+                                                    <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}" class="btn view-btn" tabindex="-1">View Profile</a>
                                                 </div>
                                                 <div class="col-6">
-                                                    <a [routerLink]="'/patients/booking'"
-                                                        [queryParams]="{id: doctor.id}" class="btn book-btn"
-                                                        tabindex="-1">Book
+                                                    <a [routerLink]="'/patients/booking'" [queryParams]="{id: doctor.id}" class="btn book-btn" tabindex="-1">Book
                                                         Now</a>
                                                 </div>
                                             </div>
@@ -219,7 +199,7 @@
     </section>
     <!--popular section-->
 
-    <section class="section section-features">
+    <!-- <section class="section section-features">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-5 features-img">
@@ -228,30 +208,24 @@
                 <div class="col-md-7">
                     <div class="section-header">
                         <h2 class="mt-2">Available Features in Our Clinic</h2>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a
-                            page when looking at its layout. </p>
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
                     </div>
                     <div class="features-slider slider">
 
-                            <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig2">
-                                <div ngxSlickItem *ngFor="let slide of sliderContent">
-                                    <div class="feature-item text-center">
+                        <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig2">
+                            <div ngxSlickItem *ngFor="let slide of sliderContent">
+                                <div class="feature-item text-center">
                                     <img src="{{slide.img}}" class="img-fluid" alt="Feature">
-                                        <p>{{slide.name}}</p>
-                                    </div>
+                                    <p>{{slide.name}}</p>
                                 </div>
-                            </ngx-slick-carousel>
-                            <!-- <div class="text-center client-navbtn">
-                                <button class="btn-next" (click)="nextslide()"><i
-                                        class="las la-caret-square-left"></i></button>
-                                <button class="btn-prev" (click)="prevslide()"><i
-                                        class="las la-caret-square-right"></i></button>
-                            </div> -->
-                        </div>
+                            </div>
+                        </ngx-slick-carousel>
+                       
                     </div>
                 </div>
             </div>
-    </section>
+        </div>
+    </section> -->
 
     <section class="section section-blogs">
         <div class="container-fluid">
@@ -259,8 +233,7 @@
             <!-- Section Header -->
             <div class="section-header text-center">
                 <h2>Blogs and News</h2>
-                <p class="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua.</p>
+                <p class="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </div>
             <!-- /Section Header -->
 
@@ -270,21 +243,18 @@
                     <!-- Blog Post -->
                     <div class="blog grid-blog">
                         <div class="blog-image">
-                            <a [routerLink]="'/blog-details'" [queryParams]="{id: blog.id}"><img class="img-fluid"
-                                    [src]="blog.img" alt="Post Image"></a>
+                            <a [routerLink]="'/blog-details'" [queryParams]="{id: blog.id}"><img class="img-fluid" [src]="blog.img" alt="Post Image"></a>
                         </div>
                         <div class="blog-content">
                             <ul class="entry-meta meta-item">
                                 <li>
                                     <div class="post-author">
-                                        <a [routerLink]="'/patients/doctor-profile'"><img [src]="blog.doctor_pic"
-                                                alt="Post Author"> <span>{{blog.doctor_name}}</span></a>
+                                        <a [routerLink]="'/patients/doctor-profile'"><img [src]="blog.doctor_pic" alt="Post Author"> <span>{{blog.doctor_name}}</span></a>
                                     </div>
                                 </li>
                                 <li><i class="far fa-clock"></i> {{blog.createdAt | date : 'dd MMM yyyy'}}</li>
                             </ul>
-                            <h3 class="blog-title"><a [routerLink]="'/blog-details'"
-                                    [queryParams]="{id: blog.id}">{{blog.title}}</a></h3>
+                            <h3 class="blog-title"><a [routerLink]="'/blog-details'" [queryParams]="{id: blog.id}">{{blog.title}}</a></h3>
                             <p class="mb-0 desc-ellipsis">{{blog.description}}</p>
                         </div>
                     </div>
@@ -294,7 +264,7 @@
 
             </div>
             <div class="view-all text-center">
-                <a [routerLink]="'/blog'" class="btn btn-primary">View All</a>
+                <a [routerLink]="'/blog'" class="btn btn-primary">Voir Tous</a>
             </div>
         </div>
     </section>

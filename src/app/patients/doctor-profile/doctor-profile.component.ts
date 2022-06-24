@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CommonServiceService } from './../../common-service.service';
 import { ToastrService } from 'ngx-toastr';
+import { OuvrierService } from 'src/app/services/ouvrier.service';
+import { Rating } from 'src/app/models/rating';
+import { RatingService } from 'src/app/services/rating.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -11,11 +15,22 @@ import { ToastrService } from 'ngx-toastr';
 export class DoctorProfileComponent implements OnInit {
   id;
   doctorDetails;
+  ouvrierDetails;
+
+  ratingListDTOs: Rating[];
+  numberOfRatingToOuvrier: any;
+  currentRating: any = 4;
+  starRating = 0;
+  maxRatingValue: any = 5;
+
   constructor(
     public commonService: CommonServiceService,
+    public ouvService: OuvrierService,
+    public ratService: RatingService,
     private route: ActivatedRoute,
     private toastr: ToastrService
   ) {}
+
   images = [
     {
       path: 'assets/img/features/feature-01.jpg',
@@ -30,10 +45,14 @@ export class DoctorProfileComponent implements OnInit {
       path: 'assets/img/features/feature-04.jpg',
     },
   ];
+
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.id = this.route.snapshot.queryParams['id'];
     this.getDoctorsDetails();
+    this.getOuvrierDetails();
+    this.countNumberOfRatingToOuvrier();
+    this.getListOfTop4RatingOrderByCreatedDateDescByOuvrierId();
   }
 
   getDoctorsDetails() {
@@ -45,8 +64,43 @@ export class DoctorProfileComponent implements OnInit {
     });
   }
 
+  getOuvrierDetails() {
+    if (!this.id) {
+      this.id = 1;
+    }
+    this.ouvService.getOuvrierById(this.id).subscribe((res) => {
+      this.ouvrierDetails = res;
+    });
+  }
+
+  countNumberOfRatingToOuvrier() {
+    this.ratService.countNumberOfRatingOfOuvriers(this.id)
+      .subscribe((res) => {
+        this.numberOfRatingToOuvrier = res;
+    });
+  }
+
+  getListOfTop4RatingOrderByCreatedDateDescByOuvrierId() {
+    this.ratService.getTop4RatingByOuvrierIdOrderByCreatedDateDesc(this.id)
+      .subscribe((response) => {
+        this.ratingListDTOs = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
   addFav() {
     this.commonService.createFav(this.doctorDetails).subscribe((res) => {
+      this.toastr.success('', 'Added to favourite successfully!');
+      document.getElementById('fav-btn').style.background = '#fb1612';
+      document.getElementById('fav-btn').style.color = '#fff';
+    });
+  }
+
+  addFavOuvrier() {
+    this.ouvService.createFav(this.ouvrierDetails).subscribe((res) => {
       this.toastr.success('', 'Added to favourite successfully!');
       document.getElementById('fav-btn').style.background = '#fb1612';
       document.getElementById('fav-btn').style.color = '#fff';
