@@ -14,8 +14,12 @@ export class AddressService {
   constructor(private http: HttpClient) {
   }
 
-  public getAddresss(): Observable<Address[]> {
+  public getAllAddresss(): Observable<Address[]> {
     return this.http.get<Address[]>(`${this.apiServerUrl}/addresses/all`);
+  }
+
+  public getAllAddresssOrderByIdDesc(): Observable<Address[]> {
+    return this.http.get<Address[]>(`${this.apiServerUrl}/addresses/searchAlladdressesOrderByIdDesc`);
   }
 
   public getAddressById(addId: number): Observable<Address> {
@@ -30,7 +34,12 @@ export class AddressService {
     return this.http.put<Address>(`${this.apiServerUrl}/addresses/update/${addId}`, add);
   }
 
+  public getNumberOfAddress(): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/addresses/NumbersOfaddresses`);
+  }
+
   public deleteAddress(addId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/addresses/delete/${addId}`);
   }
+
 }

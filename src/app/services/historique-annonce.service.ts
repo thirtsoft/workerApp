@@ -17,24 +17,24 @@ export class HistoriqueAnnonceService {
   }
 
   /*************************** HistoriqueAnnonce ********************/
-  public getHistoriqueAnnonces(): Observable<HistoriqueAnnonce[]> {
+  public getAllHistoriqueAnnonces(): Observable<HistoriqueAnnonce[]> {
     return this.http.get<HistoriqueAnnonce[]>(`${this.apiServerUrl}/historiqueAnnonces/all`);
   }
 
   public getHistoriqueAnnoncesOrderByIdDesc(): Observable<HistoriqueAnnonce[]> {
     return this.http.get<HistoriqueAnnonce[]>(`${this.apiServerUrl}/historiqueAnnonces/searchHistoriqueAnnonceByIdDesc`);
   }
-
+  
   public getHistoriqueAnnonceById(idHistoriqueAnnonce: number): Observable<HistoriqueAnnonce> {
     return this.http.get<HistoriqueAnnonce>(`${this.apiServerUrl}/historiqueAnnonces/findById/${idHistoriqueAnnonce}`);
   }
 
-  public addHistoriqueAnnonce(HistoriqueAnnonce: HistoriqueAnnonce): Observable<HistoriqueAnnonce> {
-    return this.http.post<HistoriqueAnnonce>(`${this.apiServerUrl}/historiqueAnnonces/create`, HistoriqueAnnonce);
+  public addHistoriqueAnnonce(histAnnonce: HistoriqueAnnonce): Observable<HistoriqueAnnonce> {
+    return this.http.post<HistoriqueAnnonce>(`${this.apiServerUrl}/historiqueAnnonces/create`, histAnnonce);
   }
 
-  public updateHistoriqueAnnonce(idHistoriqueAnnonce: number, HistoriqueAnnonce: HistoriqueAnnonce): Observable<HistoriqueAnnonce> {
-    return this.http.put<HistoriqueAnnonce>(`${this.apiServerUrl}/historiqueAnnonces/update/${idHistoriqueAnnonce}`, HistoriqueAnnonce);
+  public updateHistoriqueAnnonce(idHistoriqueAnnonce: number, histAnnonce: HistoriqueAnnonce): Observable<HistoriqueAnnonce> {
+    return this.http.put<HistoriqueAnnonce>(`${this.apiServerUrl}/historiqueAnnonces/update/${idHistoriqueAnnonce}`, histAnnonce);
   }
 
   public deleteHistoriqueAnnonce(idHistoriqueAnnonce: number): Observable<void> {

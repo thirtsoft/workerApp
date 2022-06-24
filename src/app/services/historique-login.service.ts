@@ -17,24 +17,24 @@ export class HistoriqueLoginService {
   }
 
   /*************************** HistoriqueLogin ********************/
-  public getHistoriqueLogins(): Observable<HistoriqueLogin[]> {
+  public getAllHistoriqueLogins(): Observable<HistoriqueLogin[]> {
     return this.http.get<HistoriqueLogin[]>(`${this.apiServerUrl}/historiqueLogins/all`);
   }
 
   public getHistoriqueLoginsOrderByIdDesc(): Observable<HistoriqueLogin[]> {
-    return this.http.get<HistoriqueLogin[]>(`${this.apiServerUrl}/historiqueLogins/searchHistoriqueLoginByIdDesc`);
+    return this.http.get<HistoriqueLogin[]>(`${this.apiServerUrl}/historiqueLogins/searchAllHistoriqueLoginsOrderByIdDesc`);
   }
-
+  
   public getHistoriqueLoginById(idHistoriqueLogin: number): Observable<HistoriqueLogin> {
     return this.http.get<HistoriqueLogin>(`${this.apiServerUrl}/historiqueLogins/findById/${idHistoriqueLogin}`);
   }
 
-  public addHistoriqueLogin(HistoriqueLogin: HistoriqueLogin): Observable<HistoriqueLogin> {
-    return this.http.post<HistoriqueLogin>(`${this.apiServerUrl}/historiqueLogins/create`, HistoriqueLogin);
+  public addHistoriqueLogin(histLogin: HistoriqueLogin): Observable<HistoriqueLogin> {
+    return this.http.post<HistoriqueLogin>(`${this.apiServerUrl}/historiqueLogins/create`, histLogin);
   }
 
-  public updateHistoriqueLogin(idHistoriqueLogin: number, HistoriqueLogin: HistoriqueLogin): Observable<HistoriqueLogin> {
-    return this.http.put<HistoriqueLogin>(`${this.apiServerUrl}/historiqueLogins/update/${idHistoriqueLogin}`, HistoriqueLogin);
+  public updateHistoriqueLogin(idHistoriqueLogin: number, histLogin: HistoriqueLogin): Observable<HistoriqueLogin> {
+    return this.http.put<HistoriqueLogin>(`${this.apiServerUrl}/historiqueLogins/update/${idHistoriqueLogin}`, histLogin);
   }
 
   public deleteHistoriqueLogin(idHistoriqueLogin: number): Observable<void> {

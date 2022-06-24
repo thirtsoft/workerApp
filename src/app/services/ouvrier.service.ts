@@ -26,7 +26,7 @@ export class OuvrierService {
   }
 
   public getOuvrierOrderByIdDesc(): Observable<Ouvrier[]> {
-    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchChauffeurOrderByIdDesc`);
+    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchOuvrierOrderByIdDesc`);
   }
 
   public getOuvrierById(chauffId: number): Observable<Ouvrier> {
@@ -60,11 +60,11 @@ export class OuvrierService {
   }
 
   public getListOuvrierBySelectedIsTrue(): Observable<Ouvrier[]> {
-    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchChauffeurBySelectedIsTrue`);
+    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchOuvrierBySelectedIsTrue`);
   }
 
   public getListOuvrierByKeyword(keyword: string): Observable<Ouvrier[]> {
-    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchChauffeurByKeyword?keyword=`+keyword);
+    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchListOfOuvrierByKeyword?keyword=`+keyword);
   }
 
   public getListOuvrierByDisponibility(disponility: string): Observable<Ouvrier[]> {
@@ -72,28 +72,28 @@ export class OuvrierService {
   }
 
   public getListOuvrierByKeywordPageable(mc: string, page: number, size: number): Observable<Ouvrier[]> {
-    const searchUrl = (this.apiServerUrl+"/ouvriers/searchChauffeurByDisponibityByPageables?id="+mc+"&page="+page+"&size="+size);
+    const searchUrl = (this.apiServerUrl+"/ouvriers/searchListOfOuvrierByDisponibility?id="+mc+"&page="+page+"&size="+size);
     return this.http.get<Ouvrier[]>(searchUrl);
   }
 
   public getListOuvrierByPermisPageable(permisId: number, page: number, size: number): Observable<Ouvrier[]> {
-    const searchUrl = (this.apiServerUrl+"/ouvriers/searchChauffeurByPermisPageables?id="+permisId+"&page="+page+"&size="+size);
+    const searchUrl = (this.apiServerUrl+"/ouvriers/searchOuvrierByMetierPageables?id="+permisId+"&page="+page+"&size="+size);
     return this.http.get<Ouvrier[]>(searchUrl);
   }
 
   public getListOuvrierByLocalityPageable(locId: number, page: number, size: number): Observable<Ouvrier[]> {
-    const searchUrl = (this.apiServerUrl+"/ouvriers/searchChauffeurByLocalityPageables?id="+locId+"&page="+page+"&size="+size);
+    const searchUrl = (this.apiServerUrl+"/ouvriers/searchOuvrierByLocalityPageables?id="+locId+"&page="+page+"&size="+size);
     return this.http.get<Ouvrier[]>(searchUrl);
   }
 
   public getListOuvrierByPermis(pId: number): Observable<Ouvrier[]> {
-    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchouvriersByPermis/${pId}`);
+    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchListOfOuvrierByMetier/${pId}`);
   }
 
   public uploadPhotoOuvrier(filePhoto: File, id: number): Observable<HttpEvent<{}>> {
     let formdata: FormData = new FormData();
     formdata.append('file', filePhoto);
-    const req = new HttpRequest('POST', `${this.apiServerUrl}/ouvriers/uploadChauffeurPhoto/${id}`, formdata, {
+    const req = new HttpRequest('POST', `${this.apiServerUrl}/ouvriers/uploadOuvrierPhoto/${id}`, formdata, {
       reportProgress: true,
       responseType: 'text'
     });
@@ -103,13 +103,13 @@ export class OuvrierService {
   }
 
   public getPhotoChauffeur() {
-    return this.http.get(`${this.apiServerUrl}/ouvriers/photoChauffeur`);
+    return this.http.get(`${this.apiServerUrl}/ouvriers/photoOuvrier`);
   }
 
   public uploadCvOuvrier(fileCV: File, id: number): Observable<HttpEvent<{}>> {
     let formdata: FormData = new FormData();
     formdata.append('file', fileCV);
-    const req = new HttpRequest('POST', `${this.apiServerUrl}/ouvriers/uploadChauffeurCv/${id}`, formdata, {
+    const req = new HttpRequest('POST', `${this.apiServerUrl}/ouvriers/uploadOuvrierCv/${id}`, formdata, {
       reportProgress: true,
       responseType: 'text'
     });
@@ -119,15 +119,15 @@ export class OuvrierService {
   }
 
   public getCvChauffeur() {
-    return this.http.get(`${this.apiServerUrl}/ouvriers/cvChauffeur`);
+    return this.http.get(`${this.apiServerUrl}/ouvriers/cvOuvrier`);
   }
 
   public countNumberOfouvriers(): Observable<any> {
-    return this.http.get(`${this.apiServerUrl}/ouvriers/NumbersOfouvriers`);
+    return this.http.get(`${this.apiServerUrl}/ouvriers/NumbersOfOuvriers`);
   }
 
   public getAllouvriersByPageables(page,size): Observable<Ouvrier[]> {
-    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/allouvriers?page=${page}&size=${size}`).pipe(
+    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/allOuvriers?page=${page}&size=${size}`).pipe(
       map(
         response => response
       )
@@ -143,7 +143,7 @@ export class OuvrierService {
   }
 
   public getouvriersByKey(word,page,size): Observable<Ouvrier[]> {
-    return this.http.get<Ouvrier[]>(this.apiServerUrl+"/ouvriers/chauffeurkey?disponibility="+word+"&page="+page+"&size="+size).pipe(
+    return this.http.get<Ouvrier[]>(this.apiServerUrl+"/ouvriers/Ouvrierkey?disponibility="+word+"&page="+page+"&size="+size).pipe(
       map(
         response => response
       )
@@ -151,7 +151,7 @@ export class OuvrierService {
   }
 
   public getouvriersLength(): Observable<number> {
-    return this.http.get<number>(`${this.apiServerUrl}/ouvriers/OuvrierSize`).pipe(
+    return this.http.get<number>(`${this.apiServerUrl}/ouvriers/OuvrierDtoSize`).pipe(
       map(
         response => response
       )
@@ -185,7 +185,7 @@ export class OuvrierService {
   public uploadPhotoOfChauffeurInFolder(file: File, id: number): Observable<HttpEvent<{}>> {
     let formdata: FormData = new FormData();
     formdata.append('file', file);
-    const req = new HttpRequest('POST', `${this.apiServerUrl}/ouvriers/uploadChauffeurPhotoInFolder/${id}`, formdata, {
+    const req = new HttpRequest('POST', `${this.apiServerUrl}/ouvriers/uploadPhotoOfOuvrierInFolder/${id}`, formdata, {
       reportProgress: true,
       responseType: 'text'
     });
@@ -194,13 +194,13 @@ export class OuvrierService {
   }
 
   public getPhotoChauffeurInContext() {
-    return this.http.get(`${this.apiServerUrl}/ouvriers/photoChauffeurInFolder`);
+    return this.http.get(`${this.apiServerUrl}/ouvriers/photoOuvrierInFolder`);
   }
 
   public uploadCvOfChauffeurInFolder(file: File, id: number): Observable<HttpEvent<{}>> {
     let formdata: FormData = new FormData();
     formdata.append('file', file);
-    const req = new HttpRequest('POST', `${this.apiServerUrl}/ouvriers/uploadChauffeurCvInFolder/${id}`, formdata, {
+    const req = new HttpRequest('POST', `${this.apiServerUrl}/ouvriers/uploadPhotoOfOuvrierInFolder/${id}`, formdata, {
       reportProgress: true,
       responseType: 'text'
     });
@@ -209,13 +209,13 @@ export class OuvrierService {
   }
 
   public getCvOfChauffeurFromContext() {
-    return this.http.get(`${this.apiServerUrl}/ouvriers/cvChauffeurInFolder`);
+    return this.http.get(`${this.apiServerUrl}/ouvriers/cvOuvrierInFolder`);
   }
 
   public downloadCvOfChauffeurFromFolder(file: File, id: number): Observable<HttpEvent<{}>> {
     let formdata: FormData = new FormData();
     formdata.append('file', file);
-    const req = new HttpRequest('POST', this.apiServerUrl+'/ouvriers/downloadCvFile/' + id, formdata, {
+    const req = new HttpRequest('POST', this.apiServerUrl+'/ouvriers/downloadCvFileOfOuvrier/' + id, formdata, {
       reportProgress: true,
       responseType: 'text'
     });

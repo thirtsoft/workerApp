@@ -14,20 +14,24 @@ export class TarifService {
   constructor(private http: HttpClient) {
   }
 
-  public getTarifss(): Observable<Tarif[]> {
+  public getAllTarifss(): Observable<Tarif[]> {
     return this.http.get<Tarif[]>(`${this.apiServerUrl}/tarifs/all`);
   }
 
-  public getTarifsById(chauffId: number): Observable<Tarif> {
-    return this.http.get<Tarif>(`${this.apiServerUrl}/tarifs/findById/${chauffId}`);
+  public getAllTarifOrderByIdDesc(): Observable<Tarif[]> {
+    return this.http.get<Tarif[]>(`${this.apiServerUrl}/tarifs/searchAllTarifsOrderByIdDesc`);
   }
 
-  public addTarifs(Tarif: Tarif): Observable<Tarif> {
-    return this.http.post<Tarif>(`${this.apiServerUrl}/tarifs/create`, Tarif);
+  public getTarifsById(tafId: number): Observable<Tarif> {
+    return this.http.get<Tarif>(`${this.apiServerUrl}/tarifs/findById/${tafId}`);
   }
 
-  public updateTarifs(tarifId: number, Tarif: Tarif): Observable<Tarif> {
-    return this.http.put<Tarif>(`${this.apiServerUrl}/tarifs/update/${tarifId}`, Tarif);
+  public addTarifs(taf: Tarif): Observable<Tarif> {
+    return this.http.post<Tarif>(`${this.apiServerUrl}/tarifs/create`, taf);
+  }
+
+  public updateTarifs(tarifId: number, taf: Tarif): Observable<Tarif> {
+    return this.http.put<Tarif>(`${this.apiServerUrl}/tarifs/update/${tarifId}`, taf);
   }
 
   public deleteTarifs(tarifId: number): Observable<void> {

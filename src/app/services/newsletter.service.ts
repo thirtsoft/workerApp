@@ -19,31 +19,31 @@ export class NewsletterService {
   }
 
   /*************************** Newsletter ********************/
-  public getNewsletters(): Observable<Newsletter[]> {
-    return this.http.get<Newsletter[]>(`${this.apiServerUrl}/newsleters/all`);
+  public getAllNewsletters(): Observable<Newsletter[]> {
+    return this.http.get<Newsletter[]>(`${this.apiServerUrl}/newsletters/all`);
   }
 
   public getNewslettersOrderByIdDesc(): Observable<Newsletter[]> {
-    return this.http.get<Newsletter[]>(`${this.apiServerUrl}/newsleters/searchNewsleterOrderByIdDesc`);
+    return this.http.get<Newsletter[]>(`${this.apiServerUrl}/newsletters/searchAllNewsletersOrderByIdDesc`);
   }
 
   public getNewsletterById(idNewsleter: number): Observable<Newsletter> {
-    return this.http.get<Newsletter>(`${this.apiServerUrl}/newsleters/findById/${idNewsleter}`);
+    return this.http.get<Newsletter>(`${this.apiServerUrl}/newsletters/findById/${idNewsleter}`);
   }
 
-  public addNewsletter(Newsletter: Newsletter): Observable<Newsletter> {
-    return this.http.post<Newsletter>(`${this.apiServerUrl}/newsleters/create`, Newsletter);
+  public addNewsletter(newsletter: Newsletter): Observable<Newsletter> {
+    return this.http.post<Newsletter>(`${this.apiServerUrl}/newsletters/create`, newsletter);
   }
 
-  public updateNewsletter(idNewsleter: number, Newsletter: Newsletter): Observable<Newsletter> {
-    return this.http.put<Newsletter>(`${this.apiServerUrl}/newsleters/update/${idNewsleter}`, Newsletter);
+  public updateNewsletter(idNewsleter: number, newsletter: Newsletter): Observable<Newsletter> {
+    return this.http.put<Newsletter>(`${this.apiServerUrl}/newsletters/update/${idNewsleter}`, newsletter);
   }
 
   public deleteNewsletter(idNewsleter: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/newsleters/delete/${idNewsleter}`);
+    return this.http.delete<void>(`${this.apiServerUrl}/newsletters/delete/${idNewsleter}`);
   }
 
   public countNumberOfNewsletters(): Observable<any> {
-    return this.http.get(`${this.apiServerUrl}/newsleters/NumbersOfNewsleters`);
+    return this.http.get(`${this.apiServerUrl}/newsletters/NumbersOfnewsletters`);
   }
 }

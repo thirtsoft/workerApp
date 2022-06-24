@@ -23,40 +23,52 @@ export class RatingService {
   }
 
   /*********************** Rating *****************/
-  public getRatings(): Observable<Rating[]> {
-    return this.http.get<Rating[]>(`${this.apiServerUrl}/notifications/all`);
+  public getAllRatings(): Observable<Rating[]> {
+    return this.http.get<Rating[]>(`${this.apiServerUrl}/ratings/all`);
+  }
+
+  public getAllRatingOrderByIdDesc(): Observable<Rating[]> {
+    return this.http.get<Rating[]>(`${this.apiServerUrl}/ratings/searchAllRatingsOrderByIdDesc`);
   }
 
   public getTop3RatingOrderByCreatedDateDesc(): Observable<Rating[]> {
-    return this.http.get<Rating[]>(`${this.apiServerUrl}/notifications/searchTop3RatingOrderByCreatedDateDesc`);
+    return this.http.get<Rating[]>(`${this.apiServerUrl}/ratings/searchTop3RatingOrderByCreatedDateDesc`);
   }
 
   public getTop4RatingByChauffeurIdOrderByCreatedDateDesc(chauffId: number): Observable<Rating[]> {
-    return this.http.get<Rating[]>(`${this.apiServerUrl}/notifications/searchTop4RatingOrderByCreatedDateDescByChauffeurId/${chauffId}`);
+    return this.http.get<Rating[]>(`${this.apiServerUrl}/ratings/searchTop4RatingOrderByCreatedDateDescByOuvrierId/${chauffId}`);
   }
 
   public getRatingById(noteId: number): Observable<Rating> {
-    return this.http.get<Rating>(`${this.apiServerUrl}/notifications/findById/${noteId}`);
+    return this.http.get<Rating>(`${this.apiServerUrl}/ratings/findById/${noteId}`);
   }
 
-  public addRating(Rating: Rating): Observable<Rating> {
-    return this.http.post<Rating>(`${this.apiServerUrl}/notifications/create`, Rating);
+  public addRating(rat: Rating): Observable<Rating> {
+    return this.http.post<Rating>(`${this.apiServerUrl}/ratings/create`, rat);
   }
 
-  public addRatingToDriver(id: number, Rating: Rating): Observable<Rating> {
-    return this.http.post<Rating>(`${this.apiServerUrl}/notifications/createWithChauffeur/${id}`, Rating);
+  public addRatingToDriver(id: number, rat: Rating): Observable<Rating> {
+    return this.http.post<Rating>(`${this.apiServerUrl}/ratings/createWithOuvrier/${id}`, rat);
   }
 
-  public addRatingToChauffeur(notificationDTO: Rating, idChauff: number, id:number): Observable<Rating> {
-    return this.http.post<Rating>(`${this.apiServerUrl}/notifications/createRatingToChauffeur?idChauff=${idChauff}&id=${id}`, notificationDTO);
+  public addRatingToChauffeur(rat: Rating, idChauff: number, id:number): Observable<Rating> {
+    return this.http.post<Rating>(`${this.apiServerUrl}/ratings/createRatingToOuvrier?idChauff=${idChauff}&id=${id}`, rat);
   }
 
-  public updateRating(noteId: number, Rating: Rating): Observable<Rating> {
-    return this.http.put<Rating>(`${this.apiServerUrl}/notifications/update/${noteId}`, Rating);
+  public updateRating(noteId: number, rat: Rating): Observable<Rating> {
+    return this.http.put<Rating>(`${this.apiServerUrl}/ratings/update/${noteId}`, rat);
+  }
+
+  public countNumberOfRating(): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/ratings/countNumberOfRatings`);
+  }
+
+  public countNumberOfRatingOfOuvriers(): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/ratings/countNumberOfRatingByOuvrierId`);
   }
 
   public deleteRating(noteId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/notifications/delete/${noteId}`);
+    return this.http.delete<void>(`${this.apiServerUrl}/ratings/delete/${noteId}`);
   }
 
   public getUserId() {

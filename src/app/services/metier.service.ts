@@ -22,7 +22,7 @@ export class MetierService {
   }
 
   public getMetierOrderByIdDesc(): Observable<Metier[]> {
-    return this.http.get<Metier[]>(`${this.apiServerUrl}/metiers/searchmetiersOrderByIdDesc`);
+    return this.http.get<Metier[]>(`${this.apiServerUrl}/metiers/searchMetiersOrderByIdDesc`);
   }
 
   public getMetierById(metiersId: number): Observable<Metier> {
@@ -35,6 +35,10 @@ export class MetierService {
 
   public updateMetier(metiersId: number, metier: Metier): Observable<Metier> {
     return this.http.put<Metier>(`${this.apiServerUrl}/metiers/update/${metiersId}`, metier);
+  }
+
+  public getNumberOfMetier(): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/metiers/NumbersOfmetiers`);
   }
 
   public deleteMetier(metiersId: number): Observable<void> {

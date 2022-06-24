@@ -14,27 +14,31 @@ export class LocalityService {
   constructor(private http: HttpClient) {
   }
 
-  public getLocaliteDTOs(): Observable<Address[]> {
-    return this.http.get<Address[]>(`${this.apiServerUrl}/addresses/all`);
+  public getAllLocaliteDTOs(): Observable<Address[]> {
+    return this.http.get<Address[]>(`${this.apiServerUrl}/localities/all`);
   }
 
   public getLocaliteDTOOrderByIdDesc(): Observable<Address[]> {
-    return this.http.get<Address[]>(`${this.apiServerUrl}/addresses/searchAddressOrderByIdDesc`);
+    return this.http.get<Address[]>(`${this.apiServerUrl}/localities/searchAlllocalitiesOrderByIdDesc`);
+  }
+
+  public getLocaliteDTOOrderByAddressId(locId: string): Observable<Address[]> {
+    return this.http.get<Address[]>(`${this.apiServerUrl}/localities/searchLocalityByAddressCode/${locId}`);
   }
 
   public getLocalityDTOById(locId: number): Observable<Address> {
-    return this.http.get<Address>(`${this.apiServerUrl}/addresses/findById/${locId}`);
+    return this.http.get<Address>(`${this.apiServerUrl}/localities/findById/${locId}`);
   }
 
   public addLocalityDTO(localityDTO: Address): Observable<Address> {
-    return this.http.post<Address>(`${this.apiServerUrl}/addresses/create`, localityDTO);
+    return this.http.post<Address>(`${this.apiServerUrl}/localities/create`, localityDTO);
   }
 
   public updateLocalityDTO(locId: number, localityDTO: Address): Observable<Address> {
-    return this.http.put<Address>(`${this.apiServerUrl}/addresses/update/${locId}`, localityDTO);
+    return this.http.put<Address>(`${this.apiServerUrl}/localities/update/${locId}`, localityDTO);
   }
 
   public deleteLocalityDTO(noteId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/addresses/delete/${noteId}`);
+    return this.http.delete<void>(`${this.apiServerUrl}/localities/delete/${noteId}`);
   }
 }

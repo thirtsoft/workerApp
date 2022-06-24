@@ -19,7 +19,7 @@ export class JetonService {
   }
 
   /*************************** Jeton ********************/
-  public getJetons(): Observable<Jeton[]> {
+  public getAllJetons(): Observable<Jeton[]> {
     return this.http.get<Jeton[]>(`${this.apiServerUrl}/jetons/all`);
   }
 
@@ -35,12 +35,12 @@ export class JetonService {
     return this.http.get<Jeton>(`${this.apiServerUrl}/jetons/findById/${idJeton}`);
   }
 
-  public addJeton(Jeton: Jeton): Observable<Jeton> {
-    return this.http.post<Jeton>(`${this.apiServerUrl}/jetons/create`, Jeton);
+  public addJeton(jeton: Jeton): Observable<Jeton> {
+    return this.http.post<Jeton>(`${this.apiServerUrl}/jetons/create`, jeton);
   }
 
-  public updateJeton(idJeton: number, Jeton: Jeton): Observable<Jeton> {
-    return this.http.put<Jeton>(`${this.apiServerUrl}/jetons/update/${idJeton}`, Jeton);
+  public updateJeton(idJeton: number, jeton: Jeton): Observable<Jeton> {
+    return this.http.put<Jeton>(`${this.apiServerUrl}/jetons/update/${idJeton}`, jeton);
   }
 
   public updateEtatOfJeton(id: number, etat: string): Observable<any> {
@@ -49,7 +49,6 @@ export class JetonService {
     let data = {"etat":etat};
     const urlUpdateEtat = (this.apiServerUrl+"/jetons/updateEtatOfJeton/"+id+"?etat="+data.etat);
     return this.http.patch<any>(urlUpdateEtat, {headers: headers});
-
   }
 
   public deleteJeton(idJeton: number): Observable<void> {
@@ -59,5 +58,6 @@ export class JetonService {
   public countNumberOfJetons(): Observable<any> {
     return this.http.get(`${this.apiServerUrl}/jetons/NumbersOfJetons`);
   }
+
 
 }

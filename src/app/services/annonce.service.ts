@@ -26,7 +26,7 @@ export class AnnonceService {
   }
 
   /**************************** Annonce ******************/
-  public getAnnonces(): Observable<Annonce[]> {
+  public getAllAnnonces(): Observable<Annonce[]> {
     return this.http.get<Annonce[]>(`${this.apiServerUrl}/annonces/all`);
   }
 
