@@ -335,7 +335,7 @@ export class HomeComponent implements OnInit {
   }
 
   getListOfOuvriers() {
-    this.ouvService.getAllOuvriers().subscribe((res) => {
+    this.ouvService.getAllOuvrierBySelectedIsTrue().subscribe((res) => {
       this.ouvriersList = res;
       console.log(this.ouvriersList);
       this.slidepage = {

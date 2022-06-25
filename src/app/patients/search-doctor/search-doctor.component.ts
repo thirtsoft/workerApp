@@ -67,12 +67,14 @@ export class SearchDoctorComponent implements OnInit {
     this.getDoctors();
     this.getspeciality();
     this.getAllMetiers();
-    this.finishOuvriers();
+//    this.finishOuvriers();
+    this.getAllOuvriers();
   }
 
   finishOuvriers(){
     let result1 = this.route.snapshot.paramMap.has('id');
-    let result2 = this.route.snapshot.paramMap.has('disponibility');
+  //  let result2 = this.route.snapshot.paramMap.has('disponibility');
+    let result2 = this.route.snapshot.paramMap.has('id');
     if(result1){
       this.getOuvrierByAddressId();
     } else if (result2) {
@@ -91,6 +93,7 @@ export class SearchDoctorComponent implements OnInit {
     this.ouvService.getListOuvrierByPageable(this.page-1,this.pageLength).subscribe(
       data => {
         this.ouvrierList = data;
+    //    console.log(this.ouvrierList);
       }
     )
   }
@@ -104,13 +107,15 @@ export class SearchDoctorComponent implements OnInit {
     )
     this.ouvService.getOuvriersByAddressId(idMetier,this.page-1,this.pageLength).subscribe(
       data => {
-        this.ouvrierList = data
+        this.ouvrierList = data;
+   //     console.log(this.ouvrierList);
       }
     )
   }
 
   getAllOuvriersContainingKey(){
-    let disponibility = this.route.snapshot.paramMap.get('disponibility');
+  //  let disponibility = this.route.snapshot.paramMap.get('disponibility');
+    let disponibility = this.route.snapshot.paramMap.get('id');
     this.ouvService.getOuvriersLengthByKey(disponibility).subscribe(
       data => {
         this.ouvrierSize = data
@@ -118,7 +123,8 @@ export class SearchDoctorComponent implements OnInit {
     )
     this.ouvService.getListOuvrierByKeywordPageable(disponibility,this.page-1,this.pageLength).subscribe(
       data => {
-        this.ouvrierList = data
+        this.ouvrierList = data;
+  //      console.log(this.ouvrierList);
       }
     )
   }
@@ -137,6 +143,13 @@ export class SearchDoctorComponent implements OnInit {
       this.metierList = res;
     })
   }
+
+  getAllOuvriers() {
+    this.ouvService.getAllOuvrierBySelectedIsTrue().subscribe(res => {
+      this.ouvrierList = res;
+    })
+  }
+
 
   getDoctors() {
     this.commonService.getSearchDoctors().subscribe(res => {

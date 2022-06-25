@@ -6,6 +6,7 @@ import { OuvrierService } from 'src/app/services/ouvrier.service';
 import { Rating } from 'src/app/models/rating';
 import { RatingService } from 'src/app/services/rating.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MetierService } from 'src/app/services/metier.service';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -27,6 +28,7 @@ export class DoctorProfileComponent implements OnInit {
     public commonService: CommonServiceService,
     public ouvService: OuvrierService,
     public ratService: RatingService,
+    public metService: MetierService,
     private route: ActivatedRoute,
     private toastr: ToastrService
   ) {}
@@ -70,6 +72,7 @@ export class DoctorProfileComponent implements OnInit {
     }
     this.ouvService.getOuvrierById(this.id).subscribe((res) => {
       this.ouvrierDetails = res;
+      console.log(this.ouvrierDetails);
     });
   }
 

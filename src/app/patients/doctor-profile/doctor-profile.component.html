@@ -1,21 +1,3 @@
-<!-- Breadcrumb -->
-<!-- 	<div class="breadcrumb-bar">
-				<div class="container-fluid">
-					<div class="row align-items-center">
-						<div class="col-md-12 col-12">
-							<nav aria-label="breadcrumb" class="page-breadcrumb">
-								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a [routerLink]="''">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Doctor Profile</li>
-								</ol>
-							</nav>
-							<h2 class="breadcrumb-title">Doctor Profile</h2>
-						</div>
-					</div>
-				</div>
-			</div> -->
-<!-- /Breadcrumb -->
-
 <!-- Page Content -->
 <div class="content">
     <div class="container">
@@ -26,19 +8,43 @@
                 <div class="doctor-widget">
                     <div class="doc-info-left">
                         <div class="doctor-img">
-                            <img *ngIf="!doctorDetails" src="assets/img/doctors/doctor-thumb-02.jpg" class="img-fluid" alt="User Image">
-                            <img *ngIf="doctorDetails" src="assets/img/doctors/doctor-thumb-02.jpg" class="img-fluid" alt="User Image">
+                            <!--                    <img *ngIf="!doctorDetails" src="assets/img/doctors/doctor-thumb-02.jpg" class="img-fluid" alt="User Image">
+                            <img *ngIf="doctorDetails" src="assets/img/doctors/doctor-thumb-02.jpg" class="img-fluid" alt="User Image"> -->
+                            <img *ngIf="!ouvrierDetails" src="assets/img/doctors/doctor-thumb-02.jpg" class="img-fluid" alt="User Image">
+                            <img *ngIf="ouvrierDetails" class="img-fluid w-100" alt="User Image" src="{{
+                                this.ouvService.apiServerUrl +
+                                '/ouvriers/photoOuvrierInFolder/' +
+                                ouvrierDetails.id
+                                }}">
                         </div>
                         <div class="doc-info-cont">
-                            <h4 class="doc-name" *ngIf="!doctorDetails">Dr. Darren Elder</h4>
+                            <!--  <h4 class="doc-name" *ngIf="!doctorDetails">Dr. Darren Elder</h4>
                             <h4 class="doc-name" *ngIf="doctorDetails">{{doctorDetails.doctor_name}}</h4>
                             <p class="doc-speciality" *ngIf="!doctorDetails">BDS, MDS - Oral & Maxillofacial Surgery</p>
                             <p class="doc-speciality" *ngIf="doctorDetails">{{doctorDetails.Education}}</p>
                             <p class="doc-department" *ngIf="!doctorDetails"><img src="assets/img/specialities/specialities-05.png" class="img-fluid" alt="Speciality">
                                 <span> Dentist </span>
+                            </p> -->
+
+                            <h4 class="doc-name" *ngIf="!ouvrierDetails">Dr. Darren Elder</h4>
+                            <h4 class="doc-name" *ngIf="ouvrierDetails">{{ouvrierDetails.firstName}}-{{ouvrierDetails.lastName}}</h4>
+                            <p class="doc-speciality" *ngIf="!ouvrierDetails">BDS, MDS - Oral & Maxillofacial Surgery</p>
+                            <p class="doc-speciality" *ngIf="ouvrierDetails">{{ouvrierDetails.education}}</p>
+                            <p class="doc-department" *ngIf="!ouvrierDetails"><img src="assets/img/specialities/specialities-05.png" class="img-fluid" alt="Speciality">
+                                <span> Dentist </span>
                             </p>
-                            <p class="doc-department" *ngIf="doctorDetails"><img [src]="doctorDetails.speciality_profile" class="img-fluid" alt="Speciality">
+
+                            <!-- <p class="doc-department" *ngIf="doctorDetails"><img [src]="doctorDetails.speciality_profile" class="img-fluid" alt="Speciality">
                                 <span> {{doctorDetails.speciality}} </span>
+                            </p> -->
+
+                            <p class="doc-department" *ngIf="ouvrierDetails">
+                                <img *ngIf="ouvrierDetails" class="img-fluid" alt="Metier" src="{{
+                                    this.ouvService.apiServerUrl +
+                                    '/ouvriers/photoOuvrierInFolder/' +
+                                    ouvrierDetails.id
+                                    }}">
+                                <span> {{ouvrierDetails.reference}} </span>
                             </p>
                             <div class="rating">
                                 <i class="fas fa-star filled"></i>
@@ -49,8 +55,12 @@
                                 <span class="d-inline-block average-rating">(35)</span>
                             </div>
                             <div class="clinic-details">
-                                <p class="doc-location" *ngIf="!doctorDetails"><i class="fas fa-map-marker-alt"></i> Newyork, USA - <a href="javascript:void(0);">Get Directions</a></p>
+                                <!--  <p class="doc-location" *ngIf="!doctorDetails"><i class="fas fa-map-marker-alt"></i> Newyork, USA - <a href="javascript:void(0);">Get Directions</a></p>
                                 <p class="doc-location" *ngIf="doctorDetails"><i class="fas fa-map-marker-alt"></i> {{doctorDetails.location}} - <a href="javascript:void(0);">Get Directions</a></p>
+                               -->
+                                <p class="doc-location" *ngIf="!ouvrierDetails"><i class="fas fa-map-marker-alt"></i> Newyork, USA - <a href="javascript:void(0);">Get Directions</a></p>
+                                <p class="doc-location" *ngIf="ouvrierDetails"><i class="fas fa-map-marker-alt"></i> {{ouvrierDetails.addressActuel}} - <a href="javascript:void(0);">Get Directions</a></p>
+
                                 <ul class="clinic-gallery" lightbox-group>
                                     <li *ngFor="let image of images">
                                         <a><img [src]="image.path" lightbox></a>
@@ -68,13 +78,24 @@
                             <ul>
                                 <li><i class="far fa-thumbs-up"></i> 99%</li>
                                 <li><i class="far fa-comment"></i> 35 Feedback</li>
-                                <li><i class="fas fa-map-marker-alt"></i>
+                                <!-- <li><i class="fas fa-map-marker-alt"></i>
                                     <span *ngIf="!doctorDetails">Newyork,USA</span>
                                     <span *ngIf="doctorDetails">{{doctorDetails.location}}</span>
+                                </li> -->
+
+                                <li><i class="fas fa-map-marker-alt"></i>
+                                    <span *ngIf="!ouvrierDetails">Newyork,USA</span>
+                                    <span *ngIf="ouvrierDetails">{{ouvrierDetails.addressActuel}}</span>
                                 </li>
-                                <li><i class="far fa-money-bill-alt"></i>
+
+                                <!--                                 <li><i class="far fa-money-bill-alt"></i>
                                     <span *ngIf="!doctorDetails">$100 per hour</span>
                                     <span *ngIf="doctorDetails">{{doctorDetails.Price}} per hour</span>
+                                </li> -->
+
+                                <li><i class="far fa-money-bill-alt"></i>
+                                    <span *ngIf="!ouvrierDetails">$100 per hour</span>
+                                    <span *ngIf="ouvrierDetails">{{ouvrierDetails.pretentionSalaire}} per hour</span>
                                 </li>
                             </ul>
                         </div>
@@ -93,7 +114,8 @@
                             </a>
                         </div>
                         <div class="clinic-booking">
-                            <a class="apt-btn" [routerLink]="'/patients/booking'" [queryParams]="{id: doctorDetails?.id}">Book Appointment</a>
+                            <!--  <a class="apt-btn" [routerLink]="'/patients/booking'" [queryParams]="{id: doctorDetails?.id}">Book Appointment</a> -->
+                            <a class="apt-btn" [routerLink]="'/patients/booking'" [queryParams]="{id: ouvrierDetails?.id}">Book Appointment</a>
                         </div>
                     </div>
                 </div>

@@ -63,7 +63,7 @@ export class OuvrierService {
   }
 
   public getListOuvrierByPageable(page: number, size: number): Observable<Ouvrier[]> {
-    const searchUrl = (this.apiServerUrl+"/ouvriers/searchChauffeurByPageables?page="+page+"&size="+size);
+    const searchUrl = (this.apiServerUrl+"/ouvriers/searchOuvriersByPageables?page="+page+"&size="+size);
     return this.http.get<Ouvrier[]>(searchUrl);
   }
 

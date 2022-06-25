@@ -32,11 +32,18 @@
                             </div>
                         </div>
                         <div class="filter-widget">
-                            <h4>Select Specialist</h4>
-                            <div *ngFor="let specialit of specialityList">
+                            <h4>Selectionner Metier</h4>
+                            <!--  <div *ngFor="let specialit of specialityList">
                                 <label class="custom_check">
 											<input type="checkbox" (click)="checkSpeciality($event)" name="select_specialist" [value]="specialit.speciality" [checked]="specialit.checked">
 											<span class="checkmark"></span> {{specialit.speciality}}
+										</label>
+                            </div> -->
+
+                            <div *ngFor="let specialit of metierList">
+                                <label class="custom_check">
+											<input type="checkbox" (click)="checkSpeciality($event)" name="select_specialist" [value]="specialit.designation" [checked]="specialit.checked">
+											<span class="checkmark"></span> {{specialit.designation}}
 										</label>
                             </div>
 
@@ -53,7 +60,7 @@
             <div class="col-md-12 col-lg-8 col-xl-9">
 
                 <!-- Doctor Widget -->
-                <div class="card" *ngFor="let doctor of doctors" [hidden]="doctors.length === 0">
+                <!--  <div class="card" *ngFor="let doctor of doctors" [hidden]="doctors.length === 0">
 
                     <div class="card-body">
                         <div class="doctor-widget">
@@ -105,9 +112,74 @@
                             </div>
                         </div>
                     </div>
+                </div> -->
+
+                <div class="card" *ngFor="let doctor of ouvrierList" [hidden]="ouvrierList.length === 0">
+
+                    <div class="card-body">
+                        <div class="doctor-widget">
+                            <div class="doc-info-left">
+                                <div class="doctor-img">
+                                    <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}">
+                                        <!--  <img [src]="doctor.reference" class="img-fluid" alt="User Image"> -->
+                                        <img class="img-fluid" alt="User Image" src="{{
+                                            this.ouvService.apiServerUrl +
+                                            '/ouvriers/photoOuvrierInFolder/' +
+                                            doctor.id
+                                            }}">
+                                    </a>
+                                </div>
+                                <div class="doc-info-cont">
+                                    <h4 class="doc-name"><a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}">{{doctor.firstName}}-{{doctor.lastName}}</a></h4>
+                                    <p class="doc-speciality">{{doctor.eduction}}</p>
+                                    <h5 class="doc-department">
+                                        <!-- <img [src]="doctor.reference" class="img-fluid" alt="Metier"> -->
+                                        <img class="img-fluid" alt="Metier" src="{{
+                                            this.ouvService.apiServerUrl +
+                                            '/ouvriers/photoOuvrierInFolder/' +
+                                            doctor.id
+                                            }}">{{doctor.reference}}</h5>
+                                    <div class="rating">
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span class="d-inline-block average-rating">(17)</span>
+                                    </div>
+                                    <div class="clinic-details">
+                                        <p class="doc-location"><i class="fas fa-map-marker-alt"></i> {{doctor.addressActuel}}</p>
+                                        <ul class="clinic-gallery" lightbox-group>
+                                            <li *ngFor="let image of images">
+                                                <a><img [src]="image.path" lightbox></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="clinic-services">
+                                        <span>Dental Fillings</span>
+                                        <span> Whitneing</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="doc-info-right">
+                                <div class="clini-infos">
+                                    <ul>
+                                        <li><i class="far fa-thumbs-up"></i> 98%</li>
+                                        <li><i class="far fa-comment"></i> 17 Feedback</li>
+                                        <li><i class="fas fa-map-marker-alt"></i> {{doctor.addressActuel}}</li>
+                                        <li><i class="far fa-money-bill-alt"></i> {{doctor.pretentionSalaire}} <i class="fas fa-info-circle" tooltip="Lorem Ipsum" placement="top"></i> </li>
+                                    </ul>
+                                </div>
+                                <div class="clinic-booking">
+                                    <a class="view-pro-btn" style="cursor: pointer;" [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}">Voir Profile</a>
+                                    <a class="apt-btn" style="cursor: pointer;" (click)="bookAppointment(doctor.id)">Book Appointment</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="load-more text-center" *ngIf="doctors.length !== 0">
+                <div class="load-more text-center" *ngIf="ouvrierList.length !== 0">
                     <a class="btn btn-primary btn-sm" href="javascript:void(0);">Load More</a>
                 </div>
             </div>
