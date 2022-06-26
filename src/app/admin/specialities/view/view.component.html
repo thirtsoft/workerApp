@@ -4,16 +4,15 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-7 col-auto">
-                    <h3 class="page-title">Specialities</h3>
+                    <h3 class="page-title">Metiers</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Specialities</li>
+                        <li class="breadcrumb-item active">Metiers</li>
                     </ul>
                 </div>
                 <div class="col-sm-5 col">
-                    <a  class="btn btn-primary float-right mt-2" data-toggle="modal"
-                        (click)="openModal(template)">
-                         Add
+                    <a class="btn btn-primary float-right mt-2" data-toggle="modal" (click)="openModal(template)">
+                         Ajouter
                     </a>
                 </div>
             </div>
@@ -28,41 +27,64 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Specialities</th>
+                                        <th>Photo</th>
+                                        <th>Reference</th>
+                                        <th>Designation</th>
+                                        <th>Description</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let special of speciality">
-                                        <td>{{special.key}}</td>
-
+                                    <!-- <tr *ngFor="
+                                            let metier of metierList
+                                            | filter: searchText
+                                            | paginate: { itemsPerPage: 4, currentPage: p };
+                                            let i = index
+                                    "> -->
+                                    <tr *ngFor="
+                                            let metier of metierList;
+                                            let i = index
+                                    ">
+                                        <td>{{metier.id}}</td>
                                         <td>
                                             <h2 class="table-avatar">
                                                 <a class="avatar avatar-sm mr-2">
-                                                    <img class="avatar-img"
-                                                        [src]="special.img"
-                                                        alt="Speciality">
+                                                    <img class="avatar-img" [src]="metier.img" alt="Metier">
+                                                </a>
+                                                <a>{{metier.designation}}</a>
+                                            </h2>
+                                        </td>
+                                        <td>{{metier.reference}}</td>
+                                        <td>{{metier.designation}}</td>
+                                        <td>{{metier.description}}</td>
+
+                                        <!--   <td>
+                                            <h2 class="table-avatar">
+                                                <a class="avatar avatar-sm mr-2">
+                                                    <img class="avatar-img" [src]="special.img" alt="Speciality">
                                                 </a>
                                                 <a>{{special.speciality}}</a>
                                             </h2>
-                                        </td>
+                                        </td>  -->
 
                                         <td class="text-right">
                                             <div class="actions">
-                                                <a class="btn btn-sm bg-success-light" data-toggle="modal"
-                                                    (click)="editModal(edittemplate,special)">
+                                                <a class="btn btn-sm bg-success-light" data-toggle="modal" (click)="editMetierModal(edittemplate,metier)">
                                                     <i class="fe fe-pencil"></i> Edit
                                                 </a>
-                                                <a data-toggle="modal" (click)="deleteModal(delete,special)"
-                                                    class="btn btn-sm bg-danger-light">
+                                                <a data-toggle="modal" (click)="deleteMetierModal(delete,metier)" class="btn btn-sm bg-danger-light">
                                                     <i class="fe fe-trash"></i> Delete
                                                 </a>
                                             </div>
                                         </td>
                                     </tr>
-                                  
+
                                 </tbody>
                             </table>
+
+                            <!-- <div class="pagination">
+                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -73,7 +95,7 @@
 
 <ng-template #template>
     <div class="modal-header">
-        <h4 class="modal-title pull-left">Add Specialities</h4>
+        <h4 class="modal-title pull-left">Ajouter Metier</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -81,10 +103,65 @@
     <div class="modal-body">
         <form>
             <div class="row form-row">
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Reference</label>
+                        <input type="text" class="form-control" [(ngModel)]="formDataMetier.reference" name="reference" id="reference" #reference="ngModel" required>
+                    </div>
+                </div>
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
-                        <label>Specialities</label>
-                        <input type="text" class="form-control" name="speciality" [(ngModel)]="name">
+                        <label>Nom</label>
+                        <input type="text" class="form-control" [(ngModel)]="formDataMetier.designation" name="designation" id="designation" #designation="ngModel" required>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label>Image</label>
+                        <input type="file" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" [(ngModel)]="formDataMetier.description" name="description" id="description" #description="ngModel" required cols="7" rows="7"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" (click)="save()"> Save Changes</button>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #edittemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Edit Metier</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="editForm">
+            <div class="row form-row">
+                <div class="col-12 col-sm-4">
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input type="text" class="form-control" formControlName="id" readonly />
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Reference</label>
+                        <input type="text" class="form-control" formControlName="reference" name="reference">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label>Designation</label>
+                        <input type="text" class="form-control" formControlName="designation" name="designation">
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
@@ -93,38 +170,16 @@
                         <input type="file" class="form-control">
                     </div>
                 </div>
-                
-            </div>
-            <button type="submit" class="btn btn-primary btn-block" (click)="save()">Save Changes</button>
-        </form>
-    </div>
-</ng-template>
 
-<ng-template #edittemplate>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Edit Specialities</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <form>
-            <div class="row form-row">
-                <div class="col-12 col-sm-6">
+                <div class="col-12 col-sm-12">
                     <div class="form-group">
-                        <label>Specialities</label>
-                        <input type="text" class="form-control" name="speciality" [(ngModel)]="name">
+                        <label>Description</label>
+                        <textarea type="text" formControlName="description" name="description" id="description" class="form-control" cols="7" rows="7"></textarea>
                     </div>
                 </div>
-                <div class="col-12 col-sm-6">
-                    <div class="form-group">
-                        <label>Image</label>
-                        <input type="file"  class="form-control">
-                    </div>
-                </div>
-                
+
             </div>
-            <button type="submit" class="btn btn-primary btn-block" (click)="update()">Edit</button>
+            <button type="submit" class="btn btn-primary btn-block" (click)="updateMetier()">Modifier</button>
         </form>
     </div>
 </ng-template>
@@ -137,10 +192,10 @@
         </button>
     </div>
     <div class="modal-body text-center">
-      Are you sure want to delete this speciality?
-      <div style="margin-top:25px">
-        <button type="button" class="btn btn-default" (mouseover)="btnColor()" id="btn-yes" (click)="deleteSpeciality()" >Yes</button>
-        <button type="button" class="btn btn-primary" (mouseover)="btnColorNo()" id="btn-no" (click)="decline()" >No</button>
-      </div>
+        Etes vous sur de vouloir supprimer ce metier ??
+        <div style="margin-top:25px">
+            <button type="button" class="btn btn-default" (mouseover)="btnColor()" id="btn-yes" (click)="deleteMetier()">Oui</button>
+            <button type="button" class="btn btn-primary" (mouseover)="btnColorNo()" id="btn-no" (click)="decline()">No</button>
+        </div>
     </div>
 </ng-template>

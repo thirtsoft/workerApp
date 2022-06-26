@@ -14,6 +14,8 @@ export class Ouvrier {
     phoneOuvrier: string;
     nbreAnneeExperience: number;
     pretentionSalaire: number;
+    education: string;
+    description: string;
     mobilite: string;
     cvOuvrier: string;
     photoOuvrier: string;

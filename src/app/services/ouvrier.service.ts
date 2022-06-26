@@ -58,8 +58,8 @@ export class OuvrierService {
     return this.http.put<Ouvrier>(`${this.apiServerUrl}/ouvriers/update/${chauffId}`, ouv);
   }
 
-  public deleteOuvrier(chauffId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/ouvriers/delete/${chauffId}`);
+  public deleteOuvrier(chauffId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}/ouvriers/delete/${chauffId}`);
   }
 
   public getListOuvrierByPageable(page: number, size: number): Observable<Ouvrier[]> {

@@ -2,6 +2,9 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CommonServiceService } from '../../../common-service.service';
 import * as $ from 'jquery';
+import { MetierService } from 'src/app/services/metier.service';
+import { Metier } from 'src/app/models/metier';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-view',
@@ -10,18 +13,40 @@ import * as $ from 'jquery';
 })
 export class ViewComponent implements OnInit {
   speciality = [];
+  metierList = [];
   modalRef: BsModalRef;
   errorMessage: string;
   name;
   id;
   key;
+
+  formDataMetier = new Metier();
+  editForm: FormGroup;
+
+
+  reference;
+  designation;
+  photoMetier;
+  description;
+  p : number=1;
+  searchText;
+
   constructor(
     private commonService: CommonServiceService,
-    private modalService: BsModalService
+    private metService: MetierService,
+    private modalService: BsModalService,
+    private fb: FormBuilder,
   ) {}
 
   ngOnInit(): void {
     this.getSpecialityList();
+    this.getMetierList();
+    this.editForm = this.fb.group({
+      id: [''],
+      reference: [''],
+      designation: [''],
+      description: ['']
+    } );
   }
 
   getSpecialityList() {
@@ -36,22 +61,41 @@ export class ViewComponent implements OnInit {
     );
   }
 
+  getMetierList() {
+    this.metService.getMetierOrderByIdDesc().subscribe(
+      (data: any[]) => {
+        this.metierList = data;
+        $(function () {
+          $('table').DataTable();
+        });
+      },
+      (error) => (this.errorMessage = <any>error)
+    );
+  }
+
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {
       class: 'modal-lg modal-dialog-centered',
     });
-    // this.name = "";
-    // this.id = "";
-    // this.key = "";
   }
 
   editModal(template: TemplateRef<any>, special) {
     this.id = special.id;
-    // this.name = data[0].speciality;
-    // this.id = data[0].id;
-    // this.key = data[0].key;
     this.modalRef = this.modalService.show(template, {
       class: 'modal-lg modal-dialog-centered',
+    });
+  }
+
+  editMetierModal(template: TemplateRef<any>, metier: Metier) {
+ //   this.id = metier.id;
+    this.modalRef = this.modalService.show(template, {
+      class: 'modal-lg modal-dialog-centered',
+    });
+    this.editForm.patchValue( {
+      id: metier.id,
+      reference: metier.reference,
+      designation: metier.designation,
+      description: metier.description
     });
   }
 
@@ -62,19 +106,22 @@ export class ViewComponent implements OnInit {
     });
   }
 
+  deleteMetierModal(template: TemplateRef<any>, metier) {
+    this.id = metier.id;
+    this.modalRef = this.modalService.show(template, {
+      class: 'modal-sm modal-dialog-centered',
+    });
+  }
+
   save() {
-    // let count = this.speciality.reverse()[0]['key'] + 1;
-    // let id = this.speciality.reverse()[0]['id'] + 1
-    // let params = {
-    //   id : id,
-    //   key : count,
-    //   speciality : this.name
-    // }
-    // this.commonService.createSpeciality(params).subscribe((data : any[])=>{
-    //   this.modalRef.hide();
-    //   this.getSpecialityList();
-    // })
+    console.log(this.formDataMetier);
+    this.metService.addMetier(this.formDataMetier)
+    .subscribe(data => {
+      this.modalRef.hide();
+      this.getMetierList();
+    });
     this.modalRef.hide();
+    this.formDataMetier = null;
   }
 
   update() {
@@ -83,10 +130,15 @@ export class ViewComponent implements OnInit {
       key: this.key,
       speciality: this.name,
     };
-    // this.commonService.updateSpeciality(params,this.id).subscribe((data : any[])=>{
-    //   this.modalRef.hide();
-    //   this.getSpecialityList();
-    // });
+    this.modalRef.hide();
+  }
+
+  updateMetier() {
+    this.metService.updateMetier(this.editForm.value.id, this.editForm.value)
+      .subscribe((data) => {
+        this.modalRef.hide();
+        this.getMetierList();
+      });
     this.modalRef.hide();
   }
 
@@ -95,6 +147,14 @@ export class ViewComponent implements OnInit {
     this.commonService.deleteSpeciality(this.id).subscribe((data: any[]) => {
       this.modalRef.hide();
       this.getSpecialityList();
+    });
+  }
+
+  deleteMetier() {
+    this.metierList = this.metierList.filter((a) => a.id !== this.id);
+    this.metService.deleteMetier(this.id).subscribe((data: any[]) => {
+      this.modalRef.hide();
+      this.getMetierList();
     });
   }
 

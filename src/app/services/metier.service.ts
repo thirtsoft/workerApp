@@ -49,8 +49,8 @@ export class MetierService {
     return this.http.get<any>(`${this.apiServerUrl}/metiers/photoMetierInFolder`);
   }
 
-  public deleteMetier(metiersId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/metiers/delete/${metiersId}`);
+  public deleteMetier(metiersId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}/metiers/delete/${metiersId}`);
   }
 
 }
