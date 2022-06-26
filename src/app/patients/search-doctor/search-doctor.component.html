@@ -179,10 +179,28 @@
                     </div>
                 </div>
 
-                <div class="load-more text-center" *ngIf="ouvrierList.length !== 0">
-                    <a class="btn btn-primary btn-sm" href="javascript:void(0);">Load More</a>
+
+                <div class="load-more text-center">
+                    <ul class=" pagination ">
+
+                        <li class="clikable ">
+                            <ngb-pagination [(page)]="page " [pageSize]="pageLength " [collectionSize]="ouvrierSize " (pageChange)="doing() " [maxSize]="8 " [boundaryLinks]="true ">
+                            </ngb-pagination>
+                        </li>
+
+                    </ul>
+
                 </div>
+
+                <div class="load-more text-center " *ngIf="ouvrierList.length !==0 ">
+                    <a class="btn btn-primary btn-sm " href="javascript:void(0); ">Load More</a>
+                </div>
+
+
             </div>
+
+
+
         </div>
 
     </div>

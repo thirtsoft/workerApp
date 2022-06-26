@@ -76,7 +76,7 @@ export class OuvrierService {
   }
 
   public getListOuvrierByDisponibility(disponility: string): Observable<Ouvrier[]> {
-    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchChauffeurByDisponibilite?disponible=`+disponility);
+    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchOuvriersByDisponibilite?disponible=`+disponility);
   }
 
   public getListOuvrierByKeywordPageable(mc: string, page: number, size: number): Observable<Ouvrier[]> {
@@ -84,8 +84,8 @@ export class OuvrierService {
     return this.http.get<Ouvrier[]>(searchUrl);
   }
 
-  public getListOuvrierByPermisPageable(permisId: number, page: number, size: number): Observable<Ouvrier[]> {
-    const searchUrl = (this.apiServerUrl+"/ouvriers/searchOuvrierByMetierPageables?id="+permisId+"&page="+page+"&size="+size);
+  public getListOuvrierByMetierPageable(metierId: number, page: number, size: number): Observable<Ouvrier[]> {
+    const searchUrl = (this.apiServerUrl+"/ouvriers/searchOuvrierByMetierPageables?id="+metierId+"&page="+page+"&size="+size);
     return this.http.get<Ouvrier[]>(searchUrl);
   }
 
@@ -94,7 +94,7 @@ export class OuvrierService {
     return this.http.get<Ouvrier[]>(searchUrl);
   }
 
-  public getListOuvrierByPermis(pId: number): Observable<Ouvrier[]> {
+  public getListOuvrierByMetier(pId: number): Observable<Ouvrier[]> {
     return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchListOfOuvrierByMetier/${pId}`);
   }
 
@@ -150,8 +150,18 @@ export class OuvrierService {
     )
   }
 
+  public getAllOuvriersByMetierIdByPageable(id,page,size): Observable<Ouvrier[]> {
+    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchAllOuvriersByMetiersByPageable?id=${id}&page=${page}&size=${size}`)
+    .pipe(
+      map(
+        response => response
+      )
+    )
+  }
+
   public getOuvriersByKey(word,page,size): Observable<Ouvrier[]> {
-    return this.http.get<Ouvrier[]>(this.apiServerUrl+"/ouvriers/Ouvrierkey?disponibility="+word+"&page="+page+"&size="+size).pipe(
+    return this.http.get<Ouvrier[]>(this.apiServerUrl+"/ouvriers/ouvrierKey?disponibility="+word+"&page="+page+"&size="+size)
+    .pipe(
       map(
         response => response
       )
@@ -159,7 +169,8 @@ export class OuvrierService {
   }
 
   public getOuvriersLength(): Observable<number> {
-    return this.http.get<number>(`${this.apiServerUrl}/ouvriers/OuvrierDtoSize`).pipe(
+    return this.http.get<number>(`${this.apiServerUrl}/ouvriers/ouvrierDtoSize`)
+    .pipe(
       map(
         response => response
       )
@@ -175,7 +186,7 @@ export class OuvrierService {
   }
 
   public getOuvriersLengthByMetierId(id): Observable<number> {
-    return this.http.get<number>(`${this.apiServerUrl}/ouvriers/ctaddressIdSize?id=${id}`).pipe(
+    return this.http.get<number>(`${this.apiServerUrl}/ouvriers/ctmetierIdSize?id=${id}`).pipe(
       map(
         response => response
       )

@@ -67,16 +67,16 @@ export class SearchDoctorComponent implements OnInit {
     this.getDoctors();
     this.getspeciality();
     this.getAllMetiers();
-//    this.finishOuvriers();
-    this.getAllOuvriers();
+    this.finishOuvriers();
+  //  this.getAllOuvriers();
   }
 
   finishOuvriers(){
     let result1 = this.route.snapshot.paramMap.has('id');
-  //  let result2 = this.route.snapshot.paramMap.has('disponibility');
-    let result2 = this.route.snapshot.paramMap.has('id');
+    let result2 = this.route.snapshot.paramMap.has('disponibility');
+  //  let result2 = this.route.snapshot.paramMap.has('id');
     if(result1){
-      this.getOuvrierByAddressId();
+      this.getOuvrierByMetierId();
     } else if (result2) {
       this.getAllOuvriersContainingKey();
     } else {
@@ -90,14 +90,28 @@ export class SearchDoctorComponent implements OnInit {
         this.ouvrierSize = data
       }
     )
-    this.ouvService.getListOuvrierByPageable(this.page-1,this.pageLength).subscribe(
+    this.ouvService.getAllOuvriersByPageables(this.page-1,this.pageLength).subscribe(
       data => {
         this.ouvrierList = data;
-    //    console.log(this.ouvrierList);
+        console.log(this.ouvrierList);
       }
     )
   }
 
+  getOuvrierByMetierId(){
+    let idMetier = this.route.snapshot.paramMap.get('id');
+    this.ouvService.getOuvriersLengthByMetierId(idMetier).subscribe(
+      data => {
+        this.ouvrierSize = data
+      }
+    )
+    this.ouvService.getAllOuvriersByMetierIdByPageable(idMetier,this.page-1,this.pageLength).subscribe(
+      data => {
+        this.ouvrierList = data;
+      }
+    )
+  }
+/*
   getOuvrierByAddressId(){
     let idMetier = this.route.snapshot.paramMap.get('id');
     this.ouvService.getOuvriersLengthByAddressId(idMetier).subscribe(
@@ -108,23 +122,23 @@ export class SearchDoctorComponent implements OnInit {
     this.ouvService.getOuvriersByAddressId(idMetier,this.page-1,this.pageLength).subscribe(
       data => {
         this.ouvrierList = data;
-   //     console.log(this.ouvrierList);
       }
     )
   }
+  */
 
   getAllOuvriersContainingKey(){
-  //  let disponibility = this.route.snapshot.paramMap.get('disponibility');
-    let disponibility = this.route.snapshot.paramMap.get('id');
+    let disponibility = this.route.snapshot.paramMap.get('disponibility');
+  //  let disponibility = this.route.snapshot.paramMap.get('id');
     this.ouvService.getOuvriersLengthByKey(disponibility).subscribe(
       data => {
         this.ouvrierSize = data
       }
     )
-    this.ouvService.getListOuvrierByKeywordPageable(disponibility,this.page-1,this.pageLength).subscribe(
+    this.ouvService.getOuvriersByKey(disponibility,this.page-1,this.pageLength).subscribe(
       data => {
         this.ouvrierList = data;
-  //      console.log(this.ouvrierList);
+        console.log(this.ouvrierList);
       }
     )
   }
@@ -145,6 +159,12 @@ export class SearchDoctorComponent implements OnInit {
   }
 
   getAllOuvriers() {
+    this.ouvService.getAllOuvrierBySelectedIsTrue().subscribe(res => {
+      this.ouvrierList = res;
+    })
+  }
+
+  getAllOuvriersByDisponibilities() {
     this.ouvService.getAllOuvrierBySelectedIsTrue().subscribe(res => {
       this.ouvrierList = res;
     })
