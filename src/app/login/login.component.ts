@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { CommonServiceService } from '../common-service.service';
 
 import { ToastrService } from 'ngx-toastr';
+import { TokenStorageService } from '../services/auth/security/token-storage.service';
+import { Login } from '../services/auth/models/login';
+import { AuthService } from '../services/auth/security/auth.service';
 
 declare const $: any;
 @Component({
@@ -17,9 +20,19 @@ export class LoginComponent implements OnInit {
   patients: any = [];
   username = '';
   password = '';
+
+  form: any = {};
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
+  loginInfo: Login;
+
   constructor(
     public router: Router,
     public commonService: CommonServiceService,
+    public authService: AuthService,
+    public tokenStorage: TokenStorageService,
     private toastr: ToastrService
   ) {
     this.username = '';
@@ -32,11 +45,17 @@ export class LoginComponent implements OnInit {
     this.getpatients();
     this.getDoctors();
     	// Floating Label
-	if($('.floating').length > 0 ){
-		$('.floating').on('focus blur', function (e) {
-		$(this).parents('.form-focus').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
-		}).trigger('blur');
-	}
+    if($('.floating').length > 0 ){
+        $('.floating').on('focus blur', function (e) {
+		    $(this).parents('.form-focus').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
+        }).trigger('blur');
+	  }
+
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+      this.roles = this.tokenStorage.getUser().roles;
+    }
+
   }
 
   checkType(event) {
@@ -71,6 +90,41 @@ export class LoginComponent implements OnInit {
         this.toastr.error('', 'Login failed!');
       }
     }
+  }
+
+  onSubmit() {
+    this.loginInfo = new Login(
+      this.form.username,
+      this.form.password,
+    );
+    console.log(this.loginInfo);
+    this.authService.attemptAuth(this.loginInfo).subscribe(data => {
+      this.tokenStorage.saveToken(data.accessToken);
+      this.tokenStorage.saveUser(data);
+      this.tokenStorage.saveUsername(data.username);
+      this.isLoginFailed = false;
+      this.isLoggedIn = true;
+      this.roles = this.tokenStorage.getUser().roles;
+      console.log("Login Success");
+      this.toastr.success('bien connecté','Vous etes', {
+        timeOut: 1500,
+        positionClass: 'toast-top-right',
+        });
+        this.router.navigate(['/patients/dashboard']);
+        /*
+        this.router.navigateByUrl("").then(() => {
+        }); */
+      },
+      error => {
+        console.log(error);
+        this.toastr.error('veuillez vérifier vos identifiants','Error de connection', {
+          timeOut: 1500,
+          positionClass: 'toast-top-right',
+          });
+        this.errorMessage = error.error.message;
+        this.isLoginFailed = true;
+      }
+    );
   }
 
   getDoctors() {
