@@ -54,12 +54,12 @@ export class OuvrierService {
 
   }
 
-  public updateOuvrier(chauffId: number, ouv: Ouvrier): Observable<Ouvrier> {
-    return this.http.put<Ouvrier>(`${this.apiServerUrl}/ouvriers/update/${chauffId}`, ouv);
+  public updateOuvrier(ouvId: number, ouv: Ouvrier): Observable<Ouvrier> {
+    return this.http.put<Ouvrier>(`${this.apiServerUrl}/ouvriers/update/${ouvId}`, ouv);
   }
 
-  public deleteOuvrier(chauffId: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiServerUrl}/ouvriers/delete/${chauffId}`);
+  public deleteOuvrier(ouvId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}/ouvriers/delete/${ouvId}`);
   }
 
   public getListOuvrierByPageable(page: number, size: number): Observable<Ouvrier[]> {
@@ -209,7 +209,7 @@ export class OuvrierService {
     return this.http.request(req);
   }
 
-  public uploadPhotoOfChauffeurInFolder(file: File, id: number): Observable<HttpEvent<{}>> {
+  public uploadPhotoOfOuvrierInFolder(file: File, id: number): Observable<HttpEvent<{}>> {
     let formdata: FormData = new FormData();
     formdata.append('file', file);
     const req = new HttpRequest('POST', `${this.apiServerUrl}/ouvriers/uploadPhotoOfOuvrierInFolder/${id}`, formdata, {
@@ -220,11 +220,11 @@ export class OuvrierService {
     return this.http.request(req);
   }
 
-  public getPhotoChauffeurInContext() {
+  public getPhotoOuvrierInContext() {
     return this.http.get(`${this.apiServerUrl}/ouvriers/photoOuvrierInFolder`);
   }
 
-  public uploadCvOfChauffeurInFolder(file: File, id: number): Observable<HttpEvent<{}>> {
+  public uploadCvOfOuvrierInFolder(file: File, id: number): Observable<HttpEvent<{}>> {
     let formdata: FormData = new FormData();
     formdata.append('file', file);
     const req = new HttpRequest('POST', `${this.apiServerUrl}/ouvriers/uploadPhotoOfOuvrierInFolder/${id}`, formdata, {
@@ -235,11 +235,11 @@ export class OuvrierService {
     return this.http.request(req);
   }
 
-  public getCvOfChauffeurFromContext() {
+  public getCvOfOuvrierFromContext() {
     return this.http.get(`${this.apiServerUrl}/ouvriers/cvOuvrierInFolder`);
   }
 
-  public downloadCvOfChauffeurFromFolder(file: File, id: number): Observable<HttpEvent<{}>> {
+  public downloadCvOfOuvrierFromFolder(file: File, id: number): Observable<HttpEvent<{}>> {
     let formdata: FormData = new FormData();
     formdata.append('file', file);
     const req = new HttpRequest('POST', this.apiServerUrl+'/ouvriers/downloadCvFileOfOuvrier/' + id, formdata, {

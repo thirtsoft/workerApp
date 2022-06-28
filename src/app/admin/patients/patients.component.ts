@@ -9,6 +9,8 @@ import { Metier } from 'src/app/models/metier';
 import { Address } from 'src/app/models/address';
 import { MetierService } from 'src/app/services/metier.service';
 import { AddressService } from 'src/app/services/address.service';
+import { ToastrService } from 'ngx-toastr';
+import { HttpErrorResponse, HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-patients',
@@ -32,11 +34,28 @@ export class PatientsComponent implements OnInit {
   p : number=1;
   searchText;
 
+  ouvrierPhotoFile;
+  ouvrierCvFile;
+  data;
+  paramId :any = 0;
+  mySubscription: any;
+  editPhoto: boolean;
+  editCv: boolean;
+  currentProfile: any;
+  selectedFiles;
+  progress: number;
+  currentPhotoFileUpload: any;
+  currentCvFileUpload: any;
+  currentTime: number = 0;
+  userId;
+  img: boolean;
+
   constructor(public commonService: CommonServiceService,
     public ouvService: OuvrierService,
     private metService: MetierService,
     private addService: AddressService,
     private modalService: BsModalService,
+    private toastr: ToastrService,
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -45,6 +64,29 @@ export class PatientsComponent implements OnInit {
     this.getMetiersList();
     this.getAddressesList();
     this.editForm = this.fb.group({
+      id: [''],
+      reference: [''],
+      firstName: [''],
+      lastName: [''],
+      sexe: [''],
+      addressActuel: [''],
+      email: [''],
+      phoneOuvrier: [''],
+      nbreAnneeExperience: [''],
+      pretentionSalaire: [''],
+      disponibity: [''],
+      education: [''],
+      description: [''],
+      selected: [''],
+      mobilite: [''],
+      cvOuvrier: [''],
+      photoOuvrier: [''],
+      dateInscription: [''],
+      metier: new Metier(),
+      address: new Address()
+    } );
+
+    this.viewForm = this.fb.group({
       id: [''],
       reference: [''],
       firstName: [''],
@@ -109,7 +151,7 @@ export class PatientsComponent implements OnInit {
     });
   }
 
-  viewModal(template: TemplateRef<any>, ouvrier: Ouvrier) {
+  viewOuvrierModal(template: TemplateRef<any>, ouvrier: Ouvrier) {
     this.modalRef = this.modalService.show(template, {
       class: 'modal-lg modal-dialog-centered',
     });
@@ -176,12 +218,14 @@ export class PatientsComponent implements OnInit {
   deleteOuvrier() {
     this.ouvriersList = this.ouvriersList.filter((a) => a.id !== this.id);
     this.ouvService.deleteOuvrier(this.id).subscribe((data) => {
+      this.toastr.error('avec succès','Ouvrier Supprimé', {
+        timeOut: 1500,
+        positionClass: 'toast-top-right',
+      });
       this.modalRef.hide();
       this.getOuvriersList();
     });
   }
-
-
 
   getPatients() {
     this.commonService.getpatients()
@@ -205,21 +249,118 @@ export class PatientsComponent implements OnInit {
     this.formDataOuvrier = null;
   }
 
+  onSaveOuvrierWithFiles() {
+    let formData = new FormData();
+    this.currentPhotoFileUpload = this.ouvrierPhotoFile.item(0)
+    this.currentCvFileUpload = this.ouvrierCvFile.item(0)
+    console.log(this.currentPhotoFileUpload);
+    console.log(this.currentCvFileUpload);
+    
+    formData.append('ouvrier', JSON.stringify(this.formDataOuvrier));
+    formData.append('photoOuvrier', this.currentPhotoFileUpload);
+    formData.append('cvOuvrier', this.currentCvFileUpload);
+    console.log("FormData--", formData);
+    this.ouvService.addOuvrierWithPhotoAndCvFileInFolder(formData)
+      .subscribe((response: Ouvrier)=> {
+        console.log('Response--', response);
+        this.toastr.success('avec succès','Ouvrier Ajoutée', {
+          timeOut: 1500,
+          positionClass: 'toast-top-right',
+        });
+        this.modalRef.hide();
+        this.getOuvriersList();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
   updateOuvrier() {
     this.ouvService.updateOuvrier(this.editForm.value.id, this.editForm.value)
       .subscribe((data) => {
+        this.toastr.success('avec succès','Information modifiée', {
+          timeOut: 1500,
+          positionClass: 'toast-top-right',
+        });
         this.modalRef.hide();
         this.getOuvriersList();
       });
     this.modalRef.hide();
   }
 
-  deleteMetier() {
-    this.ouvriersList = this.ouvriersList.filter((a) => a.id !== this.id);
-    this.ouvService.deleteOuvrier(this.id).subscribe((data: any[]) => {
-      this.modalRef.hide();
-      this.getOuvriersList();
-    });
+  getTS() {
+    return this.currentTime;
+  }
+
+  onEditPhoto(p) {
+    if(this.paramId  && this.paramId  > 0){
+      this.paramId = p;
+      this.editPhoto=true;
+      this.editCv=true;
+    }
+    this.editPhoto=false;
+    this.editCv=false;
+  }
+
+  onSelectPhotoFile(event) {
+    this.ouvrierPhotoFile=event.target.files;
+  } 
+
+  processForm() {
+    this.progress = 0;
+    this.currentPhotoFileUpload = this.ouvrierPhotoFile.item(0)
+    console.log(this.currentPhotoFileUpload);
+    console.log(this.paramId);
+    this.ouvService.uploadPhotoOfOuvrierInFolder(this.currentPhotoFileUpload, this.formDataOuvrier.id)
+      .subscribe(event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progress = Math.round(100 * event.loaded / event.total);
+          this.toastr.success('avec succès','Photo remplacé', {
+            timeOut: 1500,
+            positionClass: 'toast-top-right',
+          });
+          this.modalRef.hide();
+          this.getOuvriersList();
+        } else if (event instanceof HttpResponse) {
+          this.editPhoto=false;
+          this.currentTime = Date.now();
+        }
+      }, err => {
+        this.toastr.warning("Problème de chargment de la photo");
+      }
+    );
+    this.ouvrierPhotoFile = undefined;
+  }
+
+  onSelectCvFile(event) {
+    this.ouvrierCvFile=event.target.files;
+  } 
+
+  processCvForm() {
+    this.progress = 0;
+    this.currentCvFileUpload = this.ouvrierCvFile.item(0)
+    console.log(this.currentCvFileUpload);
+    console.log(this.paramId);
+    this.ouvService.uploadCvOfOuvrierInFolder(this.currentCvFileUpload, this.formDataOuvrier.id)
+      .subscribe(event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progress = Math.round(100 * event.loaded / event.total);
+          this.toastr.success('avec succès','CV remplacé', {
+            timeOut: 1500,
+            positionClass: 'toast-top-right',
+          });
+          this.modalRef.hide();
+          this.getOuvriersList();
+        } else if (event instanceof HttpResponse) {
+          this.editCv=false;
+          this.currentTime = Date.now();
+        }
+      }, err => {
+        this.toastr.warning("Problème de chargment du cv");
+      }
+    );
+    this.ouvrierCvFile = undefined;
   }
 
   decline() {
