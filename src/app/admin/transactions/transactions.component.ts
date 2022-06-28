@@ -5,6 +5,10 @@ import * as $ from 'jquery';
 import { JetonService } from 'src/app/services/jeton.service';
 import { ToastrService } from 'ngx-toastr';
 import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
+import { UtilisateurService } from 'src/app/services/utilisateur.service';
+import { Jeton } from 'src/app/models/jeton';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Utilisateur } from 'src/app/models/utilisateur';
 
 @Component({
   selector: 'app-transactions',
@@ -15,6 +19,7 @@ export class TransactionsComponent implements OnInit {
   modalRef: BsModalRef;
   transactionsList: any = [];
   jetonsList: any = [];
+  utilisateurList: any = [];
   errorMessage: string;
   id;
 
@@ -27,14 +32,32 @@ export class TransactionsComponent implements OnInit {
   p : number=1;
   searchText;
 
-  constructor(public commonService: CommonServiceService, private modalService: BsModalService,
-    private crudApi: JetonService,
-      public toastr: ToastrService,
-      private tokenService: TokenStorageService) { }
+  formDataJeton = new Jeton();
+  editForm: FormGroup;
+  editEtatForm: FormGroup;
+  viewForm: FormGroup;
+
+  constructor(public commonService: CommonServiceService, 
+              private modalService: BsModalService,
+              private crudApi: JetonService,
+              private userService: UtilisateurService,
+              public toastr: ToastrService,
+              private tokenService: TokenStorageService,
+              private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.getTransactions();
     this.getJetonsList();
+    this.getUtilisateurList();
+    this.editEtatForm = this.fb.group({
+      id: [''],
+      etat: ['']
+    } );
+    this.editForm = this.fb.group({
+      id: [''],
+      montant: [''],
+      utilisateur: new Utilisateur()
+    } );
   }
 
   getJetonsList() {
@@ -46,6 +69,85 @@ export class TransactionsComponent implements OnInit {
         });
       },
         error => this.errorMessage = <any>error);
+  }
+
+  getUtilisateurList() {
+    this.userService.getALLUtilisateurs()
+      .subscribe(res => {
+        this.utilisateurList = res;
+        $(function () {
+          $("table").DataTable();
+        });
+      },
+        error => this.errorMessage = <any>error);
+  }
+  
+  openJetonModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {
+      class: 'modal-lg modal-dialog-centered',
+    });
+  }
+
+  save() {
+    console.log(this.formDataJeton);
+    this.crudApi.addJeton(this.formDataJeton)
+    .subscribe( data => {
+      this.toastr.success('avec succès','Jeton Ajouté', {
+        timeOut: 1500,
+        positionClass: 'toast-top-right',
+      });
+      this.modalRef.hide();
+      this.getJetonsList();
+  });
+    this.modalRef.hide();
+    this.formDataJeton = null;
+  }
+
+  editEtatModal(template: TemplateRef<any>, jet: Jeton) {
+    this.modalRef = this.modalService.show(template, {
+      class: 'modal-lg modal-dialog-centered',
+    });
+    this.editEtatForm.patchValue( {
+     id: jet.id,
+     etat: jet.etat
+    });
+  }
+
+  updateEtat() {
+    console.log(this.editEtatForm.value.id);
+    console.log(this.editEtatForm.value);
+    this.crudApi.updateEtatOfJeton(this.editEtatForm.value.id, this.editEtatForm.value.etat)
+      .subscribe((data) => {
+        this.modalRef.hide();
+        this.toastr.success('avec succès','Etat Modifié', {
+          timeOut: 1500,
+          positionClass: 'toast-top-right',
+        });
+       this.getJetonsList();
+      })
+  }
+
+  editJetonModal(template: TemplateRef<any>, jet: Jeton) {
+       this.modalRef = this.modalService.show(template, {
+         class: 'modal-lg modal-dialog-centered',
+       });
+       this.editForm.patchValue( {
+         id: jet.id,
+         montant: jet.montant,
+         utilisateur: jet.utilisateur,
+       });
+  }
+
+  update() {
+    this.crudApi.updateJeton(this.editForm.value.id, this.editForm.value)
+      .subscribe((data) => {
+        this.toastr.warning('avec succès','Jeton Modifié', {
+          timeOut: 1500,
+          positionClass: 'toast-top-right',
+        });
+        this.modalRef.hide();
+        this.getJetonsList();
+      })
   }
 
   deleteModal(template: TemplateRef<any>, trans) {
@@ -60,6 +162,10 @@ export class TransactionsComponent implements OnInit {
 
   deleteJeton() {
     this.crudApi.deleteJeton(this.id).subscribe((data: any[]) => {
+      this.toastr.error('avec succès','Jeton Supprimé', {
+        timeOut: 1500,
+        positionClass: 'toast-top-right',
+      });
       this.modalRef.hide();
       this.getJetonsList();
     });

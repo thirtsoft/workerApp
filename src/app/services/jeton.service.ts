@@ -40,7 +40,8 @@ export class JetonService {
   }
 
   public updateJeton(idJeton: number, jeton: Jeton): Observable<Jeton> {
-    return this.http.put<Jeton>(`${this.apiServerUrl}/jetons/update/${idJeton}`, jeton);
+ //   return this.http.put<Jeton>(`${this.apiServerUrl}/jetons/update/${idJeton}`, jeton);
+    return this.http.patch<Jeton>(`${this.apiServerUrl}/jetons/update/${idJeton}`, jeton);
   }
 
   public updateEtatOfJeton(id: number, etat: string): Observable<any> {

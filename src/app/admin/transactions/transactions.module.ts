@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DataTablesModule } from 'angular-datatables';
 import { TransactionsRoutingModule } from './transactions-routing.module';
 import { TransactionsComponent } from './transactions.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -10,7 +11,9 @@ import { TransactionsComponent } from './transactions.component';
   imports: [
     CommonModule,
     TransactionsRoutingModule,
-    DataTablesModule
+    DataTablesModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class TransactionsModule { }
