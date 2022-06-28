@@ -51,8 +51,8 @@ export class JetonService {
     return this.http.patch<any>(urlUpdateEtat, {headers: headers});
   }
 
-  public deleteJeton(idJeton: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/jetons/delete/${idJeton}`);
+  public deleteJeton(idJeton: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}/jetons/delete/${idJeton}`);
   }
 
   public countNumberOfJetons(): Observable<any> {

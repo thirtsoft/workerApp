@@ -1,65 +1,80 @@
- <div class="page-wrapper">
-	<div class="content container-fluid">	
-		<!-- Page Header -->
-		<div class="page-header">
-			<div class="row">
-				<div class="col-sm-12">
-					<h3 class="page-title">List of Doctors</h3>
-					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a [routerLink]="'/admin/'">Dashboard</a></li>
-						<li class="breadcrumb-item"><a href="javascript:(0);">Users</a></li>
-						<li class="breadcrumb-item active">Doctor</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<!-- /Page Header -->
-		
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="card">
-					<div class="card-body">
-						<div class="table-responsive" *ngIf="doctorsList">
-							<table class="datatable table table-hover table-center mb-0">
-								<thead>
-									<tr>
-										<th>Doctor Name</th>
-										<th>Speciality</th>
-										<th>Member Since</th>
-										<th>Earned</th>
-										<th>Account Status</th>
-										
-									</tr>
-								</thead>
-								<tbody>
-									<tr *ngFor="let doctor of doctorsList">
-										<td>
-											<h2 class="table-avatar">
-												<a [routerLink]="'/admin/doc-profile'" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" [src]="doctor.profile" alt="User Image"></a>
-												<a [routerLink]="'/admin/doc-profile'">{{doctor.doctor_name}}</a>
-											</h2>
-										</td>
-										<td>{{doctor.speciality}}</td>
-										
-										<td>{{doctor.since | date : 'dd MMM yyyy hh mm a'}}</td>
-										
-										<td>${{doctor.Earned}}</td>
-										
-										<td>
-											<div class="status-toggle">
-												<input type="checkbox" id="status_1" class="check" checked>
-												<label for="status_1" class="checktoggle">checkbox</label>
-											</div>
-										</td>
-									</tr>
-									
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>			
-		</div>
-		
-	</div>			
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">List des Internautes</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:(0);">Users</a></li>
+                        <li class="breadcrumb-item active">Internautes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- <div class="table-responsive" *ngIf="usersList"> -->
+                        <div class="table-responsive" *ngIf="internauteList">
+                            <table class="datatable table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Username</th>
+                                        <th>Mobile</th>
+                                        <th>Addresse</th>
+                                        <th>Email</th>
+                                        <th>Membre depuis</th>
+                                        <th>Status compte</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let user of internauteList">
+                                        <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">
+                                            <h2 class="table-avatar">
+
+                                                <a [routerLink]="'/admin/doc-profile'" class="avatar avatar-sm mr-2">
+                                                    <!-- <img class="avatar-img rounded-circle" 
+													[src]="user.profile" alt="User Image"> -->
+                                                    <img [src]="
+													this.crudApi.apiServerUrl +
+													'/utilisateurs/avatar/' +
+													user.id +
+													'?ts=' +
+													getTS()
+												  " class="avatar-img rounded-circle" /></a>
+                                            </h2>
+                                        </td>
+                                        <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">{{user.username}}</td>
+                                        <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">{{user.mobile}}</td>
+                                        <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">{{user.addressRecruteur}}</td>
+                                        <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">{{user.email}}</td>
+
+                                        <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">{{user.dateInscription | date : 'dd MMM yyyy hh mm a'}}</td>
+
+
+
+                                        <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">{{user.isActive}}
+                                            <div class="status-toggle">
+                                                <input type="checkbox" id="status_1" class="check" checked>
+                                                <label for="status_1" class="checktoggle">checkbox</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>

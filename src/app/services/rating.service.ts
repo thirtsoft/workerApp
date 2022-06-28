@@ -66,8 +66,8 @@ export class RatingService {
     return this.http.get<any>(`${this.apiServerUrl}/ratings/countNumberOfRatingByOuvrierId/${ouvId}`);
   }
 
-  public deleteRating(noteId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/ratings/delete/${noteId}`);
+  public deleteRating(noteId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}/ratings/delete/${noteId}`);
   }
 
   public getUserId() {
