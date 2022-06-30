@@ -46,13 +46,14 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    /*
     this.getpatients();
     this.getDoctors();
     if($('.floating').length > 0 ){
       $('.floating').on('focus blur', function (e) {
       $(this).parents('.form-focus').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
       }).trigger('blur');
-    }
+    } */
 
     this.registrationForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),

@@ -110,10 +110,7 @@ export class LoginComponent implements OnInit {
         timeOut: 1500,
         positionClass: 'toast-top-right',
         });
-        this.router.navigate(['/patients/dashboard']);
-        /*
-        this.router.navigateByUrl("").then(() => {
-        }); */
+        this.router.navigate(['/']);
       },
       error => {
         console.log(error);

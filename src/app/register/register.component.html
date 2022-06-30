@@ -12,18 +12,18 @@
                         </div>
                         <div class="col-md-12 col-lg-6 login-right">
                             <div class="login-header">
-                                <h3>Patient Register<a href="javascript:void(0)" [routerLink]="'/doctor/doctor-register'">Are you a Doctor?</a></h3>
+                                <!--<h3>Création de compte<a href="javascript:void(0)" [routerLink]="'/doctor/doctor-register'">Are you a Doctor?</a></h3> -->
+                                <h3>Création de compte</h3>
                             </div>
-
                             <!-- Register Form -->
                             <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
                                 <div class="form-group form-focus">
                                     <!--  <input type="text" name="name" class="form-control floating" [(ngModel)]="name"> -->
-                                    <input name="name" id="name" formControlName="name" required required="" class="form-control floating" placeholder="Votre Nom" type="text" />
+                                    <input name="name" id="name" formControlName="name" required="" class="form-control floating" placeholder="Votre Nom" type="text" />
                                     <div class="alert alert-danger" *ngIf="
-                      registrationForm.get('name').invalid &&
-                      registrationForm.get('name').touched
-                    ">
+                                        registrationForm.get('name').invalid &&
+                                        registrationForm.get('name').touched
+                                    ">
                                         <div *ngIf="registrationForm.get('name').errors.required">
                                             Votre nom est obligatoire
                                         </div>
@@ -40,9 +40,9 @@
                                     <!--  <input type="text" name="mobile" class="form-control floating" [(ngModel)]="mobile" max="9"> -->
                                     <input name="username" id="username" formControlName="username" required="" class="form-control floating" placeholder="Nom utilisateur" type="text" />
                                     <div class="alert alert-danger" *ngIf="
-                      registrationForm.get('username').invalid &&
-                      registrationForm.get('username').touched
-                    ">
+                                        registrationForm.get('username').invalid &&
+                                        registrationForm.get('username').touched
+                                    ">
                                         <div *ngIf="registrationForm.get('username').errors.required">
                                             Votre nom utilisateur est obligatoire
                                         </div>
@@ -54,9 +54,9 @@
                                     <!--  <input type="text" name="mobile" class="form-control floating" [(ngModel)]="mobile" max="9"> -->
                                     <input name="email" id="email" formControlName="email" required="" class="form-control floating" placeholder="Votre Email" type="email" />
                                     <div class="alert alert-danger" *ngIf="
-                      registrationForm.get('email').invalid &&
-                      registrationForm.get('email').touched
-                    ">
+                                        registrationForm.get('email').invalid &&
+                                        registrationForm.get('email').touched
+                                    ">
                                         <div *ngIf="registrationForm.get('email').errors.required">
                                             Votre email est obligatoire
                                         </div>
@@ -71,9 +71,9 @@
                                     <!--  <input type="password" name="password" class="form-control floating" [(ngModel)]="password"> -->
                                     <input name="password" required="" class="form-control floating" placeholder="Votre mot de Password" id="password" formControlName="password" type="password" />
                                     <div class="alert alert-danger" *ngIf="
-                      registrationForm.get('password').invalid &&
-                      registrationForm.get('password').touched
-                    ">
+                                        registrationForm.get('password').invalid &&
+                                        registrationForm.get('password').touched
+                                    ">
                                         <div *ngIf="registrationForm.get('password').errors.required">
                                             Votre mot de passe est obligatoire
                                         </div>
@@ -81,7 +81,7 @@
                                             Votre mot Password doit contenir au moins 6 caractères
                                         </div>
                                     </div>
-                                    <label class="focus-label">Create Password</label>
+                                    <label class="focus-label">Mot de Passe</label>
                                 </div>
                                 <div class="text-right">
                                     <a class="forgot-link" [routerLink]="'/login-page'">Vous avez déjà un compte alors?</a>
