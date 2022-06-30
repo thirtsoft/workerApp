@@ -46,12 +46,16 @@
                                             </h2> -->
                                         </td>
 
-                                        <td>{{review.nbreEtoile}}
+                                        <!-- <td>{{review.nbreEtoile}}
                                             <i class="fe fe-star text-warning mr-1"></i>
                                             <i class="fe fe-star text-warning mr-1"></i>
                                             <i class="fe fe-star text-warning mr-1"></i>
                                             <i class="fe fe-star text-warning mr-1"></i>
                                             <i class="fe fe-star-o text-secondary"></i>
+                                        </td> -->
+                                        <td>
+                                            <ngb-rating [(rate)]="review.nbreEtoile" [id]="'rating3'" [readonly]="true" [max]="maxRatingValue">
+                                            </ngb-rating>
                                         </td>
 
                                         <td>

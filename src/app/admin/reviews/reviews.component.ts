@@ -19,6 +19,7 @@ export class ReviewsComponent implements OnInit {
   id;
   p: number=1;
   searchText: any;
+  maxRatingValue = 5;
 
 
   constructor(public commonService: CommonServiceService,
