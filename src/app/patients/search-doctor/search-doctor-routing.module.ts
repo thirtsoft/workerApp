@@ -7,6 +7,18 @@ const routes: Routes = [
 	{
 		path : '',
 		component : SearchDoctorComponent
+	},
+	{
+		path: 'metier/:id',
+		component: SearchDoctorComponent
+	},
+	{
+		path: 'metier',
+		component: SearchDoctorComponent
+	},
+	{
+		path: 'searchInCandidates/:disponibility',
+		component: SearchDoctorComponent
 	}
 ];
 

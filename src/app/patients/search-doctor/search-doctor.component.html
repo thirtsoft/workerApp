@@ -1,10 +1,8 @@
 <!-- Page Content -->
 <div class="content">
     <div class="container-fluid">
-
         <div class="row">
             <div class="col-md-12 col-lg-4 col-xl-3 theiaStickySidebar">
-
                 <!-- Search Filter -->
                 <div class="card search-filter">
                     <div class="card-header">
@@ -20,15 +18,15 @@
                             <h4>Genre</h4>
                             <div>
                                 <label class="custom_check">
-											<input type="checkbox" name="gender_type" value="Male" (click)="checkType($event)"  [checked]="type === 'Male'" >
-											<span class="checkmark"></span> Ouvrier Homme
-										</label>
+									<input type="checkbox" name="gender_type" value="Male" (click)="checkType($event)"  [checked]="type === 'Male'" >
+									<span class="checkmark"></span> Ouvrier Homme
+								</label>
                             </div>
                             <div>
                                 <label class="custom_check">
-											<input type="checkbox" name="gender_type" value="Female" [checked]="type === 'Female'"  (click)="checkType($event)">
-											<span class="checkmark"></span> Ouvrier Femme
-										</label>
+									<input type="checkbox" name="gender_type" value="Female" [checked]="type === 'Female'"  (click)="checkType($event)">
+									<span class="checkmark"></span> Ouvrier Femme
+								</label>
                             </div>
                         </div>
                         <div class="filter-widget">
@@ -42,9 +40,10 @@
 
                             <div *ngFor="let specialit of metierList">
                                 <label class="custom_check">
-											<input type="checkbox" (click)="checkSpeciality($event)" name="select_specialist" [value]="specialit.designation" [checked]="specialit.checked">
-											<span class="checkmark"></span> {{specialit.designation}}
-										</label>
+                                     <a [routerLink]="['/patients/search-doctor/metier', specialit.id]" class="nav-link " style="cursor: pointer;">
+									<!-- <input [routerLink]="['/search-doctor/metier', specialit.id]" type="checkbox" (click)="checkSpeciality($event)" name="select_specialist" [value]="specialit.designation" [checked]="specialit.checked"> -->
+									<span class="checkmark"></span> {{specialit.designation}}  </a> 
+								</label>
                             </div>
 
                         </div>

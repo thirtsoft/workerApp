@@ -67,14 +67,15 @@ export class SearchDoctorComponent implements OnInit {
     this.getDoctors();
     this.getspeciality();
     this.getAllMetiers();
-    this.finishOuvriers();
-  //  this.getAllOuvriers();
+    this.route.paramMap.subscribe(()=> {
+      this.finishOuvriers();
+    });
+  //  this.finishOuvriers();
   }
 
   finishOuvriers(){
     let result1 = this.route.snapshot.paramMap.has('id');
     let result2 = this.route.snapshot.paramMap.has('disponibility');
-  //  let result2 = this.route.snapshot.paramMap.has('id');
     if(result1){
       this.getOuvrierByMetierId();
     } else if (result2) {
@@ -111,21 +112,6 @@ export class SearchDoctorComponent implements OnInit {
       }
     )
   }
-/*
-  getOuvrierByAddressId(){
-    let idMetier = this.route.snapshot.paramMap.get('id');
-    this.ouvService.getOuvriersLengthByAddressId(idMetier).subscribe(
-      data => {
-        this.ouvrierSize = data
-      }
-    )
-    this.ouvService.getOuvriersByAddressId(idMetier,this.page-1,this.pageLength).subscribe(
-      data => {
-        this.ouvrierList = data;
-      }
-    )
-  }
-  */
 
   getAllOuvriersContainingKey(){
     let disponibility = this.route.snapshot.paramMap.get('disponibility');
@@ -170,7 +156,6 @@ export class SearchDoctorComponent implements OnInit {
     })
   }
 
-
   getDoctors() {
     this.commonService.getSearchDoctors().subscribe(res => {
       this.doctors = res;
@@ -197,7 +182,6 @@ export class SearchDoctorComponent implements OnInit {
     } else {
       this.getDoctors();
     }
-
   }
 
   checkSpeciality(event) {
