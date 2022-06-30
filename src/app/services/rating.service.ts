@@ -50,8 +50,8 @@ export class RatingService {
     return this.http.post<Rating>(`${this.apiServerUrl}/ratings/createWithOuvrier/${id}`, rat);
   }
 
-  public addRatingToChauffeur(rat: Rating, idChauff: number, id:number): Observable<Rating> {
-    return this.http.post<Rating>(`${this.apiServerUrl}/ratings/createRatingToOuvrier?idChauff=${idChauff}&id=${id}`, rat);
+  public addRatingToOuvrier(rat: Rating, idOuv: number, id:number): Observable<Rating> {
+    return this.http.post<Rating>(`${this.apiServerUrl}/ratings/createRatingToOuvrier?idOuv=${idOuv}&id=${id}`, rat);
   }
 
   public updateRating(noteId: number, rat: Rating): Observable<Rating> {

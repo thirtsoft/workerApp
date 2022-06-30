@@ -7,6 +7,8 @@ import { Rating } from 'src/app/models/rating';
 import { RatingService } from 'src/app/services/rating.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MetierService } from 'src/app/services/metier.service';
+import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -20,18 +22,27 @@ export class DoctorProfileComponent implements OnInit {
 
   ratingListDTOs: Rating[];
   numberOfRatingToOuvrier: any;
-  currentRating: any = 4;
+  currentRating: any = 3;
   starRating = 0;
   maxRatingValue: any = 5;
+  isLoggedIn = false;
+  username: string;
+  addRatingForm: NgForm;
+  formData: FormGroup;
 
   constructor(
     public commonService: CommonServiceService,
     public ouvService: OuvrierService,
     public ratService: RatingService,
     public metService: MetierService,
+    public tokenService: TokenStorageService,
+    private toastr: ToastrService,
+    private router: Router,
+    public fb: FormBuilder,
     private route: ActivatedRoute,
-    private toastr: ToastrService
   ) {}
+
+  get f() { return this.formData.controls; }
 
   images = [
     {
@@ -50,9 +61,20 @@ export class DoctorProfileComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
+    this.infoForm();
     this.id = this.route.snapshot.queryParams['id'];
     this.getDoctorsDetails();
-    this.getOuvrierDetails();
+    this.isLoggedIn = !!this.tokenService.getToken();
+    if (this.isLoggedIn) {
+      const user = this.tokenService.getUser();
+      this.ratService.getUserId();
+      this.username = user.username;
+    }
+    console.log('Param--', this.id);
+    if(this.id  && this.id  > 0){
+      this.getOuvrierDetails();
+    }
+//    this.getOuvrierDetails();
     this.countNumberOfRatingToOuvrier();
     this.getListOfTop4RatingOrderByCreatedDateDescByOuvrierId();
   }
@@ -76,6 +98,18 @@ export class DoctorProfileComponent implements OnInit {
     });
   }
 
+  infoForm() {
+    this.formData = this.fb.group({
+      nbreEtoile: [this.currentRating, Validators.required],
+      observation: ['', Validators.required],
+    });
+  }
+
+  onRateChange(event :number) {
+    console.log("The selected rate change ", event);
+    this.currentRating = event;
+  }
+
   countNumberOfRatingToOuvrier() {
     this.ratService.countNumberOfRatingOfOuvriers(this.id)
       .subscribe((res) => {
@@ -92,6 +126,28 @@ export class DoctorProfileComponent implements OnInit {
         alert(error.message);
       }
     );
+  }
+
+  onAddRating() {
+    console.log(this.formData.value);
+    console.log(this.formData.value, this.id, this.ratService.id);
+    this.ratService.addRatingToOuvrier(this.formData.value, this.id, this.ratService.id)
+      .subscribe(
+      (response: Rating) => {
+        this.toastr.success('à ln\ouvrier','Note Attribué avec succès', {
+          timeOut: 1500,
+          positionClass: 'toast-top-right',
+        });
+        this.router.navigateByUrl("/").then(() => {
+        });
+      
+      },
+      (error: HttpErrorResponse) => {
+        this.toastr.error("Tous les champs doivent etre remplis")
+      }
+
+    );
+
   }
 
   addFav() {
