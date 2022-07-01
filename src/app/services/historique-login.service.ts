@@ -22,7 +22,7 @@ export class HistoriqueLoginService {
   }
 
   public getHistoriqueLoginsOrderByIdDesc(): Observable<HistoriqueLogin[]> {
-    return this.http.get<HistoriqueLogin[]>(`${this.apiServerUrl}/historiqueLogins/searchAllHistoriqueLoginsOrderByIdDesc`);
+    return this.http.get<HistoriqueLogin[]>(`${this.apiServerUrl}/historiqueLogins/searchHistoriqueLoginByIdDesc`);
   }
   
   public getHistoriqueLoginById(idHistoriqueLogin: number): Observable<HistoriqueLogin> {

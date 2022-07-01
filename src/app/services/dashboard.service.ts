@@ -50,24 +50,24 @@ export class DashboardService {
     return this.http.get(`${this.apiServerUrl}/reservations/NumbersOfReservationInYear`);
   }
 
-  public countNumberOfChauffeurs(): Observable<any> {
-    return this.http.get(`${this.apiServerUrl}/chauffeurs/NumbersOfChauffeurs`);
+  public countNumberOfOuvriers(): Observable<any> {
+    return this.http.get(`${this.apiServerUrl}/ouvriers/NumbersOfOuvriers`);
   }
 
-  public countNumbersOfChauffeursPeerMonth(): Observable<any> {
-    return this.http.get(`${this.apiServerUrl}/chauffeurs/numberOfChauffeurPeerMonth`);
+  public countNumbersOfOuvriersPeerMonth(): Observable<any> {
+    return this.http.get(`${this.apiServerUrl}/ouvriers/numberOfOuvriersPeerMonth`);
   }
 
-  public countNumbersOfChauffeursPeerYear(): Observable<any> {
-    return this.http.get(`${this.apiServerUrl}/chauffeurs/numberOfChauffeurPeerYeer`);
+  public countNumbersOfOuvriersPeerYear(): Observable<any> {
+    return this.http.get(`${this.apiServerUrl}/ouvriers/numberOfOuvrierPeerYee`);
   }
 
   public countNumberOfRecruteurs(): Observable<any> {
     return this.http.get(`${this.apiServerUrl}/utilisateurs/NumbersOfRecruteurs`);
   }
 
-  public countNumberOfNotification(): Observable<Rating[]> {
-    return this.http.get<Rating[]>(`${this.apiServerUrl}/notifications/countNumberOfNotification`);
+  public countNumberOfRating(): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/ratings/countNumberOfRatings`);
   }
 
   public countNumberOfNotificationByProductId(noteId: string): Observable<Rating> {

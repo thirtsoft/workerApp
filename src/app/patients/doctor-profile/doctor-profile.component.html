@@ -464,13 +464,13 @@
 
                                                 <span class="comment-author">{{ rat.utilisateur?.name }}</span>
                                                 <span class="comment-date">{{ rat.createdDate | date:'dd-MM-yyyy' }}</span>
-                                                <div class="review-count rating">
+                                                <div class="review-count">
                                                     <!--  <i class="fas fa-star filled"></i>
                                                     <i class="fas fa-star filled"></i>
                                                     <i class="fas fa-star filled"></i>
                                                     <i class="fas fa-star filled"></i>
                                                     <i class="fas fa-star"></i> -->
-                                                    <ngb-rating [(rate)]="rat.nbreEtoile" [id]="'rating3'" [readonly]="true" [max]="maxRatingValue">
+                                                    <ngb-rating [(rate)]="rat.nbreEtoile" [id]="'rating3'" [readonly]="true" [max]="maxRatingValue" class="text-warning mr-1">
                                                     </ngb-rating>
                                                 </div>
                                             </div>
@@ -603,7 +603,7 @@
                                     <label>Review</label>
                                     <br>
                                     <!--  <div class="star-rating"> -->
-                                    <ngb-rating formControlName="nbreEtoile" [(rate)]="currentRating" [max]="maxRatingValue" [readonly]="false" [id]="'rating3'" [readonly]="false" (rateChange)="onRateChange($event)">
+                                    <ngb-rating class="text-warning mr-1" formControlName="nbreEtoile" [(rate)]="currentRating" [max]="maxRatingValue" [readonly]="false" [id]="'rating3'" [readonly]="false" (rateChange)="onRateChange($event)">
                                     </ngb-rating>
                                     <!-- <input id="star-5" type="radio" name="rating" value="star-5">
                                         <label for="star-5" title="5 stars">

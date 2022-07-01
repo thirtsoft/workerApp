@@ -31,15 +31,15 @@ export class UtilisateurService {
   }
 
   public getAllNewsUtilisateursOrderByIdDesc(): Observable<Utilisateur[]> {
-    return this.http.get<Utilisateur[]>(`${this.apiServerUrl}/utilisateurs/searchAllNewsRecruteursOrderByIdDesc`);
+    return this.http.get<Utilisateur[]>(`${this.apiServerUrl}/utilisateurs/searchAllNewsRegisterInMonthOrderByIdDesc`);
   }
 
   public getUtilisateurById(userId: number): Observable<Utilisateur> {
     return this.http.get<Utilisateur>(`${this.apiServerUrl}/utilisateurs/findById/${userId}`);
   }
 
-  public addUtilisateur(Utilisateur: Utilisateur): Observable<Utilisateur> {
-    return this.http.post<Utilisateur>(`${this.apiServerUrl}/utilisateurs/create`, Utilisateur);
+  public addUtilisateur(user: Utilisateur): Observable<Utilisateur> {
+    return this.http.post<Utilisateur>(`${this.apiServerUrl}/utilisateurs/create`, user);
   }
 
   public updateUtilisateur(utilisateurId: number, Utilisateur: Utilisateur): Observable<Utilisateur> {

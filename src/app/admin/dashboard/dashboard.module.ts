@@ -4,6 +4,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { ForgotPasswordModule } from './../../forgot-password/forgot-password.module';
 // import { MorrisJsModule } from 'angular-morris-js';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -11,6 +13,9 @@ import { ForgotPasswordModule } from './../../forgot-password/forgot-password.mo
     CommonModule,
     DashboardRoutingModule,
     ForgotPasswordModule,
+    FormsModule, 
+    ReactiveFormsModule,
+    NgbModule
     // MorrisJsModule,
   ],
 })
