@@ -5,6 +5,8 @@ import { CommonServiceService } from './../../common-service.service'
 import { FormsModule } from '@angular/forms';
 import { MetierService } from 'src/app/services/metier.service';
 import { OuvrierService } from 'src/app/services/ouvrier.service';
+import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
+import { RatingService } from 'src/app/services/rating.service';
 
 
 @Component({
@@ -37,14 +39,21 @@ export class SearchDoctorComponent implements OnInit {
   priceSearch!: number;
   starRating = 0;
   currentRating = 4;
+  isLoggedIn: any;
+  username: any;
+  maxRatingValue = 5;
   page: number = 1;
   pageLength: number = 12;
   ouvrierSize: number = 0;
+  numberOfRatingToOuvrier: any;
+  id;
 
   constructor(
           public commonService: CommonServiceService,
           public metService: MetierService,
           public ouvService: OuvrierService,
+          private ratService: RatingService,
+          private tokenService: TokenStorageService,
           public router: Router,
           private route: ActivatedRoute) { }
   
@@ -67,10 +76,16 @@ export class SearchDoctorComponent implements OnInit {
     this.getDoctors();
     this.getspeciality();
     this.getAllMetiers();
+    this.countNumberOfRatingToOuvrier();
     this.route.paramMap.subscribe(()=> {
       this.finishOuvriers();
     });
   //  this.finishOuvriers();
+  this.isLoggedIn = !!this.tokenService.getToken();
+  if (this.isLoggedIn) {
+    const user = this.tokenService.getUser();
+    this.username = user.username;
+  }
   }
 
   finishOuvriers(){
@@ -127,6 +142,15 @@ export class SearchDoctorComponent implements OnInit {
         console.log(this.ouvrierList);
       }
     )
+  }
+
+  countNumberOfRatingToOuvrier() {
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.ratService.countNumberOfRatingOfOuvriers(this.id)
+      .subscribe((res) => {
+        this.numberOfRatingToOuvrier = res;
+        console.log(this.numberOfRatingToOuvrier);
+    });
   }
 
   doing() {

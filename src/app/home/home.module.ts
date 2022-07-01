@@ -10,6 +10,8 @@ import { HomeComponent } from './home.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { TooltipModule } from 'ng2-tooltip-directive';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [HomeComponent],
@@ -24,6 +26,7 @@ import { TooltipModule } from 'ng2-tooltip-directive';
     MatInputModule,
     SlickCarouselModule,
     TooltipModule,
+    NgbModule
   ],
 })
 export class HomeModule {}

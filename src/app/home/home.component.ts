@@ -10,6 +10,7 @@ import { MetierService } from '../services/metier.service';
 import { OuvrierService } from '../services/ouvrier.service';
 import { Ouvrier } from '../models/ouvrier';
 import { Metier } from '../models/metier';
+import { TokenStorageService } from '../services/auth/security/token-storage.service';
 declare const $: any;
 
 export interface Doctors {
@@ -44,6 +45,13 @@ export class HomeComponent implements OnInit {
   blogs: any = [];
   keyword = 'name';
   searchDoctor = [];
+
+  isLoggedIn: any;
+  username: any;
+  maxRatingValue = 5;
+  currentRating = 4; 
+
+  
   public countries = [
     {
       id: 1,
@@ -100,7 +108,8 @@ export class HomeComponent implements OnInit {
     public router: Router,
     public commonService: CommonServiceService,
     public ouvService: OuvrierService,
-    public metService: MetierService
+    public metService: MetierService,
+    private tokenService: TokenStorageService
   ) {
     this.filteredEmployee = this.employeeCtrl.valueChanges.pipe(
       startWith(''),
@@ -176,6 +185,12 @@ export class HomeComponent implements OnInit {
         ],
       });
     });
+    this.isLoggedIn = !!this.tokenService.getToken();
+
+    if (this.isLoggedIn) {
+      const user = this.tokenService.getUser();
+      this.username = user.username;
+    }
   }
   private _filterEmployees(value: string): Doctors[] {
     const filterValue = value.toLowerCase();

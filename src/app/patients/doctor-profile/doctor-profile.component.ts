@@ -22,7 +22,7 @@ export class DoctorProfileComponent implements OnInit {
 
   ratingListDTOs: Rating[];
   numberOfRatingToOuvrier: any;
-  currentRating: any = 3;
+  currentRating: any = 4;
   starRating = 0;
   maxRatingValue: any = 5;
   isLoggedIn = false;

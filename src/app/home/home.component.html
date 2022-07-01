@@ -210,7 +210,20 @@
                             <div class="slick-slide" *ngFor="let doctor of ouvriersList;let i=index">
                                 <div ngxSlickItem>
                                     <div class="profile-widget" style="width: 100%; display: inline-block;">
-                                        <div class="doc-img">
+                                        <div class="doc-img" *ngIf="!this.isLoggedIn">
+                                            <a [routerLink]="'/login-page'" tabindex="-1">
+                                                <!-- <img class="img-fluid" alt="User Image" [src]="doctor.profile"> -->
+                                                <img class="img-fluid w-100" alt="User Image" src="{{
+                                                    this.ouvService.apiServerUrl +
+                                                    '/ouvriers/photoOuvrierInFolder/' +
+                                                    doctor.id
+                                                    }}">
+                                            </a>
+                                            <a href="javascript:void(0)" class="fav-btn" tabindex="-1">
+                                                <i class="far fa-bookmark"></i>
+                                            </a>
+                                        </div>
+                                        <div class="doc-img" *ngIf="this.isLoggedIn">
                                             <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}" tabindex="-1">
                                                 <!-- <img class="img-fluid" alt="User Image" [src]="doctor.profile"> -->
                                                 <img class="img-fluid w-100" alt="User Image" src="{{
@@ -230,11 +243,13 @@
                                             </h3>
                                             <p class="speciality">{{doctor.education}}</p>
                                             <div class="rating">
+                                                <ngb-rating [max]="maxRatingValue" [(rate)]="currentRating" [readonly]="true" class="text-warning mr-1 filled">
+                                                </ngb-rating>
+                                                <!-- <i class="fas fa-star filled"></i>
                                                 <i class="fas fa-star filled"></i>
                                                 <i class="fas fa-star filled"></i>
                                                 <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i> -->
                                                 <span class="d-inline-block average-rating">({{doctor.reference}})</span>
                                             </div>
                                             <ul class="available-info">
@@ -250,7 +265,10 @@
                                                 </li>
                                             </ul>
                                             <div class="row row-sm">
-                                                <div class="col-6">
+                                                <div class="col-6" *ngIf="!this.isLoggedIn">
+                                                    <a [routerLink]="'/login-page'" class="btn view-btn" tabindex="-1">Voir Profile</a>
+                                                </div>
+                                                <div class="col-6" *ngIf="this.isLoggedIn">
                                                     <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}" class="btn view-btn" tabindex="-1">Voir Profile</a>
                                                 </div>
                                                 <div class="col-6">
@@ -271,7 +289,11 @@
     <!--popular section-->
 
 
-    <div class="view-all text-center">
+    <div class="view-all text-center" *ngIf="!this.isLoggedIn">
+        <a [routerLink]="'/login-page'" class="btn btn-primary">Voir plus d'Ouvriers</a>
+    </div>
+
+    <div class="view-all text-center" *ngIf="this.isLoggedIn">
         <a [routerLink]="'/patients/search-doctor'" class="btn btn-primary">Voir plus d'Ouvriers</a>
     </div>
 

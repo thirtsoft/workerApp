@@ -118,7 +118,17 @@
                     <div class="card-body">
                         <div class="doctor-widget">
                             <div class="doc-info-left">
-                                <div class="doctor-img">
+                                <div class="doctor-img" *ngIf="!this.isLoggedIn">
+                                    <a [routerLink]="'/login-page'">
+                                        <!--  <img [src]="doctor.reference" class="img-fluid" alt="User Image"> -->
+                                        <img class="img-fluid" alt="User Image" src="{{
+                                            this.ouvService.apiServerUrl +
+                                            '/ouvriers/photoOuvrierInFolder/' +
+                                            doctor.id
+                                            }}">
+                                    </a>
+                                </div>
+                                <div class="doctor-img" *ngIf="this.isLoggedIn">
                                     <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}">
                                         <!--  <img [src]="doctor.reference" class="img-fluid" alt="User Image"> -->
                                         <img class="img-fluid" alt="User Image" src="{{
@@ -129,7 +139,12 @@
                                     </a>
                                 </div>
                                 <div class="doc-info-cont">
-                                    <h4 class="doc-name"><a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}">{{doctor.firstName}}-{{doctor.lastName}}</a></h4>
+                                    <h4 class="doc-name" *ngIf="!this.isLoggedIn">
+                                        <a [routerLink]="'/login-page'">{{doctor.firstName}}-{{doctor.lastName}}</a>
+                                    </h4>
+                                    <h4 class="doc-name" *ngIf="this.isLoggedIn">
+                                        <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}">{{doctor.firstName}}-{{doctor.lastName}}</a>
+                                    </h4>
                                     <p class="doc-speciality">{{doctor.eduction}}</p>
                                     <h5 class="doc-department">
                                         <!-- <img [src]="doctor.reference" class="img-fluid" alt="Metier"> -->
@@ -139,11 +154,13 @@
                                             doctor.id
                                             }}">{{doctor.reference}}</h5>
                                     <div class="rating">
+                                        <ngb-rating [max]="maxRatingValue" [(rate)]="currentRating" [readonly]="true" class="text-warning mr-1 filled">
+                                        </ngb-rating>
+                                        <!--  <i class="fas fa-star filled"></i>
                                         <i class="fas fa-star filled"></i>
                                         <i class="fas fa-star filled"></i>
                                         <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i> -->
                                         <span class="d-inline-block average-rating">(17)</span>
                                     </div>
                                     <div class="clinic-details">
@@ -169,7 +186,11 @@
                                         <li><i class="far fa-money-bill-alt"></i> {{doctor.pretentionSalaire}} <i class="fas fa-info-circle" tooltip="Lorem Ipsum" placement="top"></i> </li>
                                     </ul>
                                 </div>
-                                <div class="clinic-booking">
+                                <div class="clinic-booking" *ngIf="!this.isLoggedIn">
+                                    <a class="view-pro-btn" style="cursor: pointer;" [routerLink]="'/login-page'">Voir Profile</a>
+                                    <a class="apt-btn" style="cursor: pointer;" (click)="bookAppointment(doctor.id)">Book Appointment</a>
+                                </div>
+                                <div class="clinic-booking" *ngIf="this.isLoggedIn">
                                     <a class="view-pro-btn" style="cursor: pointer;" [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}">Voir Profile</a>
                                     <a class="apt-btn" style="cursor: pointer;" (click)="bookAppointment(doctor.id)">Book Appointment</a>
                                 </div>

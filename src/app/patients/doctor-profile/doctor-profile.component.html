@@ -47,12 +47,14 @@
                                 <span> {{ouvrierDetails.reference}} </span>
                             </p>
                             <div class="rating">
+                                <ngb-rating [max]="5" [(rate)]="currentRating" [readonly]="true" class="text-warning mr-1 filled">
+                                </ngb-rating>
+                                <!-- <i class="fas fa-star filled"></i>
                                 <i class="fas fa-star filled"></i>
                                 <i class="fas fa-star filled"></i>
                                 <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star"></i>
-                                <span class="d-inline-block average-rating">(35)</span>
+                                <i class="fas fa-star"></i> -->
+                                <span class="d-inline-block average-rating">({{numberOfRatingToOuvrier}})</span>
                             </div>
                             <div class="clinic-details">
                                 <!--  <p class="doc-location" *ngIf="!doctorDetails"><i class="fas fa-map-marker-alt"></i> Newyork, USA - <a href="javascript:void(0);">Get Directions</a></p>
