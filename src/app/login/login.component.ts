@@ -112,11 +112,11 @@ export class LoginComponent implements OnInit {
         timeOut: 1500,
         positionClass: 'toast-top-right',
         });
-        this.router.navigate(['/home']);
-        window.location.reload();
+        this.router.navigateByUrl("home").then(() => {
+          window.location.reload();
+        });
       },
       error => {
-        console.log(error);
         this.toastr.error('veuillez vérifier vos identifiants','Error de connection', {
           timeOut: 1500,
           positionClass: 'toast-top-right',

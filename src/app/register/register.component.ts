@@ -100,7 +100,9 @@ export class RegisterComponent implements OnInit {
         timeOut: 1500,
         positionClass: 'toast-top-right',
         });
-        this.router.navigate(['/']);
+        this.router.navigateByUrl("login-page").then(() => {
+          window.location.reload();
+        });
     //    this.router.navigateByUrl("auth/success-register");
     },
     error => {
