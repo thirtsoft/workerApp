@@ -38,6 +38,10 @@ export class RatingService {
     return this.http.get<Rating[]>(`${this.apiServerUrl}/ratings/searchTop4RatingOrderByCreatedDateDescByOuvrierId/${chauffId}`);
   }
 
+  public getRatingsByCustomerIdOrderByIdDesc(idCustomer: number): Observable<Rating[]> {
+    return this.http.get<Rating[]>(`${this.apiServerUrl}/ratings/searchListRatingByCustomerId/${idCustomer}`);
+  }
+
   public getRatingById(noteId: number): Observable<Rating> {
     return this.http.get<Rating>(`${this.apiServerUrl}/ratings/findById/${noteId}`);
   }

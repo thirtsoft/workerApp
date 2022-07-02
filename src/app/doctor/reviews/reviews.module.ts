@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ReviewsRoutingModule } from './reviews-routing.module';
 import { ReviewsComponent } from './reviews.component';
@@ -9,7 +10,8 @@ import { ReviewsComponent } from './reviews.component';
   declarations: [ReviewsComponent],
   imports: [
     CommonModule,
-    ReviewsRoutingModule
+    ReviewsRoutingModule,
+    NgbModule
   ]
 })
 export class ReviewsModule { }

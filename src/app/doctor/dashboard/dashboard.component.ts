@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/security/auth.service';
 import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
+import { DashboardService } from 'src/app/services/dashboard.service';
 
 
 @Component({
@@ -28,25 +29,23 @@ export class DashboardComponent implements OnInit {
 
   info: any;
   private roles: string[];
-
   currentTime: number = 0;
-
   isLoggedIn = false;
   showAdminBoard = false;
   showManagerBoard = false;
   showModeratorBoard = false;
   showUserBoard = false;
-
   username: string;
   email: String;
   userId;
   photo;
   img: boolean;
 
-  
+  numbersOfOuvriers: any;
+
   constructor(private toastr: ToastrService,
               private tokenService: TokenStorageService,
-              public autService: AuthService,
+              private crudApi: DashboardService,
               private router: Router,
               public commonService:CommonServiceService,
               private modalService: BsModalService) { }
@@ -54,6 +53,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.getPatients();
     this.getAppointments();
+    this.getNumberOfOuvriers();
     this.isLoggedIn = !!this.tokenService.getToken();
     if (this.isLoggedIn) {
       const user = this.tokenService.getUser();
@@ -66,6 +66,13 @@ export class DashboardComponent implements OnInit {
       this.userId = user.id;
       this.photo = user.photo;
     }
+  }
+
+  getNumberOfOuvriers() {
+    this.crudApi.countNumberOfOuvriers()
+    .subscribe(res=>{
+      this.numbersOfOuvriers = res;
+    })
   }
 
   search(activeTab){
