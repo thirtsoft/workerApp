@@ -1,38 +1,47 @@
 <div class="row row-grid">
-    <div class="col-md-6 col-lg-4 col-xl-3" *ngFor="let patient of patients" [hidden]="patients.length === 0">
+    <!--     <div class="col-md-6 col-lg-4 col-xl-3" *ngFor="let patient of patients" [hidden]="patients.length === 0"> -->
+    <div class="col-md-6 col-lg-4 col-xl-3" *ngFor="let ouvrier of ouvrierList" [hidden]="ouvrierList.length === 0">
         <div class="card widget-profile pat-widget-profile">
             <div class="card-body">
                 <div class="pro-widget-content">
                     <div class="profile-info-widget">
                         <a [routerLink]="'/patients/patient-profile'" class="booking-doc-img">
-                            <img [src]="patient.img" alt="User Image">
+                            <!-- <img [src]="patient.img" alt="User Image"> -->
+                            <!-- <img class="rounded-circle" src="assets/img/doctors/doctor-thumb-02.jpg" width="31" alt="Darren Elder"> -->
+                            <img class="img-fluid" alt="Metier" src="{{
+                                this.ouvService.apiServerUrl +
+                                '/ouvriers/photoOuvrierInFolder/' +
+                                ouvrier.id
+                                }}">
                         </a>
                         <div class="profile-det-info">
-                            <h3><a [routerLink]="'/patients/patient-profile'">{{patient.name}}</a></h3>
-                            
+                            <h3>
+                                <!--                           <a [routerLink]="'/patients/patient-profile'">{{patient.name}}</a></h3> -->
+                                <a [routerLink]="'/patients/patient-profile'">{{ouvrier.firstName}}-{{ouvrier.lastName}}</a></h3>
+
                             <div class="patient-details">
-                                <h5><b>Patient ID :</b> {{patient.key}}</h5>
-                                <h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> {{patient.address}}</h5>
+                                <h5><b>Metier :</b> {{ouvrier.reference}}</h5>
+                                <h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> {{ouvrier.addressActuel}}</h5>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="patient-info">
                     <ul>
-                        <li>Phone <span>+{{patient.phone}}</span></li>
-                        <li>Age <span>{{patient.age}} Years, {{patient.patients?.type}}</span></li>
-                        <li>Blood Group <span>{{patient.bloodgroup}}</span></li>
-                       
+                        <li>Phone <span>+{{ouvrier.phoneOuvrier}}</span></li>
+                        <li>Education <span>{{ouvrier.education}}, {{ouvrier.nbreAnneeExperience}}</span></li>
+                        <li>Disponibilité <span>{{ouvrier.disponibity}}</span></li>
+
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-    
- 
-            <!--  <h4 *ngIf="appointments.length === 0" style="text-align:center;margin-top:1em;">No patients</h4 -->
-          
-    
-   
-    
+
+
+    <!--  <h4 *ngIf="appointments.length === 0" style="text-align:center;margin-top:1em;">No patients</h4 -->
+
+
+
+
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OuvrierService } from 'src/app/services/ouvrier.service';
 import {CommonServiceService  } from './../../common-service.service';
 
 @Component({
@@ -10,12 +11,15 @@ export class MypatientsComponent implements OnInit {
   
   appointments : any = [];
   patients :  any = [];
+  ouvrierList: any = [];
   
-  constructor(public commonService:CommonServiceService) { }
+  constructor(public commonService:CommonServiceService,
+    public ouvService: OuvrierService) { }
 
   ngOnInit(): void {
     this.getPatients();
     this.getAppointments();
+    this.getListOfOuvriers();
 
   }
 
@@ -38,6 +42,13 @@ export class MypatientsComponent implements OnInit {
     this.commonService.getpatients()
     .subscribe(res=>{
       this.patients = res;
+    })
+  }
+
+  getListOfOuvriers() {
+    this.ouvService.getOuvrierOrderByIdDesc()
+    .subscribe(res=>{
+      this.ouvrierList = res;
     })
   }
 

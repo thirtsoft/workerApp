@@ -66,11 +66,11 @@
                     <!--  <a href="javascript:void(0)" (click)="doctor('doctor')">Doctors <i class="fas fa-chevron-down"></i></a> -->
                     <a href="javascript:void(0)" (click)="doctor('doctor')">Employeur <i class="fas fa-chevron-down"></i></a>
                     <ul class="submenu" id="doctor">
-                        <li [class.active]="base === 'doctor' && page === 'dashboard'"><a [routerLink]="'doctor/dashboard'">Dashboard</a></li>
+                        <!--  <li [class.active]="base === 'doctor' && page === 'dashboard'"><a [routerLink]="'doctor/dashboard'">Dashboard</a></li> -->
                         <li [class.active]="base === 'doctor' && page === 'appointment'"><a [routerLink]="'doctor/appointment'">Appointments</a></li>
                         <!--                         <li [class.active]="base === 'doctor' && page === 'scheduletiming'"><a [routerLink]="'doctor/scheduletiming'">Schedule Timing</a></li> -->
                         <li [class.active]="base === 'patients' && page === 'search-doctor'"><a [routerLink]="'patients/search-doctor'">Liste Candidats</a></li>
-                        <li [class.active]="base === 'patients' && page === 'doctor-profile'"><a [routerLink]="'patients/doctor-profile'">Candidat Profile</a></li>
+                        <!--   <li [class.active]="base === 'patients' && page === 'doctor-profile'"><a [routerLink]="'patients/doctor-profile'">Candidat Profile</a></li> -->
                         <li [class.active]="base === 'patients' && page === 'booking'"><a [routerLink]="'patients/booking'">Booking</a></li>
                         <li [class.active]="base === 'patients' && page === 'checkout'"><a [routerLink]="'patients/checkout'">Checkout</a></li>
                         <!--    <li [class.active]="base === 'patients' && page === 'success'"><a [routerLink]="'patients/success'">Booking Success</a></li>
@@ -78,9 +78,10 @@
                          <li [class.active]="base === 'doctor' && page === 'patients'"><a [routerLink]="'doctor/patients'">Patients List</a></li>
                         <li [class.active]="base === 'doctor' && page === 'message'"><a [routerLink]="'doctor/message'">Chat</a></li> -->
                         <li [class.active]="base === 'doctor' && page === 'invoice'"><a [routerLink]="'doctor/invoice'">Facture</a></li>
-                        <li [class.active]="base === 'doctor' && page === 'settings'"><a [routerLink]="'doctor/settings'">Profile Settings</a></li>
-                        <li [class.active]="base === 'doctor' && page === 'reviews'"><a [routerLink]="'doctor/reviews'">Reviews</a></li>
-                        <li [class.active]="base === 'doctor' && page === 'Register'"><a [routerLink]="'doctor/doctor-register'">Créer Compte</a></li>
+                        <!--  <li [class.active]="base === 'doctor' && page === 'settings'"><a [routerLink]="'doctor/settings'">Profile Settings</a></li> -->
+                        <!--  <li [class.active]="base === 'doctor' && page === 'reviews'"><a [routerLink]="'doctor/reviews'">Reviews</a></li> -->
+                        <li [class.active]="base === 'doctor' && page === 'Register'"><a [routerLink]="'/Register'">Créer Compte</a></li>
+                        <!-- <li [class.active]="base === 'doctor' && page === 'Register'"><a [routerLink]="'doctor/doctor-register'">Créer Compte</a></li> -->
                         <li [class.active]="base === 'login-page'"><a [routerLink]="'login-page'">Login</a></li>
                         <li class="has-submenu" [class.active]="(page === 'doctor-add-blog') || (page === 'doctor-edit-blog') || (page === 'doctor-blog')">
                             <a href="javascript:void(0)">Blog</a>
@@ -104,7 +105,7 @@
                             </ul>
                         </li> -->
                         <li [class.active]="base === 'patients' && page === 'search-doctor'"><a [routerLink]="'patients/search-doctor'">Liste Candidats</a></li>
-                        <li [class.active]="base === 'patients' && page === 'doctor-profile'"><a [routerLink]="'patients/doctor-profile'">Doctor Profile</a></li>
+                        <!-- <li [class.active]="base === 'patients' && page === 'doctor-profile'"><a [routerLink]="'patients/doctor-profile'">Doctor Profile</a></li> -->
                         <li [class.active]="base === 'patients' && page === 'booking'"><a [routerLink]="'patients/booking'">Booking</a></li>
                         <li [class.active]="base === 'patients' && page === 'checkout'"><a [routerLink]="'patients/checkout'">Checkout</a></li>
                         <li [class.active]="base === 'patients' && page === 'success'"><a [routerLink]="'patients/success'">Booking Success</a></li>
@@ -164,11 +165,14 @@
                     <p class="contact-info-header"> +221 77 944 03 10</p>
                 </div>
             </li>
-            <li [class.active]="base === 'login-page'" class="nav-item" *ngIf="!auth">
+            <!--  <li [class.active]="base === 'login-page'" class="nav-item" *ngIf="!auth">
+                <a class="nav-link header-login" [routerLink]="'login-page'">login / Signup </a>
+            </li> -->
+            <li [class.active]="base === 'login-page'" class="nav-item" *ngIf="!this.isLoggedIn">
                 <a class="nav-link header-login" [routerLink]="'login-page'">login / Signup </a>
             </li>
             <!-- User Menu -->
-            <li class="nav-item dropdown has-arrow logged-item" *ngIf="auth">
+            <!--  <li class="nav-item dropdown has-arrow logged-item" *ngIf="auth">
                 <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
                     <span class="user-img">
                             <img *ngIf="!isPatient" class="rounded-circle" src="assets/img/doctors/doctor-thumb-02.jpg" width="31" alt="Darren Elder">
@@ -192,6 +196,47 @@
                     <a class="dropdown-item" *ngIf="isPatient" [routerLink]="'/patients/dashboard'" style="cursor: pointer;">Dashboard</a>
                     <a class="dropdown-item" *ngIf="isPatient" [routerLink]="'/patients/settings'" style="cursor: pointer;">Profile Settings</a>
                     <a class="dropdown-item" [routerLink]="'login-page'" style="cursor: pointer;">Logout</a>
+                </div>
+            </li> -->
+
+            <!-- User Menu -->
+            <li class="nav-item dropdown has-arrow logged-item" *ngIf="this.isLoggedIn">
+                <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                    <span class="user-img">
+                            <!-- <img *ngIf="!isPatient" class="rounded-circle" src="assets/img/doctors/doctor-thumb-02.jpg" width="31" alt="Darren Elder">
+                            <img *ngIf="isPatient" class="rounded-circle" src="assets/img/patients/patient.jpg" width="31" alt="Richard Wilson">
+                         -->
+                            <img class="rounded-circle" src="assets/img/doctors/doctor-thumb-02.jpg" width="31" alt="Darren Elder">
+                        </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" style="right:0;left:auto;">
+                    <div class="user-header">
+                        <div class="avatar avatar-sm">
+                            <!--  <img *ngIf="!isPatient" src="assets/img/doctors/doctor-thumb-02.jpg" alt="User Image" class="avatar-img rounded-circle">
+                            <img *ngIf="isPatient" src="assets/img/patients/patient.jpg" alt="User Image" class="avatar-img rounded-circle">
+                        -->
+                            <img src="assets/img/doctors/doctor-thumb-02.jpg" alt="User Image" class="avatar-img rounded-circle">
+                        </div>
+                        <div class="user-text">
+                            <!-- <h6>Darren Elder</h6> -->
+                            <h6>Bonjour</h6>
+                            <!--            <p class="text-muted mb-0" *ngIf="!isPatient">Doctor</p>
+                            <p class="text-muted mb-0" *ngIf="isPatient">Patient</p> -->
+                            <p class="text-muted mb-0">{{ username }}</p>
+                        </div>
+                    </div>
+                    <!--    <a class="dropdown-item" *ngIf="!isPatient" [routerLink]="'/doctor/dashboard'" style="cursor: pointer;">Dashboard</a>
+                    <a class="dropdown-item" *ngIf="!isPatient" [routerLink]="'/doctor/settings'" style="cursor: pointer;">Profile Settings</a>
+                    <a class="dropdown-item" *ngIf="isPatient" [routerLink]="'/patients/dashboard'" style="cursor: pointer;">Dashboard</a>
+                    <a class="dropdown-item" *ngIf="isPatient" [routerLink]="'/patients/settings'" style="cursor: pointer;">Profile Settings</a>
+                    <a class="dropdown-item" [routerLink]="'login-page'" style="cursor: pointer;">Logout</a>-->
+
+                    <a class="dropdown-item" [routerLink]="'/doctor/dashboard'" style="cursor: pointer;">Dashboard</a>
+                    <a class="dropdown-item" [routerLink]="'doctor/reviews'" style="cursor: pointer;">Reviews</a>
+                    <a class="dropdown-item" [routerLink]="'/doctor/settings'" style="cursor: pointer;">Profile</a>
+                    <a class="dropdown-item" [routerLink]="'/login-page'" style="cursor: pointer;">Se connecter</a>
+                    <a class="dropdown-item" [routerLink]="'/Register'" style="cursor: pointer;">S'inscrire</a>
+                    <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">Deconnexion</a>
                 </div>
             </li>
             <!-- /User Menu -->

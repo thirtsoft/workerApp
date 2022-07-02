@@ -5,6 +5,9 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import {CommonServiceService  } from './../../common-service.service';
 
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/security/auth.service';
+import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
 
 
 @Component({
@@ -22,12 +25,47 @@ export class DashboardComponent implements OnInit {
   appointmentsLength;
   TotalPatientsLength ;
   activeTab = 'upcomming';
+
+  info: any;
+  private roles: string[];
+
+  currentTime: number = 0;
+
+  isLoggedIn = false;
+  showAdminBoard = false;
+  showManagerBoard = false;
+  showModeratorBoard = false;
+  showUserBoard = false;
+
+  username: string;
+  email: String;
+  userId;
+  photo;
+  img: boolean;
+
   
-  constructor(private toastr: ToastrService,public commonService:CommonServiceService,private modalService: BsModalService) { }
+  constructor(private toastr: ToastrService,
+              private tokenService: TokenStorageService,
+              public autService: AuthService,
+              private router: Router,
+              public commonService:CommonServiceService,
+              private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.getPatients();
-      this.getAppointments();
+    this.getAppointments();
+    this.isLoggedIn = !!this.tokenService.getToken();
+    if (this.isLoggedIn) {
+      const user = this.tokenService.getUser();
+      this.roles = user.roles;
+      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      this.showManagerBoard = this.roles.includes("ROLE_MANAGER");
+      this.showModeratorBoard = this.roles.includes("ROLE_MODERATOR");
+      this.showUserBoard = this.roles.includes('ROLE_USER');
+      this.username = user.username;
+      this.userId = user.id;
+      this.photo = user.photo;
+    }
   }
 
   search(activeTab){

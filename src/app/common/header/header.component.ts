@@ -15,6 +15,9 @@ import {
 import { DOCUMENT } from '@angular/common';
 
 import { CommonServiceService } from './../../common-service.service';
+import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
+import { UtilisateurService } from 'src/app/services/utilisateur.service';
+import { AuthService } from 'src/app/services/auth/security/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -36,12 +39,32 @@ export class HeaderComponent implements OnInit {
 
   base;
   url1;
+
+  info: any;
+  private roles: string[];
+
+  currentTime: number = 0;
+  isLoggedIn = false;
+  showAdminBoard = false;
+  showManagerBoard = false;
+  showModeratorBoard = false;
+  showUserBoard = false;
+
+  username: any;
+  userId: any;
+  photo: any;
+  img: boolean;
+
   constructor(
     @Inject(DOCUMENT) private document,
     private cdr: ChangeDetectorRef,
     public router: Router,
     private activeRoute: ActivatedRoute,
-    public commonService: CommonServiceService
+    public commonService: CommonServiceService,
+    private tokenService: TokenStorageService,
+    public userService: UtilisateurService,
+    public autService: AuthService,
+          
   ) {
     router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
@@ -142,41 +165,40 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     // Sidebar
-	
-	if($(window).width() <= 991){
-    var Sidemenu = function() {
-      this.$menuItem = $('.main-nav a');
-    };
-    $("#cart").on("click", function(o) {
-      o.preventDefault();
-     $(".shopping-cart").fadeToggle();
-     $(".shopping-cart").toggleClass('show-cart');
-   });
-    function init() {
-      var $this = Sidemenu;
-      $('.main-nav a').on('click', function(e) {
-        if($(this).parent().hasClass('has-submenu')) {
-          e.preventDefault();
-        }
-        if(!$(this).hasClass('submenu')) {
-          $('ul', $(this).parents('ul:first')).slideUp(350);
-          $('a', $(this).parents('ul:first')).removeClass('submenu');
-          $(this).next('ul').slideDown(350);
-          $(this).addClass('submenu');
-        } else if($(this).hasClass('submenu')) {
-          $(this).removeClass('submenu');
-          $(this).next('ul').slideUp(350);
-        }
+    if($(window).width() <= 991){
+      var Sidemenu = function() {
+        this.$menuItem = $('.main-nav a');
+      };
+      $("#cart").on("click", function(o) {
+        o.preventDefault();
+        $(".shopping-cart").fadeToggle();
+        $(".shopping-cart").toggleClass('show-cart');
       });
-    }
+      function init() {
+        var $this = Sidemenu;
+        $('.main-nav a').on('click', function(e) {
+          if($(this).parent().hasClass('has-submenu')) {
+            e.preventDefault();
+          }
+          if(!$(this).hasClass('submenu')) {
+            $('ul', $(this).parents('ul:first')).slideUp(350);
+            $('a', $(this).parents('ul:first')).removeClass('submenu');
+            $(this).next('ul').slideDown(350);
+            $(this).addClass('submenu');
+          } else if($(this).hasClass('submenu')) {
+            $(this).removeClass('submenu');
+            $(this).next('ul').slideUp(350);
+          }
+        });
+      }
   
     // Sidebar Initiate
-    init();
+      init();
     }
     if (localStorage.getItem('auth') === 'true') {
       this.auth = true;
       this.isPatient =
-        localStorage.getItem('patient') === 'true' ? true : false;
+      localStorage.getItem('patient') === 'true' ? true : false;
     }
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
@@ -186,29 +208,60 @@ export class HeaderComponent implements OnInit {
       }
     });
     
-        $(window).scroll(function(){
-        var scroll = $(window).scrollTop();
-          if (scroll > 95) {
-          $(".header-trans").css("background" , "#FFFFFF");
-          }
-  
-          else{
-            $(".header-trans").css("background" , "transparent");  	
-          }
-          if (scroll > 95) {
-            $(".header-trans.custom").css("background" , "#2b6ccb");
-            }
+    $(window).scroll(function(){
+      var scroll = $(window).scrollTop();
+      if (scroll > 95) {
+        $(".header-trans").css("background" , "#FFFFFF");
+      }
+      else{
+        $(".header-trans").css("background" , "transparent");  	
+      }
+      if (scroll > 95) {
+        $(".header-trans.custom").css("background" , "#2b6ccb");
+      }
     
-            else{
-              $(".header-trans.custom").css("background" , "transparent");  	
-            }
-        })
+      else{
+        $(".header-trans.custom").css("background" , "transparent");  	
+      }
+    });
+
+    this.isLoggedIn = !!this.tokenService.getToken();
+    if (this.isLoggedIn) {
+      const user = this.tokenService.getUser();
+      this.roles = user.roles;
+      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      this.showManagerBoard = this.roles.includes("ROLE_MANAGER");
+      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+      this.showUserBoard = this.roles.includes('ROLE_USER');
+      this.username = user.username;
+      this.userId = user.id;
+      this.photo = user.photo;
+    }
+  }
+
+  getUserOrder() {
+    this.router.navigate(['/my-account/' + this.userId]);
+  }
+
+  getProfile() {
+    this.router.navigate(['/home/profile/' + this.userId]);
+  }
+
+  getTS() {
+    return this.currentTime;
+  }
+
+  logout() {
+    this.tokenService.signOut();
+    window.location.reload();
+    this.router.navigate(['/home']);
   }
 
   ngAfterViewInit() {
     this.cdr.detectChanges();
     this.loadDynmicallyScript('assets/js/script.js');
   }
+  
   loadDynmicallyScript(js) {
     var script = document.createElement('script');
     script.src = js;
@@ -216,7 +269,9 @@ export class HeaderComponent implements OnInit {
     document.head.appendChild(script);
     script.onload = () => this.doSomethingWhenScriptIsLoaded();
   }
+
   doSomethingWhenScriptIsLoaded() {}
+  
   change(name) {
     this.page = name;
     this.commonService.nextmessage('main');
@@ -294,12 +349,14 @@ export class HeaderComponent implements OnInit {
     // this.router.navigate(['/doctor/dashboard']);
   }
 
+  /*
   logout() {
     localStorage.clear();
     this.auth = false;
     this.isPatient = false;
     this.router.navigate(['/login']);
   }
+  */
 
   home() {
     this.commonService.nextmessage('main');

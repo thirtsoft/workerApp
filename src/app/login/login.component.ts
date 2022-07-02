@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
     this.isPatient = event.target.checked ? true : false;
   }
 
+  /*
   login(name, password) {
     localStorage.setItem('auth', 'true');
     localStorage.setItem('patient', this.isPatient.toString());
@@ -91,6 +92,7 @@ export class LoginComponent implements OnInit {
       }
     }
   }
+  */
 
   onSubmit() {
     this.loginInfo = new Login(
@@ -110,7 +112,8 @@ export class LoginComponent implements OnInit {
         timeOut: 1500,
         positionClass: 'toast-top-right',
         });
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
+        window.location.reload();
       },
       error => {
         console.log(error);
