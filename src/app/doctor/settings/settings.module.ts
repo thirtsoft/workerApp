@@ -5,6 +5,7 @@ import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsComponent } from './settings.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { AngularTagsInputModule } from '@iomechs/angular-tags-input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,8 +13,11 @@ import { AngularTagsInputModule } from '@iomechs/angular-tags-input';
   imports: [
     CommonModule,
     SettingsRoutingModule,
-	NgxDropzoneModule,
-	AngularTagsInputModule,
+	  NgxDropzoneModule,
+	  AngularTagsInputModule,
+    FormsModule,
+    ReactiveFormsModule
+
   ]
 })
 export class SettingsModule { }

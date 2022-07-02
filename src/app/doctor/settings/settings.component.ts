@@ -1,4 +1,12 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Utilisateur } from 'src/app/models/utilisateur';
+import { AuthService } from 'src/app/services/auth/security/auth.service';
+import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
+import { UtilisateurService } from 'src/app/services/utilisateur.service';
 declare var $: any;
 declare var selection: any;
 declare var valueKey: any;
@@ -8,183 +16,196 @@ declare var valueKey: any;
   styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
-  constructor() {}
+
+  listDataProfil: Utilisateur = new Utilisateur();
+
+  private roles!: string[];
+  currentTime: number = 0;
+  isLoggedIn = false;
+  username!: string;
+  email!: string;
+  userId:any;
+  customerName!: string;
+  customerUsername!: string;
+  customerEmail!: string;
+  customerMobile!: string;
+  customerPassword!: string;
+  currentUser:any;
+  id!: number;
+  p:number=1;
+  searchText:any;
+
+  constructor(private tokenService: TokenStorageService,
+    public toastr: ToastrService,
+    public authService: AuthService,
+    public userService: UtilisateurService,
+    public fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-
-
-
-
-
-
-
-
-
-
-
-
-   var defaultOptions = {
-    tagClass: function(item) {
-      return 'badge badge-info';
-    },
-    focusClass: 'focus',
-    itemValue: function(item) {
-      return item ? item.toString() : item;
-    },
-    itemText: function(item) {
-      return this.itemValue(item);
-    },
-    itemTitle: function(item) {
-      return null;
-    },
-    freeInput: true,
-    addOnBlur: true,
-    maxTags: undefined,
-    maxChars: undefined,
-    confirmKeys: [13, 44],
-    delimiter: ',',
-    delimiterRegex: null,
-    cancelConfirmKeysOnEmpty: false,
-    onTagExists: function(item, $tag) {
-      $tag.hide().fadeIn();
-    },
-    trimValue: false,
-    allowDuplicates: false,
-    triggerChange: true
-  };
+    var defaultOptions = {
+      tagClass: function(item) {
+        return 'badge badge-info';
+      },
+      focusClass: 'focus',
+      itemValue: function(item) {
+        return item ? item.toString() : item;
+      },
+      itemText: function(item) {
+        return this.itemValue(item);
+      },
+      itemTitle: function(item) {
+        return null;
+      },
+      freeInput: true,
+      addOnBlur: true,
+      maxTags: undefined,
+      maxChars: undefined,
+      confirmKeys: [13, 44],
+      delimiter: ',',
+      delimiterRegex: null,
+      cancelConfirmKeysOnEmpty: false,
+      onTagExists: function(item, $tag) {
+        $tag.hide().fadeIn();
+      },
+      trimValue: false,
+      allowDuplicates: false,
+      triggerChange: true
+    };
 
   /**
    * Constructor function
    */
-  function TagsInput(element, options) {
-    this.isInit = true;
-    this.itemsArray = [];
+    function TagsInput(element, options) {
+      this.isInit = true;
+      this.itemsArray = [];
 
-    this.$element = $(element);
-    this.$element.hide();
+      this.$element = $(element);
+      this.$element.hide();
 
-    this.isSelect = (element.tagName === 'SELECT');
-    this.multiple = (this.isSelect && element.hasAttribute('multiple'));
-    this.objectItems = options && options.itemValue;
-    this.placeholderText = element.hasAttribute('placeholder') ? this.$element.attr('placeholder') : '';
-    this.inputSize = Math.max(1, this.placeholderText.length);
+      this.isSelect = (element.tagName === 'SELECT');
+      this.multiple = (this.isSelect && element.hasAttribute('multiple'));
+      this.objectItems = options && options.itemValue;
+      this.placeholderText = element.hasAttribute('placeholder') ? this.$element.attr('placeholder') : '';
+      this.inputSize = Math.max(1, this.placeholderText.length);
 
-    this.$container = $('<div class="bootstrap-tagsinput"></div>');
-    this.$input = $('<input type="text" placeholder="' + this.placeholderText + '"/>').appendTo(this.$container);
+      this.$container = $('<div class="bootstrap-tagsinput"></div>');
+      this.$input = $('<input type="text" placeholder="' + this.placeholderText + '"/>').appendTo(this.$container);
 
-    this.$element.before(this.$container);
+      this.$element.before(this.$container);
 
-    this.build(options);
-    this.isInit = false;
-  }
+      this.build(options);
+      this.isInit = false;
+    }
 
-  TagsInput.prototype = {
-    constructor: TagsInput,
+    TagsInput.prototype = {
+      constructor: TagsInput,
 
     /**
      * Adds the given item as a new tag. Pass true to dontPushVal to prevent
      * updating the elements val()
      */
-    add: function(item, dontPushVal, options) {
-      var self = this;
+      add: function(item, dontPushVal, options) {
+        var self = this;
 
-      if (self.options.maxTags && self.itemsArray.length >= self.options.maxTags)
-        return;
+        if (self.options.maxTags && self.itemsArray.length >= self.options.maxTags)
+          return;
 
       // Ignore falsey values, except false
-      if (item !== false && !item)
-        return;
+        if (item !== false && !item)
+          return;
 
       // Trim value
-      if (typeof item === "string" && self.options.trimValue) {
-        item = $.trim(item);
-      }
+        if (typeof item === "string" && self.options.trimValue) {
+          item = $.trim(item);
+        }
 
       // Throw an error when trying to add an object while the itemValue option was not set
-      if (typeof item === "object" && !self.objectItems)
-        throw("Can't add objects when itemValue option is not set");
+        if (typeof item === "object" && !self.objectItems)
+          throw("Can't add objects when itemValue option is not set");
 
       // Ignore strings only containg whitespace
-      if (item.toString().match(/^\s*$/))
-        return;
+        if (item.toString().match(/^\s*$/))
+          return;
 
       // If SELECT but not multiple, remove current tag
-      if (self.isSelect && !self.multiple && self.itemsArray.length > 0)
-        self.remove(self.itemsArray[0]);
+        if (self.isSelect && !self.multiple && self.itemsArray.length > 0)
+          self.remove(self.itemsArray[0]);
 
-      if (typeof item === "string" && this.$element[0].tagName === 'INPUT') {
-        var delimiter = (self.options.delimiterRegex) ? self.options.delimiterRegex : self.options.delimiter;
-        var items = item.split(delimiter);
-        if (items.length > 1) {
-          for (var i = 0; i < items.length; i++) {
-            this.add(items[i], true);
+        if (typeof item === "string" && this.$element[0].tagName === 'INPUT') {
+          var delimiter = (self.options.delimiterRegex) ? self.options.delimiterRegex : self.options.delimiter;
+          var items = item.split(delimiter);
+          if (items.length > 1) {
+            for (var i = 0; i < items.length; i++) {
+              this.add(items[i], true);
+            }
+
+            if (!dontPushVal)
+              self.pushVal(self.options.triggerChange);
+            return;
           }
-
-          if (!dontPushVal)
-            self.pushVal(self.options.triggerChange);
-          return;
         }
-      }
 
-      var itemValue = self.options.itemValue(item),
-          itemText = self.options.itemText(item),
-          tagClass = self.options.tagClass(item),
-          itemTitle = self.options.itemTitle(item);
+        var itemValue = self.options.itemValue(item),
+        itemText = self.options.itemText(item),
+        tagClass = self.options.tagClass(item),
+        itemTitle = self.options.itemTitle(item);
 
       // Ignore items allready added
-      var existing = $.grep(self.itemsArray, function(item) { return self.options.itemValue(item) === itemValue; } )[0];
-      if (existing && !self.options.allowDuplicates) {
+        var existing = $.grep(self.itemsArray, function(item) { return self.options.itemValue(item) === itemValue; } )[0];
+        if (existing && !self.options.allowDuplicates) {
         // Invoke onTagExists
-        if (self.options.onTagExists) {
-          var $existingTag = $(".tag", self.$container).filter(function() { return $(this).data("item") === existing; });
-          self.options.onTagExists(item, $existingTag);
+          if (self.options.onTagExists) {
+            var $existingTag = $(".tag", self.$container).filter(function() { return $(this).data("item") === existing; });
+            self.options.onTagExists(item, $existingTag);
+          }
+          return;
         }
-        return;
-      }
 
       // if length greater than limit
-      if (self.items().toString().length + item.length + 1 > self.options.maxInputLength)
-        return;
+        if (self.items().toString().length + item.length + 1 > self.options.maxInputLength)
+          return;
 
       // raise beforeItemAdd arg
-      var beforeItemAddEvent = $.Event('beforeItemAdd', { item: item, cancel: false, options: options});
-      self.$element.trigger(beforeItemAddEvent);
-      if (beforeItemAddEvent.cancel)
-        return;
+        var beforeItemAddEvent = $.Event('beforeItemAdd', { item: item, cancel: false, options: options});
+        self.$element.trigger(beforeItemAddEvent);
+        if (beforeItemAddEvent.cancel)
+          return;
 
       // register item in internal array and map
-      self.itemsArray.push(item);
+        self.itemsArray.push(item);
 
       // add a tag element
 
-      var $tag = $('<span class="tag ' + htmlEncode(tagClass) + (itemTitle !== null ? ('" title="' + itemTitle) : '') + '">' + htmlEncode(itemText) + '<span data-role="remove"></span></span>');
-      $tag.data('item', item);
-      self.findInputWrapper().before($tag);
-      $tag.after(' ');
+        var $tag = $('<span class="tag ' + htmlEncode(tagClass) + (itemTitle !== null ? ('" title="' + itemTitle) : '') + '">' + htmlEncode(itemText) + '<span data-role="remove"></span></span>');
+        $tag.data('item', item);
+        self.findInputWrapper().before($tag);
+        $tag.after(' ');
 
       // Check to see if the tag exists in its raw or uri-encoded form
-      var optionExists = (
-        $('option[value="' + encodeURIComponent(itemValue) + '"]', self.$element).length ||
-        $('option[value="' + htmlEncode(itemValue) + '"]', self.$element).length
-      );
+        var optionExists = (
+          $('option[value="' + encodeURIComponent(itemValue) + '"]', self.$element).length ||
+          $('option[value="' + htmlEncode(itemValue) + '"]', self.$element).length
+        );
 
       // add <option /> if item represents a value not present in one of the <select />'s options
-      if (self.isSelect && !optionExists) {
-        var $option = $('<option selected>' + htmlEncode(itemText) + '</option>');
-        $option.data('item', item);
-        $option.attr('value', itemValue);
-        self.$element.append($option);
-      }
+        if (self.isSelect && !optionExists) {
+          var $option = $('<option selected>' + htmlEncode(itemText) + '</option>');
+          $option.data('item', item);
+          $option.attr('value', itemValue);
+          self.$element.append($option);
+        }
 
-      if (!dontPushVal)
-        self.pushVal(self.options.triggerChange);
+        if (!dontPushVal)
+          self.pushVal(self.options.triggerChange);
 
       // Add class when reached maxTags
-      if (self.options.maxTags === self.itemsArray.length || self.items().toString().length === self.options.maxInputLength)
-        self.$container.addClass('bootstrap-tagsinput-max');
+        if (self.options.maxTags === self.itemsArray.length || self.items().toString().length === self.options.maxInputLength)
+          self.$container.addClass('bootstrap-tagsinput-max');
 
       // If using typeahead, once the tag has been added, clear the typeahead value so it does not stick around in the input.
-      if ($('.typeahead, .twitter-typeahead', self.$container).length) {
+        if ($('.typeahead, .twitter-typeahead', self.$container).length) {
         self.$input.typeahead('val', '');
       }
 
@@ -903,7 +924,59 @@ export class SettingsComponent implements OnInit {
       $('.registrations-info').append(regcontent);
       return false;
     });
+
+    this.isLoggedIn = !!this.tokenService.getToken();
+    if (this.isLoggedIn) {
+      const user = this.tokenService.getUser();
+      this.roles = user.roles;
+      this.username = user.username;
+      this.userId = user.id;
+    }
+
+    this.getUtilisateurById();
+  
   }
+
+  getUtilisateurById() {
+    this.userService.getUtilisateurById(this.userId).subscribe(
+      (response: Utilisateur) => {
+        this.listDataProfil = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  logout(){
+    this.tokenService.signOut();
+    this.toastr.success('au revoir','Vous etes deconnecter', {
+      timeOut: 800,
+      positionClass: 'toast-top-right',
+    });
+    this.router.navigateByUrl("/").then(() => {
+      window.location.reload();
+    });
+  }
+
+  update() {
+    this.userService.updateUtilisateur(this.listDataProfil.id, this.listDataProfil).subscribe(
+      (response: Utilisateur) => {
+        this.toastr.warning('avec succès','Informations Modifiée', {
+          timeOut: 1500,
+          positionClass: 'toast-top-right',
+        });
+        this.router.navigateByUrl("/doctor/settings").then(() => {
+          window.location.reload();
+        });
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+
+    );
+  } 
+
   files: File[] = [];
 
   onSelect(event) {
