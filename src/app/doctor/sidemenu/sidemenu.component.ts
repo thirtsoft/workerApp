@@ -86,10 +86,6 @@ export class SidemenuComponent implements OnInit {
   }
 
   logout() {
-    /*
-    localStorage.clear();
-    this.commonService.nextmessage('logout');
-    */
     this.toastr.warning('Au revoir','Vous etes bien déconnecter', {
       timeOut: 1500,
       positionClass: 'toast-top-right',

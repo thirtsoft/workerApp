@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HistoriqueLoginService } from 'src/app/services/historique-login.service';
 
 @Component({
   selector: 'app-basic-tables',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BasicTablesComponent implements OnInit {
 
-  constructor() { }
+  historiqueLoginsList: any = [];
+  
+  constructor(public log: HistoriqueLoginService) { }
 
   ngOnInit(): void {
+    this.getListHistoriqueLogins();
   }
+
+  getListHistoriqueLogins() {
+    this.log.getHistoriqueLoginsOrderByIdDesc()
+    .subscribe(res=>{
+      this.historiqueLoginsList = res;
+    })
+  }
+
 
 }
