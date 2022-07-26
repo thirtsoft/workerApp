@@ -4,10 +4,10 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-7">
-                    <h3 class="page-title">List des Ouvriers</h3>
+                    <h3 class="page-title">Gestion des Ouvriers</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:(0);">Ouvrier</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:(0);">List des Ouvriers</a></li>
                         <li class="breadcrumb-item active">Ouvriers</li>
                     </ul>
                 </div>
@@ -29,7 +29,7 @@
                                 <table class="datatable table table-hover table-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <!-- <th>ID</th> -->
                                             <th>Name</th>
                                             <th>Sexe</th>
                                             <th>Address Actuel</th>
@@ -45,7 +45,7 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let ouvrier of ouvriersList">
-                                            <td>{{ouvrier.id}}</td>
+                                            <!-- <td>{{ouvrier.id}}</td> -->
                                             <td>
                                                 <h2 class="table-avatar">
                                                     <a [routerLink]="'/admin/doc-profile'" class="avatar avatar-sm mr-3">
