@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -54,8 +54,6 @@ export class AppointmentService {
     return this.http.get<Appointment[]>(`${this.apiServerUrl}/appointments/searchTop4AppointmentsByOuvrierId/${ouvId}`);
   }
 
-  
-
   public getAppointmentById(appId: number): Observable<Appointment> {
     return this.http.get<Appointment>(`${this.apiServerUrl}/appointments/findById/${appId}`);
   }
@@ -70,6 +68,14 @@ export class AppointmentService {
 
   public updateAppointment(appointId: number, appoint: Appointment): Observable<Appointment> {
     return this.http.put<Appointment>(`${this.apiServerUrl}/appointments/update/${appointId}`, appoint);
+  }
+
+  public updateStatusOfAppointment(id: number, status: string): Observable<any> {
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json; charset=utf-8');
+    let data = {"status":status};
+    const urlUpdateStatus = (this.apiServerUrl+"/appointments/updateStatusOfAppointment/"+id+"?status="+data.status);
+    return this.http.patch<any>(urlUpdateStatus, {headers: headers});
   }
 
   public countNumberOfAppointments(): Observable<any> {

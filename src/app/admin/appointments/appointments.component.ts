@@ -6,6 +6,8 @@ import { CommonServiceService } from 'src/app/common-service.service';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Appointment } from 'src/app/models/appointment';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-appointments',
@@ -30,17 +32,51 @@ export class AppointmentsComponent implements OnInit {
   searchText: any;
   maxRatingValue = 5;
 
+  formDataAppointment = new Appointment();
+  editForm: FormGroup;
+  editEtatForm: FormGroup;
+  viewForm: FormGroup;
+
 
   constructor(public commonService: CommonServiceService,
               public crudApi: AppointmentService,
               public router: Router,
               public toastr: ToastrService,
-              private modalService: BsModalService
+              private modalService: BsModalService,
+              private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
     this.getReviews();
     this.getAppointmentsList();
+    this.editEtatForm = this.fb.group({
+      id: [''],
+      statusOfAppointment: ['']
+    } );
+  }
+
+  editStatusOfAppointmentModal(template: TemplateRef<any>, appoint: Appointment) {
+    this.modalRef = this.modalService.show(template, {
+      class: 'modal-lg modal-dialog-centered',
+    });
+    this.editEtatForm.patchValue( {
+     id: appoint.id,
+     statusOfAppointment: appoint.statusOfAppointment
+    });
+  }
+
+  updateStatus() {
+    console.log(this.editEtatForm.value.id);
+    console.log(this.editEtatForm.value);
+    this.crudApi.updateStatusOfAppointment(this.editEtatForm.value.id, this.editEtatForm.value.statusOfAppointment)
+      .subscribe((data) => {
+        this.modalRef.hide();
+        this.toastr.success('avec succès','Status Rv Modifié', {
+          timeOut: 1500,
+          positionClass: 'toast-top-right',
+        });
+       this.getAppointmentsList();
+      })
   }
 
   deleteModal(template: TemplateRef<any>, special) {
