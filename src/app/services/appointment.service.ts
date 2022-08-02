@@ -8,7 +8,7 @@ import { TokenStorageService } from './auth/security/token-storage.service';
 @Injectable({
   providedIn: 'root'
 })
-export class appointmentservice {
+export class AppointmentService {
   
   public apiServerUrl = environment.apiBaseUrl;
 
@@ -49,6 +49,12 @@ export class appointmentservice {
   public getAllAppointmentsByCustomerId(userId: number): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(`${this.apiServerUrl}/appointments/searchAllAppointmentsByCustomerId/${userId}`);
   }
+
+  public getTop4AppointmentByOuvrierIdOrderByCreatedDateDesc(ouvId: number): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.apiServerUrl}/appointments/searchTop4AppointmentsByOuvrierId/${ouvId}`);
+  }
+
+  
 
   public getAppointmentById(appId: number): Observable<Appointment> {
     return this.http.get<Appointment>(`${this.apiServerUrl}/appointments/findById/${appId}`);
@@ -102,5 +108,5 @@ export class appointmentservice {
     const user = this.tokenService.getUser();
     this.id = user.id
   }
-  
+
 }

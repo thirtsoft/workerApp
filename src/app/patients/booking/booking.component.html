@@ -1,234 +1,334 @@
-	<!-- Breadcrumb -->
-		<!-- 	<div class="breadcrumb-bar">
-				<div class="container-fluid">
-					<div class="row align-items-center">
-						<div class="col-md-12 col-12">
-							<nav aria-label="breadcrumb" class="page-breadcrumb">
-								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a [routerLink]="''">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Booking</li>
-								</ol>
-							</nav>
-							<h2 class="breadcrumb-title">Booking</h2>
-						</div>
-					</div>
-				</div>
-			</div> -->
-			<!-- /Breadcrumb -->
-			
-			<!-- Page Content -->
-			<div class="content">
-				<div class="container">
-				
-					<div class="row">
-						<div class="col-12">
-						
-							<div class="card">
-								<div class="card-body">
-									<div class="booking-doc-info" *ngIf="doctorDetails">
-										<a [routerLink]="'/patients/doctor-profile'" class="booking-doc-img">
-											<img src={{doctorDetails.profile}} alt="User Image">
-										</a>
-										<div class="booking-info">
-											<h4><a [routerLink]="'/patients/doctor-profile'">{{doctorDetails.doctor_name}}</a></h4>
-											<div class="rating">
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star"></i>
-												<span class="d-inline-block average-rating">35</span>
-											</div>
-											<p class="text-muted mb-0"><i class="fas fa-map-marker-alt"></i> {{doctorDetails.location}}</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-12 col-sm-4 col-md-6">
-									<h4 class="mb-1">11 November 2019</h4>
-									<p class="text-muted">Monday</p>
-								</div>
-								<div class="col-12 col-sm-8 col-md-6 text-sm-right">
-									<div class="bookingrange btn btn-white btn-sm mb-3">
-										<i class="far fa-calendar-alt mr-2"></i>
-										<span></span>
-										<i class="fas fa-chevron-down ml-2"></i>
-									</div>
-								</div>
-								<!-- <div class="col-12 col-sm-8 col-md-6 text-sm-right">
-									<div class="bookingrange btn btn-white btn-sm mb-3">
-										<i class="far fa-calendar-alt mr-2"></i>
-										<input name="daterangeInput" id="daterange" daterangepicker [options]="options" (selected)="selectedDate($event, daterange)" />
-										<i class="fas fa-chevron-down ml-2"></i>
-									</div>
-								</div> -->
-                            </div>
-							<!-- Schedule Widget -->
-							<div class="card booking-schedule schedule-widget">
-							
-								<!-- Schedule Header -->
-								<div class="schedule-header">
-									<div class="row">
-										<div class="col-md-12">
-										
-											<!-- Day Slot -->
-											<div class="day-slot">
-												<ul>
-													<li class="left-arrow">
-														<a >
-															<i class="fa fa-chevron-left"></i>
-														</a>
-													</li>
-													<li>
-														<span>Mon</span>
-														<span class="slot-date">11 Nov <small class="slot-year">2019</small></span>
-													</li>
-													<li>
-														<span>Tue</span>
-														<span class="slot-date">12 Nov <small class="slot-year">2019</small></span>
-													</li>
-													<li>
-														<span>Wed</span>
-														<span class="slot-date">13 Nov <small class="slot-year">2019</small></span>
-													</li>
-													<li>
-														<span>Thu</span>
-														<span class="slot-date">14 Nov <small class="slot-year">2019</small></span>
-													</li>
-													<li>
-														<span>Fri</span>
-														<span class="slot-date">15 Nov <small class="slot-year">2019</small></span>
-													</li>
-													<li>
-														<span>Sat</span>
-														<span class="slot-date">16 Nov <small class="slot-year">2019</small></span>
-													</li>
-													<li>
-														<span>Sun</span>
-														<span class="slot-date">17 Nov <small class="slot-year">2019</small></span>
-													</li>
-													<li class="right-arrow">
-														<a >
-															<i class="fa fa-chevron-right"></i>
-														</a>
-													</li>
-												</ul>
-											</div>
-											<!-- /Day Slot -->
-											
-										</div>
-									</div>
-								</div>
-								<!-- /Schedule Header -->
-								
-								<!-- Schedule Content -->
-								<div class="schedule-cont">
-									<div class="row">
-										<div class="col-md-12">
-										
-											<!-- Time Slot -->
-											<div class="time-slot">
-												<ul class="clearfix">
-													<li>
-														<a class="timing">
-															<span>9:00</span> <span>AM</span>
-														</a>
-														<a class="timing">
-															<span>10:00</span> <span>AM</span>
-														</a>
-														<a class="timing">
-															<span>11:00</span> <span>AM</span>
-														</a>
-													</li>
-													<li>
-														<a class="timing">
-															<span>12:00</span> <span>AM</span>
-														</a>
-														<a class="timing">
-															<span>01:00</span> <span>PM</span>
-														</a>
-														<a class="timing">
-															<span>02:00</span> <span>PM</span>
-														</a>
-													</li>
-													<li>
-														<a class="timing">
-															<span>03:00</span> <span>PM</span>
-														</a>
-														<a class="timing">
-															<span>04:00</span> <span>PM</span>
-														</a>
-														<a class="timing">
-															<span>05:00</span> <span>PM</span>
-														</a>
-													</li>
-													<li>
-														<a class="timing">
-															<span>06:00</span> <span>PM</span>
-														</a>
-														<a class="timing">
-															<span>07:00</span> <span>PM</span>
-														</a>
-														<a class="timing">
-															<span>08:00</span> <span>PM</span>
-														</a>
-													</li>
-													<li>
-														<a class="timing">
-															<span>09:00</span> <span>PM</span>
-														</a>
-														<a class="timing selected">
-															<span>10:00</span> <span>PM</span>
-														</a>
-														<a class="timing">
-															<span>11:00</span> <span>PM</span>
-														</a>
-													</li>
-													<li>
-														<a class="timing">
-															<span>9:00</span> <span>AM</span>
-														</a>
-														<a class="timing">
-															<span>10:00</span> <span>AM</span>
-														</a>
-														<a class="timing">
-															<span>11:00</span> <span>AM</span>
-														</a>
-													</li>
-													<li>
-														<a class="timing">
-															<span>9:00</span> <span>AM</span>
-														</a>
-														<a class="timing">
-															<span>10:00</span> <span>AM</span>
-														</a>
-														<a class="timing">
-															<span>11:00</span> <span>AM</span>
-														</a>
-													</li>
-												</ul>
-											</div>
-											<!-- /Time Slot -->
-											
-										</div>
-									</div>
-								</div>
-								<!-- /Schedule Content -->
-								
-							</div>
-							<!-- /Schedule Widget -->
-							
-							<!-- Submit Section -->
-							<div class="submit-section proceed-btn text-right">
-								<a [routerLink]="'/patients/checkout'" [queryParams]="{id: doctorDetails?.id}" class="btn btn-primary submit-btn">Proceed to Pay</a>
-							</div>
-							<!-- /Submit Section -->
-							
-						</div>
-					</div>
-				</div>
+<!-- Page Content -->
+<!-- <div class="content">
+    <div class="container">
 
-			</div>		
-			<!-- /Page Content -->
-   
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="booking-doc-info" *ngIf="doctorDetails">
+                            <a [routerLink]="'/patients/doctor-profile'" class="booking-doc-img">
+                                <img src={{doctorDetails.profile}} alt="User Image">
+                            </a>
+                            <div class="booking-info">
+                                <h4><a [routerLink]="'/patients/doctor-profile'">{{doctorDetails.doctor_name}}</a></h4>
+                                <div class="rating">
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="d-inline-block average-rating">35</span>
+                                </div>
+                                <p class="text-muted mb-0"><i class="fas fa-map-marker-alt"></i> {{doctorDetails.location}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-md-6">
+                        <h4 class="mb-1">11 November 2019</h4>
+                        <p class="text-muted">Monday</p>
+                    </div>
+                    <div class="col-12 col-sm-8 col-md-6 text-sm-right">
+                        <div class="bookingrange btn btn-white btn-sm mb-3">
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            <span></span>
+                            <i class="fas fa-chevron-down ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+     
+                <div class="card booking-schedule schedule-widget">
+                    <div class="schedule-header">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="day-slot">
+                                    <ul>
+                                        <li class="left-arrow">
+                                            <a>
+                                                <i class="fa fa-chevron-left"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <span>Mon</span>
+                                            <span class="slot-date">11 Nov <small class="slot-year">2019</small></span>
+                                        </li>
+                                        <li>
+                                            <span>Tue</span>
+                                            <span class="slot-date">12 Nov <small class="slot-year">2019</small></span>
+                                        </li>
+                                        <li>
+                                            <span>Wed</span>
+                                            <span class="slot-date">13 Nov <small class="slot-year">2019</small></span>
+                                        </li>
+                                        <li>
+                                            <span>Thu</span>
+                                            <span class="slot-date">14 Nov <small class="slot-year">2019</small></span>
+                                        </li>
+                                        <li>
+                                            <span>Fri</span>
+                                            <span class="slot-date">15 Nov <small class="slot-year">2019</small></span>
+                                        </li>
+                                        <li>
+                                            <span>Sat</span>
+                                            <span class="slot-date">16 Nov <small class="slot-year">2019</small></span>
+                                        </li>
+                                        <li>
+                                            <span>Sun</span>
+                                            <span class="slot-date">17 Nov <small class="slot-year">2019</small></span>
+                                        </li>
+                                        <li class="right-arrow">
+                                            <a>
+                                                <i class="fa fa-chevron-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-cont">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="time-slot">
+                                    <ul class="clearfix">
+                                        <li>
+                                            <a class="timing">
+                                                <span>9:00</span> <span>AM</span>
+                                            </a>
+                                            <a class="timing">
+                                                <span>10:00</span> <span>AM</span>
+                                            </a>
+                                            <a class="timing">
+                                                <span>11:00</span> <span>AM</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="timing">
+                                                <span>12:00</span> <span>AM</span>
+                                            </a>
+                                            <a class="timing">
+                                                <span>01:00</span> <span>PM</span>
+                                            </a>
+                                            <a class="timing">
+                                                <span>02:00</span> <span>PM</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="timing">
+                                                <span>03:00</span> <span>PM</span>
+                                            </a>
+                                            <a class="timing">
+                                                <span>04:00</span> <span>PM</span>
+                                            </a>
+                                            <a class="timing">
+                                                <span>05:00</span> <span>PM</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="timing">
+                                                <span>06:00</span> <span>PM</span>
+                                            </a>
+                                            <a class="timing">
+                                                <span>07:00</span> <span>PM</span>
+                                            </a>
+                                            <a class="timing">
+                                                <span>08:00</span> <span>PM</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="timing">
+                                                <span>09:00</span> <span>PM</span>
+                                            </a>
+                                            <a class="timing selected">
+                                                <span>10:00</span> <span>PM</span>
+                                            </a>
+                                            <a class="timing">
+                                                <span>11:00</span> <span>PM</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="timing">
+                                                <span>9:00</span> <span>AM</span>
+                                            </a>
+                                            <a class="timing">
+                                                <span>10:00</span> <span>AM</span>
+                                            </a>
+                                            <a class="timing">
+                                                <span>11:00</span> <span>AM</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="timing">
+                                                <span>9:00</span> <span>AM</span>
+                                            </a>
+                                            <a class="timing">
+                                                <span>10:00</span> <span>AM</span>
+                                            </a>
+                                            <a class="timing">
+                                                <span>11:00</span> <span>AM</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="submit-section proceed-btn text-right">
+                    <a [routerLink]="'/patients/checkout'" [queryParams]="{id: doctorDetails?.id}" class="btn btn-primary submit-btn">Proceed to Pay</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div> -->
+<!-- /Page Content -->
+
+<!-- Page Content -->
+<div class="content">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="doctor-widget">
+                    <div class="doc-info-left">
+                        <div class="doctor-img">
+                            <img *ngIf="!ouvrierDetails" src="assets/img/doctors/doctor-thumb-02.jpg" class="img-fluid" alt="User Image">
+                            <img *ngIf="ouvrierDetails" class="img-fluid w-100" alt="User Image" src="{{
+                                this.ouvService.apiServerUrl +
+                                '/ouvriers/photoOuvrierInFolder/' +
+                                ouvrierDetails.id
+                                }}">
+                        </div>
+                        <div class="doc-info-cont">
+                            <h4 class="doc-name" *ngIf="!ouvrierDetails">Dr. Darren Elder</h4>
+                            <h4 class="doc-name" *ngIf="ouvrierDetails">{{ouvrierDetails.firstName}}-{{ouvrierDetails.lastName}}</h4>
+                            <p class="doc-speciality" *ngIf="!ouvrierDetails">BDS, MDS - Oral & Maxillofacial Surgery</p>
+                            <p class="doc-speciality" *ngIf="ouvrierDetails">{{ouvrierDetails.education}}</p>
+                            <p class="doc-department" *ngIf="!ouvrierDetails"><img src="assets/img/specialities/specialities-05.png" class="img-fluid" alt="Speciality">
+                                <span> Dentist </span>
+                            </p>
+
+                            <p class="doc-department" *ngIf="ouvrierDetails">
+                                <img *ngIf="ouvrierDetails" class="img-fluid" alt="Metier" src="{{
+                                    this.ouvService.apiServerUrl +
+                                    '/ouvriers/photoOuvrierInFolder/' +
+                                    ouvrierDetails.id
+                                    }}">
+                                <span> {{ouvrierDetails.reference}} </span>
+                            </p>
+                            <div class="rating">
+                                <!-- <ngb-rating [max]="5" [(rate)]="currentRating" [readonly]="true" class="text-warning mr-1 filled">
+                                </ngb-rating> -->
+                                Prestation:
+                                <span class="d-inline-block average-rating">+({{numberOfAppointmentToOuvrier}})</span>
+                            </div>
+                            <div class="clinic-details">
+                                <p class="doc-location" *ngIf="!ouvrierDetails"><i class="fas fa-map-marker-alt"></i> Newyork, USA - <a href="javascript:void(0);">Get Directions</a></p>
+                                <p class="doc-location" *ngIf="ouvrierDetails"><i class="fas fa-map-marker-alt"></i> {{ouvrierDetails.addressActuel}}
+                                    <!-- <a href="javascript:void(0);">Get Directions</a> --></p>
+                            </div>
+                            <div class="clinic-services">
+                                <span>Dental Fillings</span>
+                                <span>Teeth Whitneing</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doc-info-right">
+                        <div class="clini-infos">
+                            <ul>
+                                <form [formGroup]="this.formData">
+                                    <div class="form-group">
+                                        <label>Demandez un Rendez-vous</label>
+                                        <br>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="date_rv">Date Voulu</label>
+                                        <input type="date" formControlName="appointmentDate" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="heure">Heure voulu</label>
+                                        <input type="time" formControlName="time" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Votre message</label>
+                                        <textarea id="review_desc" formControlName="description" name="description" required="" maxlength="100" class="form-control"></textarea>
+                                        <!-- <div class="d-flex justify-content-between mt-3"><small class="text-muted"><span id="chars">100</span> characters remaining</small>
+                                        </div> -->
+                                    </div>
+                                    <hr>
+
+                                    <div class="submit-section">
+                                        <button type="submit" (click)="onAddAppointment()" class="btn btn-primary submit-btn">Envoyer Demande</button>
+                                        <!-- <button class="apt-btn"  type="submit" [disabled]="!this.formData.valid" (click)="onAddAppointment()">Envoyer votre Demande</button> -->
+                                    </div>
+                                </form>
+                            </ul>
+                        </div>
+                        <!-- <div class="clinic-booking">
+                            <a class="apt-btn" [routerLink]="'/patients/booking'" [queryParams]="{id: ouvrierDetails?.id}">Book Appointment</a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Voice Call Modal -->
+<div class="modal fade call-modal" id="voice_call">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <!-- Outgoing Call -->
+                <div class="call-box incoming-box">
+                    <div class="call-wrapper">
+                        <div class="call-inner">
+                            <div class="call-user">
+                                <img alt="User Image" src="assets/img/patients/patient.jpg" class="call-avatar">
+                                <h4>Richard Wilson</h4>
+                                <span>Connecting...</span>
+                            </div>
+                            <div class="call-items">
+                                <a href="javascript:void(0);" class="btn call-item call-end" data-dismiss="modal" aria-label="Close"><i class="material-icons">call_end</i></a>
+                                <a [routerLink]="'/voice-call'" class="btn call-item call-start"><i class="material-icons">call</i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Voice Call Modal -->
+
+<!-- Video Call Modal -->
+<div class="modal fade call-modal" id="video_call">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="call-box incoming-box">
+                    <div class="call-wrapper">
+                        <div class="call-inner">
+                            <div class="call-user">
+                                <img class="call-avatar" src="assets/img/patients/patient.jpg" alt="User Image">
+                                <h4>Richard Wilson</h4>
+                                <span>Calling ...</span>
+                            </div>
+                            <div class="call-items">
+                                <a href="javascript:void(0);" class="btn call-item call-end" data-dismiss="modal" aria-label="Close"><i class="material-icons">call_end</i></a>
+                                <a [routerLink]="'/video-call'" class="btn call-item call-start"><i class="material-icons">videocam</i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
