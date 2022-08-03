@@ -30,10 +30,14 @@ export class PrestationService {
 
   public getAllPrestationsByOuvrierId(ouvId: number): Observable<Prestation[]> {
     return this.http.get<Prestation[]>(`${this.apiServerUrl}/prestations/searchAllPrestationsByOuvrierId/${ouvId}`);
-  }
+  } 
 
   public getTop4PrestationByOuvrierIdOrderByCreatedDateDesc(ouvId: number): Observable<Prestation[]> {
-    return this.http.get<Prestation[]>(`${this.apiServerUrl}/prestations/searchTop4prestationsByOuvrierId/${ouvId}`);
+    return this.http.get<Prestation[]>(`${this.apiServerUrl}/prestations/searchTop4PrestationsByOuvrierId/${ouvId}`);
+  }
+
+  public getTop8PrestationByOuvrierIdOrderByCreatedDateDesc(ouvId: number): Observable<Prestation[]> {
+    return this.http.get<Prestation[]>(`${this.apiServerUrl}/prestations/searchTop8PrestationsByOuvrierId/${ouvId}`);
   }
 
   public getPrestationById(presId: number): Observable<Prestation> {

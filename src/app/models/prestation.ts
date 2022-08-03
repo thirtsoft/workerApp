@@ -1,3 +1,4 @@
+import { Locality } from "./locality";
 import { Ouvrier } from "./ouvrier";
 
 export class Prestation {
@@ -7,4 +8,5 @@ export class Prestation {
     createdDate: Date;
     
     ouvrier: Ouvrier;
+    locality: Locality;
 }

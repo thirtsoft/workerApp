@@ -4,10 +4,14 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Appointment } from 'src/app/models/appointment';
+import { Prestation } from 'src/app/models/prestation';
+import { ServiceOffert } from 'src/app/models/service-offert';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
 import { MetierService } from 'src/app/services/metier.service';
 import { OuvrierService } from 'src/app/services/ouvrier.service';
+import { PrestationService } from 'src/app/services/prestation.service';
+import { ServiceOffertService } from 'src/app/services/service-offert.service';
 import { CommonServiceService } from './../../common-service.service';
 declare const $: any;
 declare var moment: any;
@@ -28,7 +32,11 @@ export class BookingComponent implements OnInit {
   ouvrierDetails;
 
   appointList: Appointment[];
+  prestationList: Prestation[];
+  top8PrestationList: Prestation[];
+  serviceOffertList: ServiceOffert[];
   numberOfAppointmentToOuvrier: any;
+  numberOfPrestationOfOuvrier: any;
   currentRating: any = 4;
   starRating = 0;
   maxRatingValue: any = 5;
@@ -64,7 +72,9 @@ export class BookingComponent implements OnInit {
     public tokenService: TokenStorageService,
     private toastr: ToastrService,
     private router: Router,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    private prestService: PrestationService,
+    private servOffService: ServiceOffertService
   ) {}
 
   get f() { return this.formData.controls; }
@@ -99,7 +109,7 @@ export class BookingComponent implements OnInit {
     }
     this.getDoctorsDetails();
     this.patientDetails();
-
+    
     this.infoForm();
     this.id = this.route.snapshot.queryParams['id'];
     this.getDoctorsDetails();
@@ -112,8 +122,13 @@ export class BookingComponent implements OnInit {
     console.log('Param--', this.id);
     if(this.id  && this.id  > 0){
       this.getOuvrierDetails();
+      this.getTop4ListPrestationOfOuvrierIdOrderByCreatedDateDesc();
+      this.getAllServiceOffertsByOuvrierId();
+      this.getTop8PrestationsOfOuvrierIdOrderByCreatedDateDesc();
     }
     this.countNumberOfAppointmentToOuvrier();
+    this.countNumberOfPrestationToOuvrier();
+
   }
 
   getDoctorsDetails() {
@@ -158,6 +173,13 @@ export class BookingComponent implements OnInit {
     });
   }
 
+  countNumberOfPrestationToOuvrier() {
+    this.prestService.countNumberOfPrestationByOuvrierId(this.id)
+      .subscribe((res) => {
+        this.numberOfPrestationOfOuvrier = res;
+    });
+  }
+
   getListOfTopAppointmentOrderByCreatedDateDescByOuvrierId() {
     this.appointService.getTop4AppointmentByOuvrierIdOrderByCreatedDateDesc(this.id)
       .subscribe((response) => {
@@ -167,6 +189,43 @@ export class BookingComponent implements OnInit {
         alert(error.message);
       }
     );
+  }
+
+  getTop4ListPrestationOfOuvrierIdOrderByCreatedDateDesc() {
+    this.prestService
+      .getTop4PrestationByOuvrierIdOrderByCreatedDateDesc(this.id)
+        .subscribe((response) => {
+          this.prestationList = response;
+          console.log(this.prestationList);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+  }
+
+  getTop8PrestationsOfOuvrierIdOrderByCreatedDateDesc() {
+    this.prestService
+      .getTop8PrestationByOuvrierIdOrderByCreatedDateDesc(this.id)
+        .subscribe((response) => {
+          this.top8PrestationList = response;
+          console.log(this.prestationList);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+  }
+
+  getAllServiceOffertsByOuvrierId() {
+    this.servOffService.getAllServiceOffertsByOuvrierId(this.id)
+        .subscribe((response) => {
+          this.serviceOffertList = response;
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
   }
 
   onAddAppointment() {
