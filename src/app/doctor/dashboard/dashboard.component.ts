@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/security/auth.service';
 import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
 import { DashboardService } from 'src/app/services/dashboard.service';
+import { AppointmentService } from 'src/app/services/appointment.service';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class DashboardComponent implements OnInit {
   modalRef: BsModalRef;
   appointmentId;
   appointments :any = [];
+  appointmentList: any = [];
   patients:any = [];
   patientsLength ;
   appointmentsLength;
@@ -42,6 +44,8 @@ export class DashboardComponent implements OnInit {
   img: boolean;
 
   numbersOfOuvriers: any;
+  numberOfAppointmentByCustomerId: any;
+  numberOfAppointmentByCustomerIdAndStatusAccepted: any;
 
   constructor(private toastr: ToastrService,
               private tokenService: TokenStorageService,
@@ -66,12 +70,44 @@ export class DashboardComponent implements OnInit {
       this.userId = user.id;
       this.photo = user.photo;
     }
+    this.getNumberOfAppointmentByCustumerId();
+    this.getNumberOfAppointmentByCustumerIdAndStatusAccepted();
+    this.getListAppointmentsByCustumerIdOrderByIdDesc();
+    this.getListRatingsByCustumerIdOrderByIdDesc();
   }
 
   getNumberOfOuvriers() {
     this.crudApi.countNumberOfOuvriers()
     .subscribe(res=>{
       this.numbersOfOuvriers = res;
+    })
+  }
+
+  getNumberOfAppointmentByCustumerId() {
+    this.crudApi.countNumberOfAppointmentByCustomerId(this.userId)
+    .subscribe(res=>{
+      this.numberOfAppointmentByCustomerId = res;
+    })
+  }
+
+  getNumberOfAppointmentByCustumerIdAndStatusAccepted() {
+    this.crudApi.countNumberOfAppointmentByOuvrierIdAndStatusAccepted(this.userId)
+    .subscribe(res=>{
+      this.numberOfAppointmentByCustomerIdAndStatusAccepted = res;
+    })
+  }
+
+  getListAppointmentsByCustumerIdOrderByIdDesc() {
+    this.crudApi.getAllAppointmentsByCustomerId(this.userId)
+    .subscribe(res=>{
+      this.appointmentList = res;
+    })
+  }
+
+  getListRatingsByCustumerIdOrderByIdDesc() {
+    this.crudApi.getAllRatingsByCustomerId(this.userId)
+    .subscribe(res=>{
+      this.appointmentList = res;
     })
   }
 

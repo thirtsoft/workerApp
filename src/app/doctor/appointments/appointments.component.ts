@@ -1,5 +1,8 @@
 import { Component, OnInit,TemplateRef  } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { AppointmentService } from 'src/app/services/appointment.service';
+import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
+import { OuvrierService } from 'src/app/services/ouvrier.service';
 
 import {CommonServiceService  } from './../../common-service.service';
 
@@ -13,9 +16,26 @@ export class AppointmentsComponent implements OnInit {
   modalRef: BsModalRef;
   patientId;
   appointments : any = [];
+  appointmentsList: any = [];
   patients :  any = [];
   appointmentId;
-  constructor(public commonService:CommonServiceService,private modalService: BsModalService) { }
+
+  info: any;
+  private roles: string[];
+  currentTime: number = 0;
+  isLoggedIn = false;
+  showAdminBoard = false;
+  showUserBoard = false;
+  showVendeurBoard = false;
+
+  username: string;
+  userId;
+
+  constructor(public commonService:CommonServiceService,
+              private crudApi: AppointmentService,
+              private tokenService: TokenStorageService,
+              public ouvService: OuvrierService,
+              private modalService: BsModalService) { }
 
   ngOnInit(): void {
       
@@ -23,6 +43,16 @@ export class AppointmentsComponent implements OnInit {
       this.getAppointments();
 		  this.list = this.commonService.getJSON();
 		  this.list = this.list.filter(a=>a.status === 0);
+      this.isLoggedIn = !!this.tokenService.getToken();
+      if (this.isLoggedIn) {
+        const user = this.tokenService.getUser();
+        this.roles = user.roles;
+        this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+        this.showUserBoard = this.roles.includes('ROLE_USER');
+        this.username = user.username;
+        this.userId = user.id;
+      }
+      this.getAppointmentByCustomerIdOrderIdDesc();
   }
 
   openModal(template: TemplateRef<any>,appointment) {
@@ -101,6 +131,13 @@ export class AppointmentsComponent implements OnInit {
     this.commonService.getpatients()
     .subscribe(res=>{
       this.patients = res;
+    })
+  }
+
+  getAppointmentByCustomerIdOrderIdDesc() {
+    this.crudApi.getAllAppointmentsByCustomerId(this.userId)
+    .subscribe(res=>{
+      this.appointmentsList = res;
     })
   }
 

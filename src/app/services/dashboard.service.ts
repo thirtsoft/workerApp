@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Annonce } from '../models/annonce';
+import { Appointment } from '../models/appointment';
 import { Rating } from '../models/rating';
 
 @Injectable({
@@ -48,10 +49,18 @@ export class DashboardService {
 
   public countNumbersOfReservationInYear(): Observable<any>  {
     return this.http.get(`${this.apiServerUrl}/reservations/NumbersOfReservationInYear`);
-  }
+  } 
 
   public countNumberOfOuvriers(): Observable<any> {
     return this.http.get(`${this.apiServerUrl}/ouvriers/NumbersOfOuvriers`);
+  }
+
+  public countNumberOfAppointmentByCustomerId(userId: number): Observable<any> {
+    return this.http.get(`${this.apiServerUrl}/appointments/countNumberOfAppointmentByCustomerId/${userId}`);
+  }
+
+  public countNumberOfAppointmentByOuvrierIdAndStatusAccepted(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/appointments/countNumberOfAppointmentByCustomerIdAndStatusAccepted/${userId}`);
   }
 
   public countNumbersOfOuvriersPeerMonth(): Observable<any> {
@@ -76,6 +85,14 @@ export class DashboardService {
 
   public countNumberOfEmails(): Observable<any> {
     return this.http.get(`${this.apiServerUrl}/emails/countNumberOfEmailInMonth`);
+  }
+
+  public getAllAppointmentsByCustomerId(userId: number): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.apiServerUrl}/appointments/searchAllAppointmentsByCustomerId/${userId}`);
+  }
+
+  public getAllRatingsByCustomerId(userId: number): Observable<Rating[]> {
+    return this.http.get<Rating[]>(`${this.apiServerUrl}/ratings/searchListRatingByCustomerId/${userId}`);
   }
 
 }

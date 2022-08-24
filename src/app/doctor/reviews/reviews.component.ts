@@ -45,6 +45,7 @@ export class ReviewsComponent implements OnInit {
   	this.rat.getRatingsByCustomerIdOrderByIdDesc(this.userId)
   		.subscribe(res=>{
   			this.ratingsList = res;
+        console.log(this.ratingsList);
   		})
   }
 

@@ -13,7 +13,7 @@
                             <div class="dash-widget-info">
                                 <h6>Total Ouvrier</h6>
                                 <h3>{{numbersOfOuvriers}}</h3>
-                                <p class="text-muted">Till Today</p>
+                                <p class="text-muted">A Présent</p>
                             </div>
                         </div>
                     </div>
@@ -26,9 +26,9 @@
                                 </div>
                             </div>
                             <div class="dash-widget-info">
-                                <h6>Today Patient</h6>
-                                <h3>160</h3>
-                                <p class="text-muted">06, Nov 2019</p>
+                                <h6>Demande acceptées</h6>
+                                <h3>{{numberOfAppointmentByCustomerIdAndStatusAccepted}}</h3>
+                                <!--  <p class="text-muted">06, Nov 2019</p> -->
                             </div>
                         </div>
                     </div>
@@ -41,9 +41,9 @@
                                 </div>
                             </div>
                             <div class="dash-widget-info">
-                                <h6>Appoinments</h6>
-                                <h3>85</h3>
-                                <p class="text-muted">06, Apr 2019</p>
+                                <h6>Demande de Rv</h6>
+                                <h3>{{numberOfAppointmentByCustomerId}}</h3>
+                                <!--  <p class="text-muted">06, Apr 2019</p> -->
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h4 class="mb-4">Patient Appointments</h4>
+        <h4 class="mb-4">Demande de Rv Effectuées</h4>
         <div class="appointment-tab">
 
             <!-- Appointment Tab -->
@@ -79,36 +79,44 @@
                                 <table class="table table-hover table-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th>Patient Name</th>
-                                            <th>Appt Date</th>
-                                            <th>Purpose</th>
-                                            <th>Type</th>
-                                            <th class="text-center">Paid Amount</th>
+                                            <th>#</th>
+                                            <th>Ouvrier</th>
+                                            <th>Description</th>
+                                            <th>Date</th>
+                                            <th>Heure</th>
+                                            <th class="text-center">Status</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let appointment of appointments">
+                                        <tr *ngFor="let appointment of appointmentList">
+                                            <td>{{appointment.reference}}</td>
                                             <td>
                                                 <h2 class="table-avatar">
-                                                    <a [routerLink]="'/patients/patient-profile'" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" [src]="appointment?.patients?.img" alt="User Image"></a>
-                                                    <a [routerLink]="'/patients/patient-profile'">{{appointment?.patients?.name}}<span>{{appointment.patients?.key}}</span></a>
+                                                    <!--  <a [routerLink]="'/patients/patient-profile'" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" [src]="appointment?.patients?.img" alt="User Image"></a> -->
+                                                    <a [routerLink]="'/patients/patient-profile'">
+                                                        {{appointment?.ouvrier?.firstName}} - {{appointment.ouvrier?.lastName}}
+                                                        <span>{{appointment.ouvrier?.reference}}</span></a>
                                                 </h2>
                                             </td>
-                                            <td>{{appointment.appointment_time | date : 'dd MMM yyyy'}}<span class="d-block text-info">10.00 AM</span></td>
-                                            <td>General</td>
-                                            <td>{{appointment.type}}</td>
-                                            <td class="text-center">{{appointment.amount}}</td>
+                                            <td>{{appointment.description}}</td>
+                                            <td>{{appointment.appointmentDate | date : 'dd MMM yyyy'}}<span class="d-block text-info">{{appointment.time}}</span></td>
+                                            <td>{{appointment.time}}</td>
+                                            <!--    <td>{{appointment.type}}</td>
+                                            <td class="text-center">{{appointment.amount}}</td> -->
                                             <td class="text-right">
                                                 <div class="table-action">
-                                                    <a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+                                                    <!-- <a href="javascript:void(0);" class="btn btn-sm bg-info-light">
                                                         <i class="far fa-eye"></i> View
-                                                    </a>
-                                                    <a (click)="openModal(template,appointment)" class="btn btn-sm bg-success-light">
+                                                    </a> -->
+                                                    <a *ngIf="appointment.statusOfAppointment==='Accepted'" class="btn btn-sm bg-success-light">
                                                         <i class="fas fa-check"></i> Accept
                                                     </a>
-                                                    <a href="javascript:void(0);" (click)="openModal(Declinetemplate,appointment)" class="btn btn-sm bg-danger-light">
-                                                        <i class="fas fa-times"></i> Cancel
+                                                    <a *ngIf="appointment.statusOfAppointment==='Encours'" href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+                                                        Encours
+                                                    </a>
+                                                    <a *ngIf="appointment.statusOfAppointment==='Refused'" href="javascript:void(0);" class="btn btn-sm bg-danger-light">
+                                                        <i class="fas fa-times"></i> Refused
                                                     </a>
                                                 </div>
                                             </td>
@@ -123,7 +131,7 @@
                 <!-- /Upcoming Appointment Tab -->
 
                 <!-- Today Appointment Tab -->
-                <div class="tab-pane" id="today" [ngClass]="{ 'active':activeTab==='today'}">
+                <!--  <div class="tab-pane" id="today" [ngClass]="{ 'active':activeTab==='today'}">
                     <div class="card card-table mb-0">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -170,7 +178,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- /Today Appointment Tab -->
 
             </div>
