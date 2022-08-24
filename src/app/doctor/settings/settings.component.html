@@ -1,7 +1,7 @@
 <!-- Basic Information -->
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">Basic Information</h4>
+        <h4 class="card-title">Information Personnel</h4>
         <div class="row form-row">
             <div class="col-md-12">
                 <div class="form-group">
@@ -14,14 +14,20 @@
                                 <span><i class="fa fa-upload"></i> Upload Photo</span>
                                 <input type="file" class="upload">
                             </div>
-                            <small class="form-text text-muted">Allowed JPG, GIF or PNG. Max size of 2MB</small>
+                            <small class="form-text text-muted">Autorisé JPG, GIF or PNG. Max size of 2MB</small>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Username <span class="text-danger">*</span></label>
+                    <label>Prénom&Nom <span class="text-danger">*</span></label>
+                    <input type="text" [(ngModel)]="listDataProfil.name" name="name" id="name" #name="ngModel" required class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Nom utilisateur <span class="text-danger">*</span></label>
                     <input type="text" [(ngModel)]="listDataProfil.username" name="username" id="username" #username="ngModel" required class="form-control">
                 </div>
             </div>
@@ -31,27 +37,16 @@
                     <input type="email" [(ngModel)]="listDataProfil.email" name="email" id="email" #email="ngModel" required class="form-control" value="">
                 </div>
             </div>
+
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>First Name <span class="text-danger">*</span></label>
-                    <input type="text" [(ngModel)]="listDataProfil.name" name="name" id="name" #name="ngModel" required class="form-control">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Last Name <span class="text-danger">*</span></label>
-                    <input type="text" [(ngModel)]="listDataProfil.name" name="name" id="name" #name="ngModel" required class="form-control">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Phone Number</label>
+                    <label>Numéro téléphone</label>
                     <input type="text" [(ngModel)]="listDataProfil.mobile" name="mobile" id="mobile" #mobile="ngModel" required class="form-control">
                 </div>
             </div>
-            <div class="col-md-6">
+            <!--  <div class="col-md-6">
                 <div class="form-group">
-                    <label>Gender</label>
+                    <label>Genre</label>
                     <select class="form-control select">
                         <option>Select</option>
                         <option>Male</option>
@@ -64,7 +59,7 @@
                     <label>Date of Birth</label>
                     <input type="text" class="form-control">
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -73,7 +68,7 @@
 <!-- About Me -->
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">About Me</h4>
+        <h4 class="card-title">A Propos</h4>
         <div class="form-group mb-0">
             <label>Biography</label>
             <textarea [(ngModel)]="listDataProfil.information" name="information" id="information" #information="ngModel" required class="form-control" rows="5"></textarea>
@@ -131,30 +126,30 @@
         <div class="row form-row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Address Line 1</label>
+                    <label>Address</label>
                     <input type="text" [(ngModel)]="listDataProfil.addressRecruteur" name="addressRecruteur" id="addressRecruteur" #addressRecruteur="ngModel" required class="form-control">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="control-label">Address Line 2</label>
-                    <input type="text" class="form-control">
+                    <label class="control-label">Nom entreprise</label>
+                    <input type="text" [(ngModel)]="listDataProfil.nomEntreprise" name="nomEntreprise" id="nomEntreprise" #nomEntreprise="ngModel" required class="form-control">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="control-label">City</label>
-                    <input type="text" [(ngModel)]="listDataProfil.villeRecruteur" name="villeRecruteur" id="villeRecruteur" #villeRecruteur="ngModel" required class="form-control">
+                    <label class="control-label">Secteur Activité</label>
+                    <input type="text" [(ngModel)]="listDataProfil.secteurActivite" name="secteurActivite" id="secteurActivite" #secteurActivite="ngModel" required class="form-control">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="control-label">State / Province</label>
-                    <input type="text" class="form-control">
+                    <label class="control-label">Site web</label>
+                    <input type="text" [(ngModel)]="listDataProfil.website" name="website" id="website" #website="ngModel" required class="form-control">
                 </div>
             </div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label">Country</label>
                     <input type="text" class="form-control">
@@ -165,7 +160,7 @@
                     <label class="control-label">Postal Code</label>
                     <input type="text" class="form-control">
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

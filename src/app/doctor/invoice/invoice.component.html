@@ -1,6 +1,6 @@
-<div class="card card-table">
+<!-- <div class="card card-table">
     <div class="card-body">
-        <!-- Invoice Table -->
+        <h4 class="card-title" style="margin-left: 15px; margin-top:15px;">Liste de vos Jetons</h4>
         <div class="table-responsive">
             <table class="table table-hover table-center mb-0">
                 <thead>
@@ -19,20 +19,9 @@
                                 jet.id
               }}</a>
                         </td>
-                        <!--  <td>
-                            <h2 class="table-avatar">
-                                <a class="avatar avatar-sm mr-2">
-                                    <img class="avatar-img rounded-circle" [src]="invoice.profile" alt="User Image" />
-                                </a>
-                                <a [routerLink]="'/patients/patient-profile'">{{ invoice.patient_name
-                  }}<span>{{ jet.patient_id }}</span></a
-                >
-              </h2>
-            </td> -->
                         <td>{{ jet.montant }}</td>
                         <td>{{ jet.etat }}</td>
-                        <td>{{ jet.createdDate | date: 'DD-MM-yyyy' }}</td>
-                        <td>14 Nov 2019</td>
+                        <td>{{ jet.createdDate | date: 'dd-MM-yyyy' }}</td>
                         <td class="text-right">
                             <div class="table-action">
                                 <a [routerLink]="'/invoice-details'" class="btn btn-sm bg-info-light">
@@ -46,7 +35,63 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="pagination">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
         </div>
-        <!-- /Invoice Table -->
+    </div>
+</div> -->
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Liste de vos Jetons</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="row-border hover table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Numéro</th>
+                                        <th>Montant</th>
+                                        <th>Etat</th>
+                                        <th>Date dépot</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let jet of jetonList">
+                                        <td>{{jet.id}}</td>
+                                        <td>{{jet.id}}</td>
+                                        <td>{{ jet.montant }}</td>
+                                        <td>{{ jet.etat }}</td>
+                                        <td>{{ jet.createdDate | date: 'dd-MM-yyyy' }}</td>
+
+                                        <td class="text-right">
+                                            <div class="table-action">
+                                                <a [routerLink]="'/invoice-details'" class="btn btn-sm bg-info-light">
+                                                    <i class="far fa-eye"></i> View
+                                                </a>
+                                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+                                                    <i class="fas fa-print"></i> Print
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

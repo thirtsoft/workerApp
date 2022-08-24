@@ -18,6 +18,7 @@ import { CommonServiceService } from './../../common-service.service';
 import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
 import { UtilisateurService } from 'src/app/services/utilisateur.service';
 import { AuthService } from 'src/app/services/auth/security/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
@@ -64,6 +65,7 @@ export class HeaderComponent implements OnInit {
     private tokenService: TokenStorageService,
     public userService: UtilisateurService,
     public autService: AuthService,
+    private toastr: ToastrService
           
   ) {
     router.events.subscribe((event: Event) => {
@@ -251,10 +253,21 @@ export class HeaderComponent implements OnInit {
     return this.currentTime;
   }
 
-  logout() {
+  /* logout() {
     this.tokenService.signOut();
     window.location.reload();
     this.router.navigate(['/home']);
+  } */
+
+  logout() {
+    this.toastr.warning('Au revoir','Vous etes bien déconnecter', {
+      timeOut: 2500,
+      positionClass: 'toast-top-right',
+    });
+    this.tokenService.signOut();
+    this.router.navigateByUrl("home").then(() => {
+      window.location.reload();
+    });
   }
 
   ngAfterViewInit() {

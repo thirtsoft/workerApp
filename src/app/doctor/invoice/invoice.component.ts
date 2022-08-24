@@ -15,29 +15,21 @@ export class InvoiceComponent implements OnInit {
   invoices : any = [];
   jetonList: any = [];
 
-  info: any;
-  private roles: string[];
+  errorMessage: string;
 
+  info: any;
+  roles: string[];
   currentTime: number = 0;
 
   isLoggedIn = false;
   showAdminBoard = false;
   showUserBoard = false;
-  showVendeurBoard = false;
-
   username: string;
-  email: String;
   userId;
-  photo;
-  img: boolean;
-
-  currentUser;
-
 
   constructor(public commonService:CommonServiceService,
               private jet:JetonService,
-              private tokenService: TokenStorageService,
-              private router: Router) { }
+              private tokenService: TokenStorageService) { }
 
   ngOnInit(): void {
   	this.getTransactions();
@@ -49,7 +41,6 @@ export class InvoiceComponent implements OnInit {
       this.showUserBoard = this.roles.includes('ROLE_USER');
       this.username = user.username;
       this.userId = user.id;
-      console.log(this.userId);
     }
     this.getJetonsList();
   }
@@ -61,12 +52,22 @@ export class InvoiceComponent implements OnInit {
   		})
   }
 
-  getJetonsList() {
-    console.log(this.userId);
+ /*  getJetonsList() {
   	this.jet.getJetonsByCustomerIdByIdDesc(this.userId)
   		.subscribe(res=>{
   			this.jetonList = res;
   		})
+  } */
+
+  getJetonsList() {
+    this.jet.getJetonsByCustomerIdByIdDesc(this.userId)
+      .subscribe(res => {
+        this.jetonList = res;
+        $(function () {
+          $("table").DataTable();
+        });
+      },
+        error => this.errorMessage = <any>error);
   }
 
 }
