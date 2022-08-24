@@ -9,6 +9,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MetierService } from 'src/app/services/metier.service';
 import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Prestation } from 'src/app/models/prestation';
+import { ServiceOffert } from 'src/app/models/service-offert';
+import { PrestationService } from 'src/app/services/prestation.service';
+import { ServiceOffertService } from 'src/app/services/service-offert.service';
+import { AppointmentService } from 'src/app/services/appointment.service';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -21,6 +26,12 @@ export class DoctorProfileComponent implements OnInit {
   ouvrierDetails;
 
   ratingListDTOs: Rating[];
+  prestationList: Prestation[];
+  top8PrestationList: Prestation[];
+  serviceOffertList: ServiceOffert[];
+  numberOfAppointmentToOuvrier: any;
+  numberOfPrestationOfOuvrier: any;
+
   numberOfRatingToOuvrier: any;
   currentRating: any = 4;
   starRating = 0;
@@ -35,6 +46,9 @@ export class DoctorProfileComponent implements OnInit {
     public ouvService: OuvrierService,
     public ratService: RatingService,
     public metService: MetierService,
+    private prestService: PrestationService,
+    private servOffService: ServiceOffertService,
+    public appointService: AppointmentService,
     public tokenService: TokenStorageService,
     private toastr: ToastrService,
     private router: Router,
@@ -73,6 +87,9 @@ export class DoctorProfileComponent implements OnInit {
     console.log('Param--', this.id);
     if(this.id  && this.id  > 0){
       this.getOuvrierDetails();
+      this.getTop4ListPrestationOfOuvrierIdOrderByCreatedDateDesc();
+      this.getTop8PrestationsOfOuvrierIdOrderByCreatedDateDesc();
+      this.getAllServiceOffertsByOuvrierId();
     }
 //    this.getOuvrierDetails();
     this.countNumberOfRatingToOuvrier();
@@ -149,6 +166,44 @@ export class DoctorProfileComponent implements OnInit {
     );
 
   }
+
+  getTop4ListPrestationOfOuvrierIdOrderByCreatedDateDesc() {
+    this.prestService
+      .getTop4PrestationByOuvrierIdOrderByCreatedDateDesc(this.id)
+        .subscribe((response) => {
+          this.prestationList = response;
+          console.log(this.prestationList);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+  }
+
+  getTop8PrestationsOfOuvrierIdOrderByCreatedDateDesc() {
+    this.prestService
+      .getTop8PrestationByOuvrierIdOrderByCreatedDateDesc(this.id)
+        .subscribe((response) => {
+          this.top8PrestationList = response;
+          console.log(this.prestationList);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+  }
+
+  getAllServiceOffertsByOuvrierId() {
+    this.servOffService.getAllServiceOffertsByOuvrierId(this.id)
+        .subscribe((response) => {
+          this.serviceOffertList = response;
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+  }
+
 
   addFav() {
     this.commonService.createFav(this.doctorDetails).subscribe((res) => {
