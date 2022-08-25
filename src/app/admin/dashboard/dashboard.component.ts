@@ -44,6 +44,8 @@ export class DashboardComponent implements OnInit {
   numberOfRegister: any;
   numberOfOuvrier: any;
   numberOfRating: any;
+  numberOfAcceptedAppointmentInYear: any;
+  sumTotalOfJetonInYear: any;
   id;
   p: number=1;
   searchText: any;
@@ -138,6 +140,8 @@ export class DashboardComponent implements OnInit {
     this.getNumberOfOuvriers();
     this.getNumberOfRecruteurs();
     this.getNumberOfRating();
+    this.getNumberTotalOfAppointmentInYear();
+    this.getSumTotalOfJetonInYear();
   }
 
   getNumberOfOuvriers(): void {
@@ -156,6 +160,18 @@ export class DashboardComponent implements OnInit {
   getNumberOfRating(): void {
     this.crudApi.countNumberOfRating().subscribe(data => {
       this.numberOfRating = data;
+    });
+  }
+
+  getNumberTotalOfAppointmentInYear(): void {
+    this.crudApi.getNumberTotalOfAppointmentsInYear().subscribe(data => {
+      this.numberOfAcceptedAppointmentInYear = data;
+    });
+  }
+
+  getSumTotalOfJetonInYear(): void {
+    this.crudApi.getSumTotalOfJetonsInYear().subscribe(data => {
+      this.sumTotalOfJetonInYear = data;
     });
   }
 

@@ -51,6 +51,14 @@ export class DashboardService {
     return this.http.get(`${this.apiServerUrl}/reservations/NumbersOfReservationInYear`);
   } 
 
+  public getNumberTotalOfAppointmentsInYear(): Observable<any>  {
+    return this.http.get(`${this.apiServerUrl}/appointments/numbersOfAcceptedAppointmentsInYear`);
+  } 
+
+  public getSumTotalOfJetonsInYear(): Observable<any>  {
+    return this.http.get(`${this.apiServerUrl}/jetons/sumTotalOfJetonInYear`);
+  } 
+
   public countNumberOfOuvriers(): Observable<any> {
     return this.http.get(`${this.apiServerUrl}/ouvriers/NumbersOfOuvriers`);
   }
