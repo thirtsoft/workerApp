@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
 import { UtilisateurService } from 'src/app/services/utilisateur.service';
 import { Jeton } from 'src/app/models/jeton';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Utilisateur } from 'src/app/models/utilisateur';
 
 @Component({
@@ -46,7 +46,7 @@ export class TransactionsComponent implements OnInit {
               private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.getTransactions();
+  //  this.getTransactions();
     this.getJetonsList();
     this.getUtilisateurList();
     this.editEtatForm = this.fb.group({
@@ -56,12 +56,12 @@ export class TransactionsComponent implements OnInit {
     this.editForm = this.fb.group({
       id: [''],
       montant: [''],
-      utilisateur: new Utilisateur()
-    } );
+      utilisateur: new FormControl(this.utilisateurList),
+    });
   }
 
   getJetonsList() {
-    this.crudApi.getAllJetons()
+    this.crudApi.getJetonsOrderByIdDesc()
       .subscribe(res => {
         this.jetonsList = res;
         $(function () {
@@ -114,8 +114,6 @@ export class TransactionsComponent implements OnInit {
   }
 
   updateEtat() {
-    console.log(this.editEtatForm.value.id);
-    console.log(this.editEtatForm.value);
     this.crudApi.updateEtatOfJeton(this.editEtatForm.value.id, this.editEtatForm.value.etat)
       .subscribe((data) => {
         this.modalRef.hide();
@@ -127,16 +125,30 @@ export class TransactionsComponent implements OnInit {
       })
   }
 
+
   editJetonModal(template: TemplateRef<any>, jet: Jeton) {
        this.modalRef = this.modalService.show(template, {
          class: 'modal-lg modal-dialog-centered',
        });
        this.editForm.patchValue( {
+        id: jet.id,
+        montant: jet.montant,
+        utilisateur: jet.utilisateur,
+      });
+      console.log(this.editForm);
+       /*
+       this.editForm.patchValue( {
          id: jet.id,
          montant: jet.montant,
          utilisateur: jet.utilisateur,
        });
+       */
   }
+
+  
+compareFn(c1: Utilisateur, c2: Utilisateur): boolean {
+  return c1 && c2 ? c1.id === c2.id : c1 === c2;
+}
 
   update() {
     this.crudApi.updateJeton(this.editForm.value.id, this.editForm.value)
@@ -147,7 +159,7 @@ export class TransactionsComponent implements OnInit {
         });
         this.modalRef.hide();
         this.getJetonsList();
-      })
+      });
   }
 
   deleteModal(template: TemplateRef<any>, trans) {

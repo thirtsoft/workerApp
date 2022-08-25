@@ -28,10 +28,10 @@
                             <table class="datatable table table-hover table-center mb-0">
                                 <thead>
                                     <tr>
-                                        <th>Invoice Number</th>
-                                        <th>Internaute ID</th>
-                                        <th>Internaute Name</th>
-                                        <th>Total Amount</th>
+                                        <th>#</th>
+                                        <th>Numéro</th>
+                                        <th>Client</th>
+                                        <th>Montant</th>
                                         <th class="text-center">Status</th>
                                         <th>Date</th>
                                         <th class="text-right">Actions</th>
@@ -39,22 +39,18 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let jet of jetonsList">
-                                        <td><a [routerLink]="'/admin/admin-invoice'">{{jet.id}}</a></td>
-                                        <td>{{jet.utilisateur?.id}}</td>
+                                        <td>{{jet.id}}</td>
+                                        <td>{{jet.numero}}</td>
                                         <td>
                                             <h2 class="table-avatar">
                                                 <!--  <a [routerLink]="'/admin/doc-profile'" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" [src]="jet.profile" alt="User Image"></a> -->
-                                                <a [routerLink]="'/admin/doc-profile'">{{jet.utilisateur?.name}}</a>
+                                                <a [routerLink]="'/admin/doc-profile'" class="avatar avatar-sm mr-2">{{jet.utilisateur?.name}}</a>
                                             </h2>
                                         </td>
                                         <td>{{jet.montant}}</td>
-                                        <!-- <td class="text-center">
-                                            <span class="badge badge-pill bg-success inv-badge">{{jet.etat}}</span>
-                                        </td> -->
-
-
-                                        <td>{{jet.etat}}
-                                            <a class="btn btn-sm bg-success-light" data-toggle="modal" (click)="editEtatModal(editEtattemplate,jet)" style="cursor: pointer;">
+                                        <td>
+                                            <!-- {{jet.etat}} -->
+                                            <a class="btn btn-sm bg-success-light" data-toggle="modal" (click)="editEtatModal(editEtattemplate,jet)" style="cursor: pointer; margin-left: 50px;">
                                                 <i class="fa fa-pencil-square-o"></i>
                                             </a>
                                             <div class="status-toggle">
@@ -65,7 +61,6 @@
                                         </td>
                                         <td>{{jet.createdDate | date : 'dd MMM yyyy hh mm a'}}</td>
                                         <td class="text-right">
-
                                             <div class="actions">
                                                 <a class="btn btn-sm bg-success-light" data-toggle="modal" (click)="editJetonModal(edittemplate,jet)" style="cursor: pointer;">
                                                     <i class="fe fe-pencil"></i> Edit
@@ -107,17 +102,15 @@
                 <div class="form-group ">
                     <label>Client</label>
                     <select name="utilisateur " [(ngModel)]="formDataJeton.utilisateur" class="form-control ">
-							<option
-							  *ngFor="let add of utilisateurList "
-							  [ngValue]=" add.id==formDataJeton.utilisateur?.id ? formDataJeton.utilisateur : add "
-							>
-							  {{ add.name }}
-							</option>
-						  </select>
+						<option
+							*ngFor="let add of utilisateurList "
+							[ngValue]=" add.id==formDataJeton.utilisateur?.id ? formDataJeton.utilisateur : add "
+						>
+							{{ add.name }}
+						</option>
+					</select>
                 </div>
             </div>
-
-
             <button type="submit " class="btn btn-primary btn-block " (click)="save() ">
 		  Save Changes
 		</button>
@@ -141,21 +134,19 @@
                         <input type="text" class="form-control" formControlName="id" readonly />
                     </div>
                 </div>
-
                 <div class="col-12 col-sm-12">
                     <div class="form-group">
                         <select name="etat" formControlName="etat" id="etat" class="form-control">
-              <option value="VALIDE">VALIDE</option>
-              <option value="ENCOURS">ENCOURS</option>
-              <option value="INVALIDE">INVALIDE</option>
-            </select>
+                            <option value="VALIDE">VALIDE</option>
+                            <option value="ENCOURS">ENCOURS</option>
+                            <option value="INVALIDE">INVALIDE</option>
+                        </select>
                     </div>
                 </div>
             </div>
-
             <button type="submit" class="btn btn-primary btn-block" (click)="updateEtat()">
-          Edit
-        </button>
+                Edit
+            </button>
         </form>
     </div>
 </ng-template>
@@ -164,8 +155,8 @@
     <div class="modal-header">
         <h4 class="modal-title pull-left">Modifier Jeton</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
-		<span aria-hidden="true">&times;</span>
-	  </button>
+		    <span aria-hidden="true">&times;</span>
+	    </button>
     </div>
     <div class="modal-body">
         <form [formGroup]="editForm">
@@ -178,14 +169,14 @@
             <div class="col-12 col-sm-12 ">
                 <div class="form-group ">
                     <label>Client</label>
-                    <select name="utilisateur" formControlName="utilisateur" class="form-control ">
-							<option
-							  *ngFor="let add of utilisateurList "
-							  [ngValue]="add"
-							>
-							  {{ add.name }}
-							</option>
-						  </select>
+                    <select [compareWith]="compareFn" formControlName="utilisateur" class="form-control ">
+						<option
+							*ngFor="let add of utilisateurList "
+							[ngValue]="add"
+						>
+							{{ add.name }}
+						</option>
+					</select>
                 </div>
             </div>
             <button type="submit " class="btn btn-primary btn-block " (click)="update() ">
@@ -194,203 +185,6 @@
         </form>
     </div>
 </ng-template>
-
-<!-- <ng-template #edittemplate>
-    <div class="modal-header ">
-        <h4 class="modal-title pull-left ">Modifier Ouvrier</h4>
-        <button type="button " class="close " data-dismiss="modal " aria-label="Close " (click)="modalRef.hide() ">
-		<span aria-hidden="true ">&times;</span>
-	  </button>
-    </div>
-    <div class="modal-body ">
-        <form [formGroup]="editForm " novalidate>
-            <div class="row form-row ">
-                <div class="col-12 col-sm-6 ">
-                    <div class="form-group ">
-                        <label>ID</label>
-                        <input type="text " class="form-control " formControlName="id " readonly />
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 ">
-                    <div class="form-group ">
-                        <label>Photo</label>
-                        <img formControlName="photoOuvrier " height="90 " width="90 " class="img-circle " src="{{ this.ouvService.apiServerUrl + '/ouvriers/photoOuvrierInFolder/' + formDataJeton.id }} " />
-                        <span *ngIf="!editPhoto ">
-                          <input type="file " (change)="onSelectPhotoFile($event) " />
-                          <button
-                            class="btn btn-success btn-sm "
-                            (click)="processForm() "
-                          >
-                            <span class="glyphicon glyphicon-upload "></span> Enregistrer la photo
-                        </button>
-                        {{ progress }}
-                        </span>
-
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="row form-row ">
-                <div class="col-12 col-sm-6 ">
-                    <div class="form-group ">
-                        <label>Reference</label>
-                        <input type="text " class="form-control " formControlName="reference " readonly />
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 ">
-                    <div class="form-group ">
-                        <label>CV</label>
-                        <input type="file " class="form-control " formControlName="id " readonly />
-                    </div>
-                </div>
-            </div>
-
-            <div class="row form-row ">
-                <div class="col-12 col-sm-6 ">
-                    <div class="form-group ">
-                        <label>Prénom</label>
-                        <input type="text " name="firstName " class="form-control " formControlName="firstName " />
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 ">
-                    <div class="form-group ">
-                        <label>Nom</label>
-                        <input type="text " name="lastName " class="form-control " formControlName="lastName " />
-                    </div>
-                </div>
-            </div>
-
-            <div class="row form-row ">
-                <div class="col-12 col-sm-4 ">
-                    <div class="form-group ">
-                        <label>Sexe</label>
-                        <input type="text " name="sexe " class="form-control " formControlName="sexe " />
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-4 ">
-                    <div class="form-group ">
-                        <label>Addresse Actuel</label>
-                        <input type="text " name="addressActuel " class="form-control " formControlName="addressActuel " />
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-4 ">
-                    <div class="form-group ">
-                        <label>Ville</label>
-                        <select name="address " [(ngModel)]="formDataJeton.address " class="form-control " placeholder="Ville Ouvrier ">
-							<option
-							  *ngFor="let add of addressList "
-							  [ngValue]=" add.id==f ormDataOuvrier.address?.id ? formDataJeton.address : add "
-							>
-							  {{ add.country }}
-							</option>
-						  </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row form-row ">
-                <div class="col-12 col-sm-4 ">
-                    <div class="form-group ">
-                        <label>Email</label>
-                        <input type="email " name="email " class="form-control " formControlName="email " />
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-4 ">
-                    <div class="form-group ">
-                        <label>Mobile</label>
-                        <input type="text " name="phoneOuvrier " class="form-control " formControlName="phoneOuvrier " />
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-4 ">
-                    <div class="form-group ">
-                        <label>Profession</label>
-                        <select name="metier " formControlName="metier " class="form-control ">
-							<option
-							  *ngFor="let add of metiersList "
-							  [ngValue]=" add.id==f ormDataOuvrier.metier?.id ? formDataJeton.metier : add "
-							>
-							  {{ add.designation }}
-							</option>
-						  </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row form-row ">
-                <div class="col-12 col-sm-4 ">
-                    <div class="form-group ">
-                        <label>Education</label>
-                        <input type="text " name="education " class="form-control " formControlName="education " />
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-4 ">
-                    <div class="form-group ">
-                        <label>Nombre Années Expérience</label>
-                        <input type="text " name="nbreAnneeExperience " class="form-control " formControlName="nbreAnneeExperience " />
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-4 ">
-                    <div class="form-group ">
-                        <label>Prétention salaire</label>
-                        <input type="number " name="pretentionSalaire " class="form-control " formControlName="pretentionSalaire " />
-                    </div>
-                </div>
-            </div>
-
-            <div class="row form-row ">
-                <div class="col-12 col-sm-4 ">
-                    <div class="form-group ">
-                        <label>Disponibilité</label>
-                        <input type="text " name="disponibity " class="form-control " formControlName="disponibity " />
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-4 ">
-                    <div class="form-group ">
-                        <label>Mobilité</label>
-                        <input type="text " name="mobilite " class="form-control " formControlName="mobilite " />
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-4 ">
-                    <div class="form-group ">
-                        <label>Selected</label>
-                        <input type="checkbox " name="selected " formControlName="selected " class="form-control " />
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row form-row ">
-                <div class="col-12 col-sm-12 ">
-                    <div class="form-group ">
-                        <label>Description</label>
-                        <textarea id="description " cols="2 " rows="2 " type="text " class="form-control " name="description " formControlName="description "></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <button type="submit " class="btn btn-warning btn-block " (click)="updateOuvrier() ">
-		  Modifier
-		</button>
-
-            <button type="submit " class="btn btn-primary btn-block " (click)="modalRef.hide() ">
-            Fermer
-          </button>
-        </form>
-    </div>
-</ng-template> -->
-
-
 
 <ng-template #delete>
     <div class="modal-header ">
