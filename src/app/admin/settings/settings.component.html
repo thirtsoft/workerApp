@@ -1,5 +1,4 @@
 <div class="page-wrapper">
-
     <div class="content container-fluid">
         <div class="page-header">
             <div class="row">
@@ -29,18 +28,13 @@
                                         <th>#</th>
                                         <th>Ouvrier</th>
                                         <th>Titre</th>
+                                        <th>Addresse</th>
                                         <th>Description</th>
                                         <th>Date</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- <tr *ngFor="
-                                            let metier of metierList
-                                            | filter: searchText
-                                            | paginate: { itemsPerPage: 4, currentPage: p };
-                                            let i = index
-                                    "> -->
                                     <tr *ngFor="
                                             let prest of prestationList;
                                             let i = index
@@ -48,6 +42,7 @@
                                         <td>{{prest.id}}</td>
                                         <td>{{prest.ouvrier?.firstName}} {{prest.ouvrier?.lastName}}</td>
                                         <td>{{prest.title}}</td>
+                                        <td>{{prest.locality?.name}}</td>
                                         <td>{{prest.description}}</td>
                                         <td>{{prest.createdDate | date:'dd-MMM-yyyy'}}</td>
 
@@ -65,10 +60,6 @@
 
                                 </tbody>
                             </table>
-
-                            <!-- <div class="pagination">
-                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -90,15 +81,25 @@
                 <div class="col-12 col-sm-12">
                     <div class="form-group">
                         <label>Titre</label>
-                        <input type="text" class="form-control" [(ngModel)]="formDataPrestation.title" name="title" id="title" #title="ngModel" required>
+                        <input type="text" class="form-control" [(ngModel)]="formDataPrestation.title" name="title" #title="ngModel" required>
                     </div>
                 </div>
                 <div class="col-12 col-sm-12">
                     <div class="form-group">
                         <label>Ouvrier</label>
-                        <select class="form-control" [(ngModel)]="formDataPrestation.ouvrier" name="ouvrier">
-							<option *ngFor="let ouv of ouvrierList" value="">{{ouv.firstName}}-{{ouv.lastName}}</option>
-						</select>
+                        <select name="ouvrier" id="ouvrier" [(ngModel)]="formDataPrestation.ouvrier" class="form-control" #ouvrier="ngModel" required>
+                            <option value="0" selected>-Select-</option>
+                            <option  *ngFor="let ouv of ouvrierList" [ngValue]="ouv.id == formDataPrestation.ouvrier?.id ? formDataPrestation.ouvrier : ouv">{{ouv.firstName}}-{{ouv.lastName}}</option>
+                          </select>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Localité</label>
+                        <select name="locality" [(ngModel)]="formDataPrestation.locality" class="form-control" #locality="ngModel" required>
+                            <option  *ngFor="let loc of localitiesList" [ngValue]="loc.id == formDataPrestation.locality?.id ? formDataPrestation.locality : loc">{{loc.name}}</option>
+                        </select>
                     </div>
                 </div>
 
@@ -125,17 +126,44 @@
     <div class="modal-body">
         <form [formGroup]="editForm">
             <div class="row form-row">
-                <div class="col-12 col-sm-4">
+                <div class="col-12 col-sm-12">
                     <div class="form-group">
                         <label>ID</label>
                         <input type="text" class="form-control" formControlName="id" readonly />
                     </div>
                 </div>
 
-                <div class="col-12 col-sm-6">
+                <div class="col-12 col-sm-12">
                     <div class="form-group">
                         <label>Titre</label>
                         <input type="text" class="form-control" formControlName="title" name="title">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 ">
+                    <div class="form-group ">
+                        <label>Ouvrier</label>
+                        <select [compareWith]="compareOuvrier" formControlName="ouvrier" class="form-control ">
+                            <option
+                                *ngFor="let ouv of ouvrierList "
+                                [ngValue]="ouv"
+                            >
+                            {{ouv.firstName}}-{{ouv.lastName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12 ">
+                    <div class="form-group ">
+                        <label>Localité</label>
+                        <select [compareWith]="compareLocality" formControlName="locality" class="form-control ">
+                            <option
+                                *ngFor="let loc of localitiesList"
+                                [ngValue]="loc"
+                            >
+                            {{loc.name}}
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-12 col-sm-12">

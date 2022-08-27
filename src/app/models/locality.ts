@@ -5,7 +5,6 @@ export class Locality {
     name: string;
     rue: string;
 	codePostal: string;
-    subject: string; 
     dataCreate: Date;
     dataUpdate: Date;
 

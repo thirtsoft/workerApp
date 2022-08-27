@@ -89,7 +89,6 @@ export class TransactionsComponent implements OnInit {
   }
 
   save() {
-    console.log(this.formDataJeton);
     this.crudApi.addJeton(this.formDataJeton)
     .subscribe( data => {
       this.toastr.success('avec succès','Jeton Ajouté', {

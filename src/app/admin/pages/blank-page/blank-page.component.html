@@ -1,27 +1,190 @@
-<!-- Page Wrapper -->
 <div class="page-wrapper">
     <div class="content container-fluid">
-    
-        <!-- Page Header -->
         <div class="page-header">
             <div class="row">
-                <div class="col-sm-12">
-                    <h3 class="page-title">Blank Page</h3>
+                <div class="col-sm-7 col-auto">
+                    <h3 class="page-title">ServiceOffert</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Blank Page</li>
+                        <li class="breadcrumb-item active">List ServiceOffert</li>
                     </ul>
+                </div>
+                <div class="col-sm-5 col">
+                    <a class="btn btn-primary float-right mt-2" data-toggle="modal" (click)="openModal(template)">
+                         Ajouter
+                    </a>
                 </div>
             </div>
         </div>
         <!-- /Page Header -->
-        
         <div class="row">
             <div class="col-sm-12">
-                Contents here
-            </div>			
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="datatable table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th></th>
+                                        <th>Ouvrier</th>
+                                        <th>Titre</th>
+                                        <th>Description</th>
+                                        <th>Date</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="
+                                            let serv of servicesOffertList;
+                                            let i = index
+                                    ">
+                                        <td>{{serv.id}}</td>
+                                        <td>{{serv.reference}}</td>
+                                        <td>{{serv.ouvrier?.firstName}} {{serv.ouvrier?.lastName}}</td>
+                                        <td>{{serv.designation}}</td>
+                                        <td>{{serv.description}}</td>
+                                        <td>{{serv.createdDate | date:'dd-MMM-yyyy'}}</td>
+
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                <a class="btn btn-sm bg-success-light" data-toggle="modal" (click)="editServiceOffertModal(edittemplate,serv)">
+                                                    <i class="fe fe-pencil"></i> Edit
+                                                </a>
+                                                <a data-toggle="modal" (click)="deleteServiceOffertModal(delete,serv)" class="btn btn-sm bg-danger-light">
+                                                    <i class="fe fe-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <!-- <div class="pagination">
+                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-    </div>			
+    </div>
 </div>
-<!-- /Page Wrapper -->
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Ajouter servation</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="row form-row">
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Reference</label>
+                        <input type="text" class="form-control" [(ngModel)]="formDataServiceOffert.reference" name="reference" id="reference" #reference="ngModel" required>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Désignation</label>
+                        <input type="text" class="form-control" [(ngModel)]="formDataServiceOffert.designation" name="designation" id="designation" #designation="ngModel" required>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Ouvrier</label>
+                        <select name="ouvrier" id="ouvrier" [(ngModel)]="formDataServiceOffert.ouvrier" class="form-control" #ouvrier="ngModel" required>
+                            <option value="0" selected>-Select-</option>
+                            <option  *ngFor="let ouv of ouvrierList" [ngValue]="ouv.id == formDataServiceOffert.ouvrier?.id ? formDataServiceOffert.ouvrier : ouv">{{ouv.firstName}}-{{ouv.lastName}}</option>
+                          </select>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" [(ngModel)]="formDataServiceOffert.description" name="description" id="description" #description="ngModel" required cols="7" rows="7"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" (click)="save()"> Save Changes</button>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #edittemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Edit serviceOffert</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="editForm">
+            <div class="row form-row">
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input type="text" class="form-control" formControlName="id" readonly />
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Reference</label>
+                        <input type="text" class="form-control" formControlName="reference" name="reference">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Designation</label>
+                        <input type="text" class="form-control" formControlName="designation" name="designation">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 ">
+                    <div class="form-group ">
+                        <label>Ouvrier</label>
+                        <select [compareWith]="compareFn" formControlName="ouvrier" class="form-control ">
+                            <option
+                                *ngFor="let ouv of ouvrierList "
+                                [ngValue]="ouv"
+                            >
+                            {{ouv.firstName}}-{{ouv.lastName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea type="text" formControlName="description" name="description" id="description" class="form-control" cols="7" rows="7"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" (click)="updateServiceOffert()">Modifier</button>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #delete>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Delete</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body text-center">
+        Etes vous sur de vouloir supprimer cette servation ??
+        <div style="margin-top:25px">
+            <button type="button" class="btn btn-default" (mouseover)="btnColor()" id="btn-yes" (click)="deleteServiceOffert()">Oui</button>
+            <button type="button" class="btn btn-primary" (mouseover)="btnColorNo()" id="btn-no" (click)="decline()">No</button>
+        </div>
+    </div>
+</ng-template>

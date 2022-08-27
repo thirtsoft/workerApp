@@ -5,6 +5,7 @@ export class ServiceOffert {
     reference: string;
     designation: string;
     description: string;
+    createdDate: Date; 
     
     ouvrier: Ouvrier;
 

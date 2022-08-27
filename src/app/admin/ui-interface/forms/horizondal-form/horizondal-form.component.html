@@ -1,373 +1,183 @@
-<!-- Page Wrapper -->
-            <div class="page-wrapper">
-                <div class="content container-fluid">
-				
-					<!-- Page Header -->
-					<div class="page-header">
-						<div class="row">
-							<div class="col">
-								<h3 class="page-title">Horizontal Form</h3>
-								<ul class="breadcrumb">
-									<li class="breadcrumb-item"><a>Dashboard</a></li>
-									<li class="breadcrumb-item active">Horizontal Form</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<!-- /Page Header -->
-					
-					<div class="row">
-						<div class="col-xl-6 d-flex">
-							<div class="card flex-fill">
-								<div class="card-header">
-									<h4 class="card-title">Basic Form</h4>
-								</div>
-								<div class="card-body">
-									<form action="#">
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">First Name</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Last Name</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Email Address</label>
-											<div class="col-lg-9">
-												<input type="email" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Username</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Password</label>
-											<div class="col-lg-9">
-												<input type="password" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Repeat Password</label>
-											<div class="col-lg-9">
-												<input type="password" class="form-control">
-											</div>
-										</div>
-										<div class="text-right">
-											<button type="submit" class="btn btn-primary">Submit</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-6 d-flex">
-							<div class="card flex-fill">
-								<div class="card-header">
-									<h4 class="card-title">Address Form</h4>
-								</div>
-								<div class="card-body">
-									<form action="#">
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Address 1</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Address 2</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">City</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">State</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Country</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Postal Code</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="text-right">
-											<button type="submit" class="btn btn-primary">Submit</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Two Column Horizontal Form</h4>
-								</div>
-								<div class="card-body">
-									<h4 class="card-title">Personal Information</h4>
-									<form action="#">
-										<div class="row">
-											<div class="col-xl-6">
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">First Name</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Last Name</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Gender</label>
-													<div class="col-lg-9">
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="radio" name="gender" id="gender_male" value="option1" checked>
-															<label class="form-check-label" for="gender_male">
-															Male
-															</label>
-														</div>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="radio" name="gender" id="gender_female" value="option2">
-															<label class="form-check-label" for="gender_female">
-															Female
-															</label>
-														</div>
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Blood Group</label>
-													<div class="col-lg-9">
-														<ng-select2  width="100%">
-															<option>Select</option>
-															<option value="1">A+</option>
-															<option value="2">O+</option>
-															<option value="3">B+</option>
-															<option value="4">AB+</option>
-														</ng-select2>
-													</div>
-												</div>
-											</div>
-											<div class="col-xl-6">
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Username</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Email</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Password</label>
-													<div class="col-lg-9">
-														<input type="password" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Repeat Password</label>
-													<div class="col-lg-9">
-														<input type="password" class="form-control">
-													</div>
-												</div>
-											</div>
-										</div>
-										<h4 class="card-title">Address</h4>
-										<div class="row">
-											<div class="col-xl-6">
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Address Line 1</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Address Line 2</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">State</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-											</div>
-											<div class="col-xl-6">
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">City</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Country</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Postal Code</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="text-right">
-											<button type="submit" class="btn btn-primary">Submit</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Two Column Horizontal Form</h4>
-								</div>
-								<div class="card-body">
-									<form action="#">
-										<div class="row">
-											<div class="col-xl-6">
-												<h4 class="card-title">Personal Details</h4>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">First Name</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Last Name</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Password</label>
-													<div class="col-lg-9">
-														<input type="password" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">State</label>
-													<div class="col-lg-9">
-														<ng-select2  width="100%">
-															<option>Select State</option>
-															<option value="1">California</option>
-															<option value="2">Texas</option>
-															<option value="3">Florida</option>
-														</ng-select2>
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">About</label>
-													<div class="col-lg-9">
-														<textarea rows="4" cols="5" class="form-control" placeholder="Enter message"></textarea>
-													</div>
-												</div>
-											</div>
-											<div class="col-xl-6">
-												<h4 class="card-title">Personal details</h4>
-												<div class="row">
-													<label class="col-lg-3 col-form-label">Name</label>
-													<div class="col-lg-9">
-														<div class="row">
-															<div class="col-md-6">
-																<div class="form-group">
-																	<input type="text" placeholder="First Name" class="form-control">
-																</div>
-															</div>
-															<div class="col-md-6">
-																<div class="form-group">
-																	<input type="text" placeholder="Last Name" class="form-control">
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Email</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Phone</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Address</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control m-b-20">
-														<div class="row">
-															<div class="col-md-6">
-																<div class="form-group">
-																	<ng-select2  width="100%">
-																		<option>Select Country</option>
-																		<option value="1">USA</option>
-																		<option value="2">France</option>
-																		<option value="3">India</option>
-																		<option value="4">Spain</option>
-																	</ng-select2>
-																</div>
-																<div class="form-group">
-																	<input type="text" placeholder="ZIP code" class="form-control">
-																</div>
-															</div>
-															<div class="col-md-6">
-																<div class="form-group">
-																	<input type="text" placeholder="State/Province" class="form-control">
-																</div>
-																<div class="form-group">
-																	<input type="text" placeholder="City" class="form-control">
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="text-right">
-											<button type="submit" class="btn btn-primary">Submit</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				
-				</div>			
-			</div>
-			<!-- /Main Wrapper -->
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-7 col-auto">
+                    <h3 class="page-title">Localité</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Dashboard</a></li>
+                        <li class="breadcrumb-item active">List Localités</li>
+                    </ul>
+                </div>
+                <div class="col-sm-5 col">
+                    <a class="btn btn-primary float-right mt-2" data-toggle="modal" (click)="openModal(template)">
+                         Ajouter
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="datatable table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nom</th>
+                                        <th>Ville</th>
+                                        <th>Rue</th>
+                                        <th>CodePostal</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="
+                                            let loc of localitiesList;
+                                            let i = index
+                                    ">
+                                        <td>{{loc.id}}</td>
+                                        <td>{{loc.name}}</td>
+                                        <td>{{loc.address?.name}} {{loc.address?.country}}</td>
+                                        <td>{{loc.rue}}</td>
+                                        <td>{{loc.codePostal}}</td>
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                <a class="btn btn-sm bg-success-light" data-toggle="modal" (click)="editLocalityModal(edittemplate,loc)">
+                                                    <i class="fe fe-pencil"></i> Edit
+                                                </a>
+                                                <a data-toggle="modal" (click)="deleteLocalityModal(delete,loc)" class="btn btn-sm bg-danger-light">
+                                                    <i class="fe fe-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Ajouter Localité</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="row form-row">
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" class="form-control" [(ngModel)]="formDataLocality.name" name="name" id="name" #name="ngModel" required>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Ville</label>
+                        <select name="address" id="address" [(ngModel)]="formDataLocality.address" class="form-control" #address="ngModel" required>
+                            <option value="0" selected>-Select-</option>
+                            <option  *ngFor="let add of addressesList" [ngValue]="add.id == formDataLocality.address?.id ? formDataLocality.address : add">{{add.name}}-{{add.country}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Rue</label>
+                        <input type="text" class="form-control" [(ngModel)]="formDataLocality.rue" name="rue" id="rue" #rue="ngModel" required>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>CodePostal</label>
+                        <input type="text" class="form-control" [(ngModel)]="formDataLocality.codePostal" name="codePostal" id="codePostal" #codePostal="ngModel" required>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" (click)="save()"> Save Changes</button>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #edittemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Edit Localité</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="editForm">
+            <div class="row form-row">
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input type="text" class="form-control" formControlName="id" readonly />
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" class="form-control" formControlName="name" name="name">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Rue</label>
+                        <input type="text" class="form-control" formControlName="rue" name="rue">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 ">
+                    <div class="form-group ">
+                        <label>Ville</label>
+                        <select [compareWith]="compareAddress" formControlName="address" class="form-control ">
+                            <option
+								*ngFor="let add of addressesList"
+                                [ngValue]="add"
+                            >
+                            {{add.name}}-{{add.country}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label>CodePostal</label>
+                        <input type="text" class="form-control" formControlName="codePostal" name="codePostal">
+                    </div>
+                </div>
+
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" (click)="updateLocality()">Modifier</button>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #delete>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Delete</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body text-center">
+        Etes vous sur de vouloir supprimer cette Localité ??
+        <div style="margin-top:25px">
+            <button type="button" class="btn btn-default" (mouseover)="btnColor()" id="btn-yes" (click)="deleteLocality()">Oui</button>
+            <button type="button" class="btn btn-primary" (mouseover)="btnColorNo()" id="btn-no" (click)="decline()">No</button>
+        </div>
+    </div>
+</ng-template>

@@ -1,8 +1,12 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 import { CommonServiceService } from 'src/app/common-service.service';
+import { Locality } from 'src/app/models/locality';
+import { Ouvrier } from 'src/app/models/ouvrier';
 import { Prestation } from 'src/app/models/prestation';
+import { LocalityService } from 'src/app/services/locality.service';
 import { OuvrierService } from 'src/app/services/ouvrier.service';
 import { PrestationService } from 'src/app/services/prestation.service';
 
@@ -16,6 +20,7 @@ export class SettingsComponent implements OnInit {
   speciality = [];
   prestationList = [];
   ouvrierList = [];
+  localitiesList = [];
   modalRef: BsModalRef;
   errorMessage: string;
   name;
@@ -24,44 +29,29 @@ export class SettingsComponent implements OnInit {
 
   formDataPrestation = new Prestation();
   editForm: FormGroup;
-
-  reference;
-  designation;
-  photoMetier;
-  description;
   p : number=1;
   searchText;
 
   constructor(
-    private commonService: CommonServiceService,
     private crudApi: PrestationService,
     private ouvrierService: OuvrierService,
+    private locService: LocalityService,
     private modalService: BsModalService,
+    private toastr: ToastrService,
     private fb: FormBuilder,
   ) {}
 
   ngOnInit(): void {
-    this.getSpecialityList();
     this.getPrestationList();
     this.getOuvriersList();
+    this.getLocalitiesList();
     this.editForm = this.fb.group({
       id: [''],
       title: [''],
       description: [''],
-      ouvrier: [''],
+      ouvrier: new FormControl(this.ouvrierList),
+      locality: new FormControl(this.localitiesList)
     } );
-  }
-
-  getSpecialityList() {
-    this.commonService.getSpeciality().subscribe(
-      (data: any[]) => {
-        this.speciality = data;
-        $(function () {
-          $('table').DataTable();
-        });
-      },
-      (error) => (this.errorMessage = <any>error)
-    );
   }
 
   getPrestationList() {
@@ -84,21 +74,35 @@ export class SettingsComponent implements OnInit {
     );
   }
 
+  getLocalitiesList() {
+    this.locService.getAllLocaliteDTOs().subscribe(
+      (data: any[]) => {
+        this.localitiesList = data;
+      }
+    );
+  }
+
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {
       class: 'modal-lg modal-dialog-centered',
     });
   }
 
-  editModal(template: TemplateRef<any>, special) {
-    this.id = special.id;
-    this.modalRef = this.modalService.show(template, {
-      class: 'modal-lg modal-dialog-centered',
+  save() {
+    this.crudApi.addPrestation(this.formDataPrestation)
+    .subscribe(data => {
+      this.toastr.success('avec succès','Prestation Ajouté', {
+        timeOut: 2500,
+        positionClass: 'toast-top-right',
+      });
+      this.modalRef.hide();
+      this.getPrestationList();
     });
+    this.modalRef.hide();
+    this.formDataPrestation = null;
   }
 
   editPrestationModal(template: TemplateRef<any>, prest: Prestation) {
- //   this.id = metier.id;
     this.modalRef = this.modalService.show(template, {
       class: 'modal-lg modal-dialog-centered',
     });
@@ -107,14 +111,29 @@ export class SettingsComponent implements OnInit {
       title: prest.title,
       description: prest.description,
       ouvrier: prest.ouvrier,
+      locality: prest.locality,
     });
   }
 
-  deleteModal(template: TemplateRef<any>, special) {
-    this.id = special.id;
-    this.modalRef = this.modalService.show(template, {
-      class: 'modal-sm modal-dialog-centered',
-    });
+  compareOuvrier(o1: Ouvrier, o2: Ouvrier): boolean {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  }
+
+  compareLocality(loc1: Locality, loc2: Locality): boolean {
+    return loc1 && loc2 ? loc1.id === loc2.id : loc1 === loc2;
+  }
+
+  updatePrestation() {
+    this.crudApi.updatePrestation(this.editForm.value.id, this.editForm.value)
+      .subscribe((data) => {
+        this.toastr.warning('avec succès','Prestation Modifié', {
+          timeOut: 2500,
+          positionClass: 'toast-top-right',
+        });
+        this.modalRef.hide();
+        this.getPrestationList();
+      });
+    this.modalRef.hide();
   }
 
   deletePrestationModal(template: TemplateRef<any>, prest) {
@@ -124,46 +143,13 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  save() {
-    console.log(this.formDataPrestation);
-    this.crudApi.addPrestation(this.formDataPrestation)
-    .subscribe(data => {
-      this.modalRef.hide();
-      this.getPrestationList();
-    });
-    this.modalRef.hide();
-    this.formDataPrestation = null;
-  }
-
-  update() {
-    let params = {
-      id: this.id,
-      key: this.key,
-      speciality: this.name,
-    };
-    this.modalRef.hide();
-  }
-
-  updatePrestation() {
-    this.crudApi.updatePrestation(this.editForm.value.id, this.editForm.value)
-      .subscribe((data) => {
-        this.modalRef.hide();
-        this.getPrestationList();
-      });
-    this.modalRef.hide();
-  }
-
-  deleteSpeciality() {
-    this.speciality = this.speciality.filter((a) => a.id !== this.id);
-    this.commonService.deleteSpeciality(this.id).subscribe((data: any[]) => {
-      this.modalRef.hide();
-      this.getSpecialityList();
-    });
-  }
-
   deletePrestation() {
     this.prestationList = this.prestationList.filter((a) => a.id !== this.id);
     this.crudApi.deletePrestation(this.id).subscribe((data: any[]) => {
+      this.toastr.error('avec succès','Prestation Supprimé', {
+        timeOut: 2500,
+        positionClass: 'toast-top-right',
+      });
       this.modalRef.hide();
       this.getPrestationList();
     });
