@@ -1,6 +1,5 @@
 <div class="page-wrapper">
     <div class="content container-fluid">
-        <!-- Page Header -->
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-12">
@@ -13,13 +12,10 @@
                 </div>
             </div>
         </div>
-        <!-- /Page Header -->
-
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <!-- <div class="table-responsive" *ngIf="usersList"> -->
                         <div class="table-responsive" *ngIf="internauteList">
                             <table class="datatable table table-hover table-center mb-0">
                                 <thead>
@@ -31,7 +27,6 @@
                                         <th>Email</th>
                                         <th>Membre depuis</th>
                                         <th>Status compte</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,8 +35,6 @@
                                             <h2 class="table-avatar">
 
                                                 <a [routerLink]="'/admin/doc-profile'" class="avatar avatar-sm mr-2">
-                                                    <!-- <img class="avatar-img rounded-circle" 
-													[src]="user.profile" alt="User Image"> -->
                                                     <img [src]="
 													this.crudApi.apiServerUrl +
 													'/utilisateurs/avatar/' +
@@ -58,8 +51,6 @@
 
                                         <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">{{user.dateInscription | date : 'dd MMM yyyy hh mm a'}}</td>
 
-
-
                                         <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">{{user.isActive}}
                                             <div class="status-toggle">
                                                 <input type="checkbox" id="status_1" class="check" checked>
@@ -75,6 +66,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>

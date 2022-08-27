@@ -37,8 +37,8 @@ export class HistoriqueLoginService {
     return this.http.put<HistoriqueLogin>(`${this.apiServerUrl}/historiqueLogins/update/${idHistoriqueLogin}`, histLogin);
   }
 
-  public deleteHistoriqueLogin(idHistoriqueLogin: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/historiqueLogins/delete/${idHistoriqueLogin}`);
+  public deleteHistoriqueLogin(idHistoriqueLogin: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}/historiqueLogins/delete/${idHistoriqueLogin}`);
   }
 
   public countNumberOfhistoriqueLogins(): Observable<any> {

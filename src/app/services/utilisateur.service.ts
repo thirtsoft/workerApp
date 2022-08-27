@@ -42,8 +42,8 @@ export class UtilisateurService {
     return this.http.post<Utilisateur>(`${this.apiServerUrl}/utilisateurs/create`, user);
   }
 
-  public updateUtilisateur(utilisateurId: number, Utilisateur: Utilisateur): Observable<Utilisateur> {
-    return this.http.put<Utilisateur>(`${this.apiServerUrl}/utilisateurs/update/${utilisateurId}`, Utilisateur);
+  public updateUtilisateur(utilisateurId: number, user: Utilisateur): Observable<Utilisateur> {
+    return this.http.patch<Utilisateur>(`${this.apiServerUrl}/utilisateurs/update/${utilisateurId}`, user);
   }
 
   public activatedUser(id: number, isActive: boolean): Observable<any> {
@@ -68,8 +68,8 @@ export class UtilisateurService {
     return this.http.request(req);
   }
 
-  public deleteUtilisateur(utilisateurId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/utilisateurs/delete/${utilisateurId}`);
+  public deleteUtilisateur(utilisateurId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}/utilisateurs/delete/${utilisateurId}`);
   }
 
 }

@@ -14,7 +14,7 @@ import { FormBuilder } from '@angular/forms';
 export class DoctorsComponent implements OnInit {
   doctorsList: any = [];
   errorMessage: string;
-  internauteList: any = [];
+  internauteList = [];
 
   id!: number;
   p : number=1;
@@ -57,8 +57,8 @@ export class DoctorsComponent implements OnInit {
 
   getInternautesList() {
     this.crudApi.getAllUtilisateursOrderByIdDesc().subscribe(
-      (res) => {
-        this.internauteList = res;
+      (data: any[]) => {
+        this.internauteList = data;
         $(function () {
           $('table').DataTable();
         });

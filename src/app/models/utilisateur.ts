@@ -1,3 +1,5 @@
+import { Role } from "./role";
+
 export class Utilisateur {
     id: number;
     name: string;
@@ -16,5 +18,7 @@ export class Utilisateur {
     message: string;
     isActive: boolean
     dateInscription: Date;
+
+    roles: Role;
 
 }

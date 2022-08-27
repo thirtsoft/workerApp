@@ -18,27 +18,27 @@ export class HistoriqueAppointmentService {
 
   /*************************** HistoriqueAppointment ********************/
   public getAllHistoriqueAppointments(): Observable<HistoriqueAppointment[]> {
-    return this.http.get<HistoriqueAppointment[]>(`${this.apiServerUrl}/historiqueAppointments/all`);
+    return this.http.get<HistoriqueAppointment[]>(`${this.apiServerUrl}/historiqueAppointment/all`);
   }
 
   public getHistoriqueAppointmentsOrderByIdDesc(): Observable<HistoriqueAppointment[]> {
-    return this.http.get<HistoriqueAppointment[]>(`${this.apiServerUrl}/historiqueAppointments/searchAllHistoriqueAppointmentByIdDesc`);
+    return this.http.get<HistoriqueAppointment[]>(`${this.apiServerUrl}/historiqueAppointment/searchAllHistoriqueAppointmentByIdDesc`);
   }
   
   public getHistoriqueAppointmentById(idHistoriqueAppointment: number): Observable<HistoriqueAppointment> {
-    return this.http.get<HistoriqueAppointment>(`${this.apiServerUrl}/historiqueAppointments/findById/${idHistoriqueAppointment}`);
+    return this.http.get<HistoriqueAppointment>(`${this.apiServerUrl}/historiqueAppointment/findById/${idHistoriqueAppointment}`);
   }
 
   public addHistoriqueAppointment(histAnnonce: HistoriqueAppointment): Observable<HistoriqueAppointment> {
-    return this.http.post<HistoriqueAppointment>(`${this.apiServerUrl}/historiqueAppointments/create`, histAnnonce);
+    return this.http.post<HistoriqueAppointment>(`${this.apiServerUrl}/historiqueAppointment/create`, histAnnonce);
   }
 
   public updateHistoriqueAppointment(idHistoriqueAppointment: number, histAnnonce: HistoriqueAppointment): Observable<HistoriqueAppointment> {
-    return this.http.put<HistoriqueAppointment>(`${this.apiServerUrl}/historiqueAppointments/update/${idHistoriqueAppointment}`, histAnnonce);
+    return this.http.put<HistoriqueAppointment>(`${this.apiServerUrl}/historiqueAppointment/update/${idHistoriqueAppointment}`, histAnnonce);
   }
 
-  public deleteHistoriqueAppointment(idHistoriqueAppointment: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/historiqueAppointments/delete/${idHistoriqueAppointment}`);
+  public deleteHistoriqueAppointment(idHistoriqueAppointment: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}/historiqueAppointment/delete/${idHistoriqueAppointment}`);
   }
 
 }
