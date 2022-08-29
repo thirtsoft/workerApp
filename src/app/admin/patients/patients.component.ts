@@ -4,13 +4,16 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import * as $ from 'jquery';
 import { OuvrierService } from 'src/app/services/ouvrier.service';
 import { Ouvrier } from 'src/app/models/ouvrier';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Metier } from 'src/app/models/metier';
 import { Address } from 'src/app/models/address';
 import { MetierService } from 'src/app/services/metier.service';
 import { AddressService } from 'src/app/services/address.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse, HttpEventType, HttpResponse } from '@angular/common/http';
+import { Locality } from 'src/app/models/locality';
+import { LocalityService } from 'src/app/services/locality.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-patients',
@@ -18,24 +21,26 @@ import { HttpErrorResponse, HttpEventType, HttpResponse } from '@angular/common/
   styleUrls: ['./patients.component.css']
 })
 export class PatientsComponent implements OnInit {
-  patientsList: any = [];
+
   ouvriersList: any = [];
   metiersList: any = [];
-  addressList: any = [];
+  localityList: any = [];
   modalRef: BsModalRef;
   errorMessage: string;
   name;
   id;
   key;
-  formDataOuvrier = new Ouvrier();
+  formDataOuvrier: Ouvrier = new Ouvrier();
   editForm: FormGroup;
   viewForm: FormGroup;
   mailForm: FormGroup;
   p : number=1;
   searchText;
 
-  ouvrierPhotoFile;
-  ouvrierCvFile;
+  ouvrierPhotoFile: File;
+  ouvrierCvFile: File;
+
+  submitted = false;
   data;
   paramId :any = 0;
   mySubscription: any;
@@ -50,19 +55,19 @@ export class PatientsComponent implements OnInit {
   userId;
   img: boolean;
 
-  constructor(public commonService: CommonServiceService,
+  constructor(
     public ouvService: OuvrierService,
     private metService: MetierService,
-    private addService: AddressService,
+    private locService: LocalityService,
     private modalService: BsModalService,
     private toastr: ToastrService,
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.getPatients();
     this.getOuvriersList();
     this.getMetiersList();
-    this.getAddressesList();
+    this.getLocalitiesList();
+
     this.editForm = this.fb.group({
       id: [''],
       reference: [''],
@@ -82,8 +87,8 @@ export class PatientsComponent implements OnInit {
       cvOuvrier: [''],
       photoOuvrier: [''],
       dateInscription: [''],
-      metier: new Metier(),
-      address: new Address()
+      metier: new FormControl(this.metiersList),
+      locality: new FormControl(this.localityList),
     } );
 
     this.viewForm = this.fb.group({
@@ -105,8 +110,8 @@ export class PatientsComponent implements OnInit {
       cvOuvrier: [''],
       photoOuvrier: [''],
       dateInscription: [''],
-      metier: new Metier(),
-      address: new Address()
+      metier: new FormControl(this.metiersList),
+      locality: new FormControl(this.localityList),
     } );
 
     this.mailForm = this.fb.group({
@@ -133,22 +138,71 @@ export class PatientsComponent implements OnInit {
       .subscribe(res => {
         this.metiersList = res;
       },
-        error => this.errorMessage = <any>error);
+      error => this.errorMessage = <any>error);
   }
 
-  getAddressesList() {
-    this.addService.getAllAddresss()
+  getLocalitiesList() {
+    this.locService.getAllLocaliteDTOs()
       .subscribe(res => {
-        this.addressList = res;
-        console.log(this.addressList);
+        this.localityList = res;
       },
-        error => this.errorMessage = <any>error);
+      error => this.errorMessage = <any>error);
+  }
+
+  getTS() {
+    return this.currentTime;
+  }
+
+  selectPhotoFile(event) {
+    const photofile = event.target.files[0];
+    this.ouvrierPhotoFile = photofile;
+  }
+
+  selectCvFile(event) {
+    const cvfile = event.target.files[0];
+    this.ouvrierCvFile = cvfile;
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {
       class: 'modal-lg modal-dialog-centered',
     });
+  }
+
+ /*  save() {
+    this.ouvService.addOuvrier(this.formDataOuvrier)
+    .subscribe(data => {
+      this.toastr.success('avec succès','Ouvrier Ajoutée', {
+        timeOut: 2500,
+        positionClass: 'toast-top-right',
+      });
+      this.modalRef.hide();
+      this.getOuvriersList();
+    });
+    this.modalRef.hide();
+    this.formDataOuvrier = null;
+  } */
+
+  onSaveOuvrierWithFiles() {
+    let formData = new FormData();
+    this.currentPhotoFileUpload = this.ouvrierPhotoFile;
+    this.currentCvFileUpload = this.ouvrierCvFile;
+    formData.append('ouvrier', JSON.stringify(this.formDataOuvrier));
+    formData.append('photoOuvrier', this.currentPhotoFileUpload);
+    formData.append('cvOuvrier', this.currentCvFileUpload);
+    this.ouvService.addOuvrierWithPhotoAndCvFileInFolder(formData)
+      .subscribe((response: Ouvrier)=> {
+        this.toastr.success('avec succès','Ouvrier Ajoutée', {
+          timeOut: 2500,
+          positionClass: 'toast-top-right',
+        });
+        this.modalRef.hide();
+        this.getOuvriersList();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 
   viewOuvrierModal(template: TemplateRef<any>, ouvrier: Ouvrier) {
@@ -175,10 +229,17 @@ export class PatientsComponent implements OnInit {
       photoOuvrier: ouvrier.photoOuvrier,
       dateInscription: ouvrier.dateInscription,
       metier: ouvrier.metier,
-      address: ouvrier.address
+      locality: ouvrier.locality
     });
   }
 
+  compareMetier(c1: Metier, c2: Metier): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+
+  compareLocality(loc1: Locality, loc2: Locality): boolean {
+    return loc1 && loc2 ? loc1.id === loc2.id : loc1 === loc2;
+  }
 
   editOuvrierModal(template: TemplateRef<any>, ouvrier: Ouvrier) {
     this.modalRef = this.modalService.show(template, {
@@ -204,93 +265,21 @@ export class PatientsComponent implements OnInit {
       photoOuvrier: ouvrier.photoOuvrier,
       dateInscription: ouvrier.dateInscription,
       metier: ouvrier.metier,
-      address: ouvrier.address
+      locality: ouvrier.locality
     });
-  }
-
-  deleteOuvrierModal(template: TemplateRef<any>, ouvrier) {
-    this.id = ouvrier.id;
-    this.modalRef = this.modalService.show(template, {
-      class: 'modal-sm modal-dialog-centered',
-    });
-  }
-
-  deleteOuvrier() {
-    this.ouvriersList = this.ouvriersList.filter((a) => a.id !== this.id);
-    this.ouvService.deleteOuvrier(this.id).subscribe((data) => {
-      this.toastr.error('avec succès','Ouvrier Supprimé', {
-        timeOut: 1500,
-        positionClass: 'toast-top-right',
-      });
-      this.modalRef.hide();
-      this.getOuvriersList();
-    });
-  }
-
-  getPatients() {
-    this.commonService.getpatients()
-      .subscribe(res => {
-        this.patientsList = res;
-        $(function () {
-          $("table").DataTable();
-        });
-      },
-        error => this.errorMessage = <any>error);
-  }
-
-  save() {
-    console.log(this.formDataOuvrier);
-    this.ouvService.addOuvrier(this.formDataOuvrier)
-    .subscribe(data => {
-      this.modalRef.hide();
-      this.getOuvriersList();
-    });
-    this.modalRef.hide();
-    this.formDataOuvrier = null;
-  }
-
-  onSaveOuvrierWithFiles() {
-    let formData = new FormData();
-    this.currentPhotoFileUpload = this.ouvrierPhotoFile.item(0)
-    this.currentCvFileUpload = this.ouvrierCvFile.item(0)
-    console.log(this.currentPhotoFileUpload);
-    console.log(this.currentCvFileUpload);
-    
-    formData.append('ouvrier', JSON.stringify(this.formDataOuvrier));
-    formData.append('photoOuvrier', this.currentPhotoFileUpload);
-    formData.append('cvOuvrier', this.currentCvFileUpload);
-    console.log("FormData--", formData);
-    this.ouvService.addOuvrierWithPhotoAndCvFileInFolder(formData)
-      .subscribe((response: Ouvrier)=> {
-        console.log('Response--', response);
-        this.toastr.success('avec succès','Ouvrier Ajoutée', {
-          timeOut: 1500,
-          positionClass: 'toast-top-right',
-        });
-        this.modalRef.hide();
-        this.getOuvriersList();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
   }
 
   updateOuvrier() {
     this.ouvService.updateOuvrier(this.editForm.value.id, this.editForm.value)
       .subscribe((data) => {
         this.toastr.success('avec succès','Information modifiée', {
-          timeOut: 1500,
+          timeOut: 2500,
           positionClass: 'toast-top-right',
         });
         this.modalRef.hide();
         this.getOuvriersList();
       });
     this.modalRef.hide();
-  }
-
-  getTS() {
-    return this.currentTime;
   }
 
   onEditPhoto(p) {
@@ -304,20 +293,19 @@ export class PatientsComponent implements OnInit {
   }
 
   onSelectPhotoFile(event) {
-    this.ouvrierPhotoFile=event.target.files;
+    const photofile = event.target.files[0];
+    this.ouvrierPhotoFile = photofile;
   } 
 
   processForm() {
     this.progress = 0;
-    this.currentPhotoFileUpload = this.ouvrierPhotoFile.item(0)
-    console.log(this.currentPhotoFileUpload);
-    console.log(this.paramId);
-    this.ouvService.uploadPhotoOfOuvrierInFolder(this.currentPhotoFileUpload, this.formDataOuvrier.id)
+    this.currentPhotoFileUpload = this.ouvrierPhotoFile;
+    this.ouvService.uploadPhotoOfOuvrierInFolder(this.currentPhotoFileUpload, this.editForm.value.id)
       .subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
           this.progress = Math.round(100 * event.loaded / event.total);
           this.toastr.success('avec succès','Photo remplacé', {
-            timeOut: 1500,
+            timeOut: 2500,
             positionClass: 'toast-top-right',
           });
           this.modalRef.hide();
@@ -334,20 +322,19 @@ export class PatientsComponent implements OnInit {
   }
 
   onSelectCvFile(event) {
-    this.ouvrierCvFile=event.target.files;
+    const cvfile = event.target.files[0];
+    this.ouvrierCvFile = cvfile;
   } 
 
   processCvForm() {
     this.progress = 0;
-    this.currentCvFileUpload = this.ouvrierCvFile.item(0)
-    console.log(this.currentCvFileUpload);
-    console.log(this.paramId);
-    this.ouvService.uploadCvOfOuvrierInFolder(this.currentCvFileUpload, this.formDataOuvrier.id)
+    this.currentCvFileUpload = this.ouvrierCvFile;
+    this.ouvService.uploadCvOfOuvrierInFolder(this.currentCvFileUpload, this.editForm.value.id)
       .subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
           this.progress = Math.round(100 * event.loaded / event.total);
           this.toastr.success('avec succès','CV remplacé', {
-            timeOut: 1500,
+            timeOut: 2500,
             positionClass: 'toast-top-right',
           });
           this.modalRef.hide();
@@ -361,6 +348,25 @@ export class PatientsComponent implements OnInit {
       }
     );
     this.ouvrierCvFile = undefined;
+  }
+
+  deleteOuvrierModal(template: TemplateRef<any>, ouvrier) {
+    this.id = ouvrier.id;
+    this.modalRef = this.modalService.show(template, {
+      class: 'modal-sm modal-dialog-centered',
+    });
+  }
+
+  deleteOuvrier() {
+    this.ouvriersList = this.ouvriersList.filter((a) => a.id !== this.id);
+    this.ouvService.deleteOuvrier(this.id).subscribe((data) => {
+      this.toastr.error('avec succès','Ouvrier Supprimé', {
+        timeOut: 2500,
+        positionClass: 'toast-top-right',
+      });
+      this.modalRef.hide();
+      this.getOuvriersList();
+    });
   }
 
   decline() {

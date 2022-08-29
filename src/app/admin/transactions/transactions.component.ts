@@ -145,9 +145,9 @@ export class TransactionsComponent implements OnInit {
   }
 
   
-compareFn(c1: Utilisateur, c2: Utilisateur): boolean {
-  return c1 && c2 ? c1.id === c2.id : c1 === c2;
-}
+  compareFn(c1: Utilisateur, c2: Utilisateur): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
 
   update() {
     this.crudApi.updateJeton(this.editForm.value.id, this.editForm.value)

@@ -1,10 +1,8 @@
 <div class="page-wrapper">
     <div class="content container-fluid">
-        <!-- Page Header -->
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-12">
-                    <h3 class="page-title">Rendez-vous</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Dashboard</a></li>
                         <li class="breadcrumb-item active">Demandes de rv</li>
@@ -12,10 +10,8 @@
                 </div>
             </div>
         </div>
-        <!-- /Page Header -->
         <div class="row">
             <div class="col-md-12">
-                <!-- Recent Orders -->
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -28,7 +24,6 @@
                                         <th>Date Rv</th>
                                         <th>Status</th>
                                         <th class="text-right">Actions</th>
-                                        <!--   <th class="text-right">Amount</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,7 +39,6 @@
                                                 <a [routerLink]="'/admin/doc-profile'">{{appoint.ouvrier?.firstName}}-{{appoint.ouvrier?.lastName}}</a>
                                             </h2>
                                         </td>
-                                        <!--  <td *ngIf="!appoint">Dental</td> -->
                                         <td>{{appoint.ouvrier?.reference}}</td>
                                         <td>
                                             <h2 class="table-avatar">
@@ -56,14 +50,12 @@
                                         <td>{{appoint.appointmentDate | date : 'dd MMM yyyy'}} <span class="text-primary d-block">{{appoint.time}}</span></td>
                                         <td>
                                             {{appoint.statusOfAppointment}}
-                                            <a class="btn btn-sm bg-success-light" *ngIf="appoint.statusOfAppointment==='Accepted'" disabled data-toggle="modal" (click)="editStatusOfAppointmentModal(editEtattemplate,appoint)" style="cursor: pointer;">
+                                            <button class="btn btn-sm bg-success-light" [disabled]="appoint.statusOfAppointment=='Accepted'" data-toggle="modal" (click)="editStatusOfAppointmentModal(editEtattemplate,appoint)" style="cursor: pointer;">
                                                 <i class="fa fa-pencil-square-o"></i>
-                                            </a>
+                                            </button>
                                             <div class="status-toggle">
-                                                <input *ngIf="appoint.statusOfAppointment==='Accepted'" type="checkbox" id="status_1" class="check" checked>
-                                                <input *ngIf="appoint.statusOfAppointment==='Refused'" type="checkbox" id="status_1" class="check">
+                                                <input type="checkbox" [checked]="appoint.statusOfAppointment=='Accepted'" id="status_1" class="check">
                                                 <label for="status_1" class="checktoggle">checkbox</label>
-
                                             </div>
                                         </td>
                                         <td class="text-right">
@@ -105,10 +97,10 @@
                 <div class="col-12 col-sm-12">
                     <div class="form-group">
                         <select name="statusOfAppointment" formControlName="statusOfAppointment" id="statusOfAppointment" class="form-control">
-              <option value="Encours">Encours</option>
-              <option value="Accepted">Accepted</option>
-              <option value="Refused">Refused</option>
-            </select>
+                            <option value="Encours">Encours</option>
+                            <option value="Accepted">Accepted</option>
+                            <option value="Refused">Refused</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -128,7 +120,7 @@
 		</button>
     </div>
     <div class="modal-body text-center">
-        Etes-vous sur de vouloir supprimer cet Note?
+        Etes-vous sur de vouloir supprimer cet Rv?
         <div style="margin-top:25px">
             <button type="button" class="btn btn-default" (mouseover)="btnColor()" id="btn-yes" (click)="deleteAppointment()">Yes</button>
             <button type="button" class="btn btn-primary" (mouseover)="btnColorNo()" id="btn-no" (click)="decline()">No</button>

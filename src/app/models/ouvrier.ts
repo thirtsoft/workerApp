@@ -1,4 +1,5 @@
 import { Address } from "./address";
+import { Locality } from "./locality";
 import { Metier } from "./metier";
 
 export class Ouvrier {
@@ -25,5 +26,6 @@ export class Ouvrier {
     
     metier: Metier;
     address: Address;
+    locality: Locality;
 
 }

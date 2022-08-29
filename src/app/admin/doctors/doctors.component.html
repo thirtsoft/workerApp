@@ -3,11 +3,10 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-12">
-                    <h3 class="page-title">List des Internautes</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="javascript:(0);">Users</a></li>
-                        <li class="breadcrumb-item active">Internautes</li>
+                        <li class="breadcrumb-item active">List des Internautes</li>
                     </ul>
                 </div>
             </div>
@@ -33,7 +32,6 @@
                                     <tr *ngFor="let user of internauteList">
                                         <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">
                                             <h2 class="table-avatar">
-
                                                 <a [routerLink]="'/admin/doc-profile'" class="avatar avatar-sm mr-2">
                                                     <img [src]="
 													this.crudApi.apiServerUrl +
@@ -48,12 +46,10 @@
                                         <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">{{user.mobile}}</td>
                                         <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">{{user.addressRecruteur}}</td>
                                         <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">{{user.email}}</td>
-
                                         <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">{{user.dateInscription | date : 'dd MMM yyyy hh mm a'}}</td>
-
                                         <td *ngIf="user?.roles[0]?.name == 'ROLE_USER'">{{user.isActive}}
                                             <div class="status-toggle">
-                                                <input type="checkbox" id="status_1" class="check" checked>
+                                                <input type="checkbox" [checked]="user.active===true" id="status_1" class="check">
                                                 <label for="status_1" class="checktoggle">checkbox</label>
                                             </div>
                                         </td>

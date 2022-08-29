@@ -1,14 +1,12 @@
 <div class="page-wrapper">
     <div class="content container-fluid">
-        <!-- Page Header -->
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-7">
-                    <h3 class="page-title">Gestion des Ouvriers</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="javascript:(0);">List des Ouvriers</a></li>
-                        <li class="breadcrumb-item active">Ouvriers</li>
+                        <li class="breadcrumb-item active">Gestion des Ouvriers</li>
                     </ul>
                 </div>
                 <div class="col-sm-5 col">
@@ -18,8 +16,6 @@
                 </div>
             </div>
         </div>
-        <!-- /Page Header -->
-
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
@@ -29,23 +25,18 @@
                                 <table class="datatable table table-hover table-center mb-0">
                                     <thead>
                                         <tr>
-                                            <!-- <th>ID</th> -->
-                                            <th>Name</th>
-                                            <th>Sexe</th>
-                                            <th>Address Actuel</th>
+                                            <th>Nom et Prénom</th>
+                                            <th>Address</th>
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>Disponibilité</th>
-                                            <th>Education</th>
+                                            <th>CV</th>
                                             <th>Selected</th>
-                                            <th>Mobilité</th>
-                                            <!--  <th class="text-right">Paid</th> -->
                                             <th class="text-right">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let ouvrier of ouvriersList">
-                                            <!-- <td>{{ouvrier.id}}</td> -->
                                             <td>
                                                 <h2 class="table-avatar">
                                                     <a [routerLink]="'/admin/doc-profile'" class="avatar avatar-sm mr-3">
@@ -59,14 +50,24 @@
                                                     </a>
                                                 </h2>
                                             </td>
-                                            <td>{{ouvrier.sexe}}</td>
-                                            <td>{{ouvrier.addressActuel}}</td>
+                                            <td>{{ouvrier?.locality?.name}}</td>
                                             <td>{{ouvrier.email}}</td>
                                             <td>{{ouvrier.phoneOuvrier}}</td>
                                             <td>{{ouvrier.disponibity}}</td>
-                                            <td>{{ouvrier.education}}</td>
+                                            <td>{{ouvrier.cvOuvrier}} &nbsp;
+                                                <a href="{{this.ouvService.apiServerUrl + '/ouvriers/downloadCvFileOfOuvrier/' + ouvrier.cvOuvrier}}" class="cv">
+                                                    <em class="fa fa-download" style="cursor: pointer; align-items: flex-end"></em
+                                                        >
+
+                                                </a>
+                                               <!--  <a href="http://localhost:8081/sen-ouvrier/v1/ouvriers/downloadCvFileOfOuvrier/{{
+                                                    ouvrier.cvOuvrier
+                                                  }}" class="cv">
+                                                    <em class="fa fa-download" style="cursor: pointer; align-items: flex-end"></em
+                                                  >&nbsp;&nbsp;
+                                                </a> -->
+                                            </td>
                                             <td>{{ouvrier.selected}}</td>
-                                            <td>{{ouvrier.mobilite}}</td>
                                             <!-- <td>{{ouvrier.lastvisit | date : 'dd MMM yyyy'}}</td>
                                             <td class="text-right">${{ouvrier.paid}}</td> -->
                                             <td class="text-right">
@@ -74,7 +75,7 @@
                                                     <a class="btn btn-sm bg-success-light" data-toggle="modal" (click)="viewOuvrierModal(viewtemplate, ouvrier)" style="cursor: pointer;">
                                                         <i class="fa fa-eye"></i> Voir
                                                     </a>
-                                                    <a class="btn btn-sm bg-success-light" data-toggle="modal" (click)="editOuvrierModal(edittemplate,ouvrier)">
+                                                    <a class="btn btn-sm bg-success-light" data-toggle="modal" (click)="editOuvrierModal(edittemplate,ouvrier)" style="cursor: pointer;">
                                                         <i class="fe fe-pencil"></i> Edit
                                                     </a>
 
@@ -96,7 +97,6 @@
 
     </div>
 </div>
-
 
 <ng-template #template>
     <div class="modal-header">
@@ -138,21 +138,22 @@
                         <input type="text" class="form-control" name="addressActuel" [(ngModel)]="formDataOuvrier.addressActuel" #addressActuel="ngModel" />
                     </div>
                 </div>
+           
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
-                        <label>Ville</label>
-                        <select name="address" [(ngModel)]="formDataOuvrier.address" class="form-control" placeholder="Ville Ouvrier">
-							<option
-							  *ngFor="let add of addressList"
+                        <label>Address</label>
+                        <select name="locality" [(ngModel)]="formDataOuvrier.locality" #locality="ngModel" class="form-control" required="">
+                            <option
+							  *ngFor="let loc of localityList"
 							  [ngValue]="
-								add.id == formDataOuvrier.address?.id
-								  ? formDataOuvrier.address
-								  : add
+                              loc.id == formDataOuvrier.locality?.id
+								  ? formDataOuvrier.locality
+								  : loc
 							  "
 							>
-							  {{ add.country }}
+							  {{ loc.name }}
 							</option>
-						  </select>
+						</select>
                     </div>
                 </div>
 
@@ -171,8 +172,8 @@
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label>Profession</label>
-                        <select name="metier" [(ngModel)]="formDataOuvrier.metier" class="form-control" placeholder="Profession">
-							<option
+                        <select name="metier" [(ngModel)]="formDataOuvrier.metier" #metier="ngModel" class="form-control" required="">
+                            <option
 							  *ngFor="let add of metiersList"
 							  [ngValue]="
 								add.id == formDataOuvrier.metier?.id
@@ -195,7 +196,7 @@
                 <div class="col-12 col-sm-4">
                     <div class="form-group">
                         <label>Salaire</label>
-                        <input type="text" class="form-control" name="pretentionSalaire" [(ngModel)]="formDataOuvrier.pretentionSalaire" #pretentionSalaire="ngModel" />
+                        <input type="number" class="form-control" name="pretentionSalaire" [(ngModel)]="formDataOuvrier.pretentionSalaire" #pretentionSalaire="ngModel" />
                     </div>
                 </div>
                 <div class="col-12 col-sm-4">
@@ -225,13 +226,13 @@
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label>Photo</label>
-                        <input type="file" class="form-control" name="photoOuvrier" [(ngModel)]="formDataOuvrier.photoOuvrier" #photoOuvrier="ngModel" />
+                        <input type="file" class="form-control" name="photoOuvrier" id="photoOuvrier" (change)="selectPhotoFile($event)" required/>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label>CV</label>
-                        <input type="file" class="form-control" name="cvOuvrier" [(ngModel)]="formDataOuvrier.cvOuvrier" #cvOuvrier="ngModel" />
+                        <input type="file" class="form-control" name="cvOuvrier" id="cvOuvrier" (change)="selectCvFile($event)" required />
                     </div>
                 </div>
                 <div class="col-12 col-sm-12">
@@ -242,7 +243,7 @@
                 </div>
 
             </div>
-            <button type="submit" class="btn btn-primary btn-block" (click)="save()">
+            <button type="submit" class="btn btn-primary btn-block" (click)="onSaveOuvrierWithFiles()">
 		  Save Changes
 		</button>
         </form>
@@ -265,14 +266,13 @@
                         <input type="text" class="form-control" formControlName="id" readonly />
                     </div>
                 </div>
-
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label>Photo</label>
-                        <img formControlName="photoOuvrier" height="90" width="90" class="img-circle" src="{{
+                        <img height="100" width="100" class="img-circle" src="{{
                             this.ouvService.apiServerUrl +
                               '/ouvriers/photoOuvrierInFolder/' +
-                              formDataOuvrier.id
+                              editForm.value.id
                           }}" />
                         <span *ngIf="!editPhoto">
                           <input type="file" (change)="onSelectPhotoFile($event)" />
@@ -284,8 +284,6 @@
                         </button>
                         {{ progress }}
                         </span>
-
-
                     </div>
                 </div>
             </div>
@@ -301,7 +299,17 @@
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label>CV</label>
-                        <input type="file" class="form-control" formControlName="id" readonly />
+                        <input type="text" class="form-control" formControlName="cvOuvrier" readonly />
+                        <span *ngIf="!editCv">
+                            <input type="file" (change)="onSelectCvFile($event)" />
+                            <button
+                              class="btn btn-success btn-sm"
+                              (click)="processCvForm()"
+                            >
+                              <span class="glyphicon glyphicon-upload"></span> Enregistrer le cv
+                          </button>
+                          {{ progress }}
+                          </span>
                     </div>
                 </div>
             </div>
@@ -322,35 +330,23 @@
             </div>
 
             <div class="row form-row">
-                <div class="col-12 col-sm-4">
+                <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label>Sexe</label>
                         <input type="text" name="sexe" class="form-control" formControlName="sexe" />
                     </div>
                 </div>
-
-                <div class="col-12 col-sm-4">
+                <div class="col-12 col-sm-6">
                     <div class="form-group">
-                        <label>Addresse Actuel</label>
-                        <input type="text" name="addressActuel" class="form-control" formControlName="addressActuel" />
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-4">
-                    <div class="form-group">
-                        <label>Ville</label>
-                        <select name="address" [(ngModel)]="formDataOuvrier.address" class="form-control" placeholder="Ville Ouvrier">
-							<option
-							  *ngFor="let add of addressList"
-							  [ngValue]="
-								add.id == formDataOuvrier.address?.id
-								  ? formDataOuvrier.address
-								  : add
-							  "
-							>
-							  {{ add.country }}
-							</option>
-						  </select>
+                        <label>Addresse</label> 
+                          <select [compareWith]="compareLocality" formControlName="locality" class="form-control ">
+                            <option
+                                *ngFor="let loc of localityList"
+                                [ngValue]="loc"
+                            >
+                                {{ loc.name }}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -373,22 +369,17 @@
                 <div class="col-12 col-sm-4">
                     <div class="form-group">
                         <label>Profession</label>
-                        <select name="metier" formControlName="metier" class="form-control">
-							<option
-							  *ngFor="let add of metiersList"
-							  [ngValue]="
-								add.id == formDataOuvrier.metier?.id
-								  ? formDataOuvrier.metier
-								  : add
-							  "
-							>
-							  {{ add.designation }}
-							</option>
-						  </select>
+                          <select [compareWith]="compareMetier" formControlName="metier" class="form-control ">
+                            <option
+                                *ngFor="let met of metiersList "
+                                [ngValue]="met"
+                            >
+                                {{ met.designation }}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
-
             <div class="row form-row">
                 <div class="col-12 col-sm-4">
                     <div class="form-group">
@@ -433,7 +424,6 @@
                         <input type="checkbox" name="selected" formControlName="selected" class="form-control" />
                     </div>
                 </div>
-
             </div>
 
             <div class="row form-row">
@@ -472,24 +462,15 @@
                         <input type="text" class="form-control" formControlName="id" readonly />
                     </div>
                 </div>
-
                 <div class="col-12 col-sm-6">
                     <label for="">Photo</label>
-                    <img formControlName="photoOuvrier" height="90" width="90" class="img-circle" src="{{
+                    <img height="100" width="100" class="img-circle" src="{{
                         this.ouvService.apiServerUrl +
                           '/ouvriers/photoOuvrierInFolder/' +
-                          formDataOuvrier.id
+                          viewForm.value.id
                       }}" />
                 </div>
-
-                <!--  <div class="col-12 col-sm-6">
-                    <div class="form-group">
-                        <label>Reference</label>
-                        <input type="text" class="form-control" formControlName="reference" readonly />
-                    </div>
-                </div> -->
             </div>
-
             <div class="row form-row">
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
@@ -509,6 +490,12 @@
             <div class="row form-row">
                 <div class="col-12 col-sm-4">
                     <div class="form-group">
+                        <label>Reference</label>
+                        <input type="text" class="form-control" formControlName="reference" readonly />
+                    </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                    <div class="form-group">
                         <label>Sexe</label>
                         <input type="text" class="form-control" formControlName="sexe" readonly />
                     </div>
@@ -516,32 +503,21 @@
 
                 <div class="col-12 col-sm-4">
                     <div class="form-group">
-                        <label>Addresse Actuel</label>
-                        <input type="text" class="form-control" formControlName="addressActuel" readonly />
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-4">
-                    <div class="form-group">
-                        <label>Ville</label>
-                        <select name="address" [(ngModel)]="formDataOuvrier.address" class="form-control" placeholder="Ville Ouvrier">
-							<option
-							  *ngFor="let add of addressList"
-							  [ngValue]="
-								add.id == formDataOuvrier.address?.id
-								  ? formDataOuvrier.address
-								  : add
-							  "
-							>
-							  {{ add.country }}
-							</option>
-						  </select>
+                        <label>Addresse</label> 
+                        <select formControlName="locality" name="locality" [compareWith]="compareLocality"  class="form-control" readonly>
+                            <option
+                                *ngFor="let loc of localityList "
+                                [ngValue]="loc"
+                                readonly
+                            >
+                            {{ loc.name }}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
 
             <div class="row form-row">
-
                 <div class="col-12 col-sm-4">
                     <div class="form-group">
                         <label>Email</label>
@@ -559,18 +535,15 @@
                 <div class="col-12 col-sm-4">
                     <div class="form-group">
                         <label>Profession</label>
-                        <select name="metier" formControlName="metier" class="form-control" readonly>
-							<option
-							  *ngFor="let add of metiersList"
-							  [ngValue]="
-								add.id == formDataOuvrier.metier?.id
-								  ? formDataOuvrier.metier
-								  : add
-							  "
-							>
-							  {{ add.designation }}
-							</option>
-						  </select>
+                        <select [compareWith]="compareMetier" formControlName="metier" class="form-control" readonly>
+                            <option
+                                *ngFor="let met of metiersList "
+                                [ngValue]="met"
+                                readonly
+                            >
+                                {{ met.designation }}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -593,14 +566,21 @@
 
                 <div class="col-12 col-sm-4">
                     <div class="form-group">
-                        <label>Prétention salaire</label>
-                        <input type="text" class="form-control" formControlName="pretentionSalaire" readonly />
+                        <label>CV</label>
+                        <input type="text" class="form-control" formControlName="cvOuvrier" readonly />
                     </div>
                 </div>
+
             </div>
 
             <div class="row form-row">
                 <div class="col-12 col-sm-4">
+                    <div class="form-group">
+                        <label>Prétention salaire</label>
+                        <input type="text" class="form-control" formControlName="pretentionSalaire" readonly />
+                    </div>
+                </div>
+                <div class="col-12 col-sm-3">
                     <div class="form-group">
                         <label>Disponibilité</label>
                         <input type="text" class="form-control" formControlName="disponibity" readonly />
@@ -614,7 +594,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-sm-4">
+                <div class="col-12 col-sm-1">
                     <div class="form-group">
                         <label>Selected</label>
                         <input type="checkbox" class="form-control" formControlName="selected" readonly />

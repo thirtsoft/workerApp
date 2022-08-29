@@ -15,13 +15,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./appointments.component.css']
 })
 export class AppointmentsComponent implements OnInit {
-  /* datatable: any;
-  constructor() { }
-
-  ngOnInit(): void {
-    const table: any = $('table');
-    this.datatable = table.DataTable();
-  } */
 
   reviews: any = [];
   appointmentsList: any = [];
@@ -36,7 +29,7 @@ export class AppointmentsComponent implements OnInit {
   editForm: FormGroup;
   editEtatForm: FormGroup;
   viewForm: FormGroup;
-
+  appointmentStatus = 'Accepted';
 
   constructor(public commonService: CommonServiceService,
               public crudApi: AppointmentService,
@@ -47,12 +40,23 @@ export class AppointmentsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getReviews();
     this.getAppointmentsList();
     this.editEtatForm = this.fb.group({
       id: [''],
       statusOfAppointment: ['']
     } );
+  }
+
+  getAppointmentsList() {
+    this.crudApi.getAllAppointmentOrderByIdDesc()
+      .subscribe(res => {
+        this.appointmentsList = res;
+        console.log(this.appointmentsList);
+        $(function () {
+          $("table").DataTable();
+        });
+      },
+        error => this.errorMessage = <any>error);
   }
 
   editStatusOfAppointmentModal(template: TemplateRef<any>, appoint: Appointment) {
@@ -89,36 +93,6 @@ export class AppointmentsComponent implements OnInit {
     let data = this.appointmentsList.filter(a => a.id === appoint.id);
     this.id = data[0].id;
     this.modalRef = this.modalService.show(template, { class: 'modal-sm modal-dialog-centered' });
-  }
-
-  getReviews() {
-    this.commonService.getReviews()
-      .subscribe(res => {
-        this.reviews = res;
-        $(function () {
-          $("table").DataTable();
-        });
-      },
-        error => this.errorMessage = <any>error);
-  }
-
-  getAppointmentsList() {
-    this.crudApi.getAllAppointmentOrderByIdDesc()
-      .subscribe(res => {
-        this.appointmentsList = res;
-        console.log(this.appointmentsList);
-        $(function () {
-          $("table").DataTable();
-        });
-      },
-        error => this.errorMessage = <any>error);
-  }
-
-  deleteReview() {
-    this.commonService.deleteReview(this.id).subscribe((data: any[]) => {
-      this.modalRef.hide();
-      this.getReviews();
-    });
   }
 
   deleteAppointment() {
