@@ -10,7 +10,7 @@ import { Utilisateur } from '../models/utilisateur';
 })
 export class UtilisateurService {
 
-  public apiServerUrl = environment.apiBaseUrl;
+  apiServerUrl = environment.apiBaseUrl;
 
   choixmenu : string  = 'A';
   dataForm:  FormGroup;

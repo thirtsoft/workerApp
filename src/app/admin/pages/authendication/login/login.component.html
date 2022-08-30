@@ -8,37 +8,52 @@
                 </div>
                 <div class="login-right">
                     <div class="login-right-wrap">
-                        <h1>Login</h1>
-                        <p class="account-subtitle">Access to our dashboard</p>
-                        
+                        <h1>Connectez-vous !!!</h1>
+                        <p class="account-subtitle">Pour accèder au Tableau de bord</p>
+
                         <!-- Form -->
-                        <form>
+                        <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                             <div class="form-group">
-                                <input class="form-control" type="text" placeholder="Email">
+                                <input type="text" name="username" [(ngModel)]="form.username" #username="ngModel" class="form-control" placeholder="Nom utilisateur" autofocus required>
+                                <div *ngIf="f.submitted && username.invalid">
+                                    <div *ngIf="username.errors.required">nom utilisateur est obligatoire </div>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" type="text" placeholder="Password">
+                                <input type="password" name="password" [(ngModel)]="form.password" #password="ngModel" required minlength="6" class="form-control" placeholder="Password">
+                                <div *ngIf="f.submitted && password.invalid">
+                                    <div *ngIf="password.errors.required">Password est obligatoire </div>
+                                    <div *ngIf="password.errors.minlength">
+                                        Le mote de passe doit contenir au moins 6 caractères
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-primary btn-block" type="submit">Login</button>
+                                <button class="btn btn-primary btn-block" type="submit">Se Connecter</button>
+                            </div>
+                            <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger">
+                                Echec Authentification : {{ errorMessage }}
                             </div>
                         </form>
                         <!-- /Form -->
-                        
-                        <div class="text-center forgotpass"><a [routerLink]="'/admin/forgot-pass'">Forgot Password?</a></div>
+
+                        <!--  <div class="text-center forgotpass"><a [routerLink]="'/admin/forgot-pass'">Forgot Password?</a></div>
                         <div class="login-or">
                             <span class="or-line"></span>
                             <span class="span-or">or</span>
-                        </div>
-                          
+                        </div> -->
+
                         <!-- Social Login -->
-                        <div class="social-login">
+                        <!-- <div class="social-login">
                             <span>Login with</span>
                             <a href="javascript:void(0);" class="facebook"><i class="fa fa-facebook"></i></a><a href="javascript:void(0);" class="google"><i class="fa fa-google"></i></a>
-                        </div>
+                        </div> -->
                         <!-- /Social Login -->
-                        
-                        <div class="text-center dont-have">Don’t have an account? <a [routerLink]="'/admin/register'">Register</a></div>
+
+                        <!--   <div class="text-center dont-have">Don’t have an account? <a [routerLink]="'/admin/register'">Register</a></div> -->
+                        <div class="text-center dont-have">
+                            Developed by <a href="https://wwww.wokite.net/">Wokite</a>
+                        </div>
                     </div>
                 </div>
             </div>
