@@ -7,7 +7,15 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    //  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: 'login-form', pathMatch: 'full' },
+      {
+        path: 'login-form',
+        loadChildren: () =>
+          import('./pages/authendication/login/login.module').then(
+            (m) => m.LoginModule
+          ),
+      },
       {
         path: 'dashboard',
         loadChildren: () =>
@@ -20,13 +28,13 @@ const routes: Routes = [
             './pages/authendication/forgot-password/forgot-password.module'
           ).then((m) => m.ForgotPasswordModule),
       },
-      {
+     /*  {
         path: 'login-form',
         loadChildren: () =>
           import('./pages/authendication/login/login.module').then(
             (m) => m.LoginModule
           ),
-      },
+      }, */
       {
         path: 'admin-invoice',
         loadChildren: () =>

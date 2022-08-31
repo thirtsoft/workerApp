@@ -6,6 +6,7 @@ import { ForgotPasswordModule } from './../../forgot-password/forgot-password.mo
 // import { MorrisJsModule } from 'angular-morris-js';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -15,7 +16,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ForgotPasswordModule,
     FormsModule, 
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    DataTablesModule
     // MorrisJsModule,
   ],
 })

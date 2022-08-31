@@ -50,7 +50,8 @@ export class AdminComponent implements OnInit {
     this.commonService.nextmessage('admin');
     let scope = this;
     setTimeout(() => {
-      scope.Router.navigateByUrl('/admin/dashboard');
+    //  scope.Router.navigateByUrl('/admin/dashboard');
+      scope.Router.navigateByUrl('/admin/login-form');
     }, 100);
   }
 }

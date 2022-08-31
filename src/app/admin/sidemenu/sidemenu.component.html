@@ -1,6 +1,4 @@
-<!-- Header -->
 <div class="header">
-    <!-- Logo -->
     <div class="header-left">
         <a [routerLink]="'/admin/'" class="logo">
             <img src="assets/img/logo.png" alt="Logo">
@@ -9,7 +7,6 @@
             <img src="assets/admin/img/logo-small.png" alt="Logo" width="30" height="30">
         </a>
     </div>
-    <!-- /Logo -->
 
     <a href="javascript:void(0);" id="toggle_btn">
         <i class="fe fe-text-align-left"></i>
@@ -34,29 +31,29 @@
         <!-- Notifications -->
         <li class="nav-item dropdown noti-dropdown">
             <a href="javascript:void(0)" class="dropdown-toggle nav-link" (click)="bell()" [attr.aria-expanded]="!bellCollapsed" aria-controls="collapseExample1">
-                <i class="fe fe-bell"></i> <span class="badge badge-pill">3</span>
+                <i class="fe fe-bell"></i> <span class="badge badge-pill">{{numberOfPendingAppointment}}</span>
             </a>
             <div class="dropdown-menu notifications" id="collapseExample1" [ngbCollapse]="bellCollapsed">
                 <div class="topnav-dropdown-header">
-                    <span class="notification-title">Notifications</span>
+                    <span class="notification-title">Demandes Encours</span>
                     <a href="javascript:void(0)" class="clear-noti" (click)="bellCollapsed = !bellCollapsed"> Clear All </a>
                 </div>
                 <div class="noti-content">
                     <ul class="notification-list">
                         <li class="notification-message" (click)="bellCollapsed = !bellCollapsed">
-                            <a href="javascript:void(0)">
+                            <a href="javascript:void(0)" routerLink="/admin/appointment">
                                 <div class="media">
                                     <span class="avatar avatar-sm">
 										<img class="avatar-img rounded-circle" alt="User Image" src="assets/img/doctors/doctor-thumb-02.jpg">
 									</span>
                                     <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Dr. Ruby Perrin</span> Schedule <span class="noti-title">her appointment</span></p>
+                                        <p class="noti-details"><span class="noti-title">Voir</span> Plus <span class="noti-title">her appointment</span></p>
                                         <p class="noti-time"><span class="notification-time">4 mins ago</span></p>
                                     </div>
                                 </div>
                             </a>
                         </li>
-                        <li class="notification-message" (click)="bellCollapsed = !bellCollapsed">
+                        <!-- <li class="notification-message" (click)="bellCollapsed = !bellCollapsed">
                             <a href="javascript:void(0)">
                                 <div class="media">
                                     <span class="avatar avatar-sm">
@@ -94,11 +91,11 @@
                                     </div>
                                 </div>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
                 <div class="topnav-dropdown-footer">
-                    <a href="javascript:void(0)" (click)="bellCollapsed = !bellCollapsed">View all Notifications</a>
+                    <a href="javascript:void(0)" routerLink="/admin/appointment" (click)="bellCollapsed = !bellCollapsed">Voir tous les demandes</a>
                 </div>
             </div>
         </li>
@@ -107,7 +104,17 @@
         <!-- User Menu -->
         <li class="nav-item dropdown has-arrow" id="dropdown">
             <a href="javascript:void(0)" class="dropdown-toggle nav-link" class="dropdown-toggle nav-link" (click)="user()" [attr.aria-expanded]="!userCollapsed" aria-controls="collapseExample2">
-                <span class="user-img"><img class="rounded-circle" src="assets/admin/img/profiles/avatar-01.jpg" width="31" alt="Ryan Taylor"></span>
+                <span class="user-img">
+                    <img class="rounded-circle" src="assets/admin/img/profiles/avatar-01.jpg" width="31" alt="Ryan Taylor" *ngIf="!img">
+                    <img [src]="
+                        this.userService.apiServerUrl +
+                        '/utilisateurs/avatar/' +
+                        this.id +
+                        '?ts=' +
+                        getTS()
+                        "class="rounded-circle" alt="{{username}}" *ngIf="img" 
+                    />
+                </span>
             </a>
             <div class="dropdown-menu" id="collapseExample2" [ngbCollapse]="userCollapsed">
                 <div class="user-header">
@@ -115,13 +122,13 @@
                         <img src="assets/admin/img/profiles/avatar-01.jpg" alt="User Image" class="avatar-img rounded-circle">
                     </div>
                     <div class="user-text">
-                        <h6>Ryan Taylor</h6>
+                        <h6>{{username}}</h6>
                         <p class="text-muted mb-0">Administrator</p>
                     </div>
                 </div>
-                <a class="dropdown-item" [routerLink]="'doc-profile'">My Profile</a>
-                <a class="dropdown-item" [routerLink]="'settings'">Settings</a>
-                <a class="dropdown-item" [routerLink]="'login-form'">Logout</a>
+                <a class="dropdown-item" (click)="getProfile()" style="cursor: pointer;">My Profile</a>
+                <a class="dropdown-item" (click)="getHistoriqueLogin()" style="cursor: pointer;">Settings</a>
+                <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">Logout</a>
             </div>
         </li>
         <!-- /User Menu -->

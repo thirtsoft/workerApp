@@ -6,17 +6,19 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { Appointment } from 'src/app/models/appointment';
 import { HistoriqueLogin } from 'src/app/models/historique-login';
-import { Rating } from 'src/app/models/rating';
 import { Utilisateur } from 'src/app/models/utilisateur';
-import { Login } from 'src/app/services/auth/models/login';
 import { AuthService } from 'src/app/services/auth/security/auth.service';
 import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { HistoriqueLoginService } from 'src/app/services/historique-login.service';
 import { RatingService } from 'src/app/services/rating.service';
 import { UtilisateurService } from 'src/app/services/utilisateur.service';
-declare var $: any;
+import * as $ from 'jquery';
+import 'datatables.net';
+
+//declare var $: any;
 declare var Morris: any;
 @Component({
   selector: 'app-dashboard',
@@ -29,13 +31,16 @@ export class DashboardComponent implements OnInit {
   listOuvriers: any = [];
   listUtilisateurs: any = [];
   listHistoriqueLogin: any = [];
+  listTop10PendingAppointment: any = [];
 
-  form: any = {};
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
-  loginInfo: Login;
+
+  name = '';
+  username = '';
+  email;
 
   showAdminBoard = false;
   showManagerBoard = false;
@@ -50,6 +55,8 @@ export class DashboardComponent implements OnInit {
   p: number=1;
   searchText: any;
   maxRatingValue = 5;
+  userId;
+  img: boolean;
 
   constructor(private crudApi: DashboardService,
               public authService: AuthService,
@@ -125,15 +132,25 @@ export class DashboardComponent implements OnInit {
       redraw: true,
     });
 
-    if(this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
+    this.isLoggedIn = !!this.tokenStorage.getToken();
+    if(this.isLoggedIn) {
+      const user = this.tokenStorage.getUser();
       this.roles = this.tokenStorage.getUser().roles;
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       this.showGestionnaireBoard = this.roles.includes("ROLE_GESTIONNAIRE");
       this.showManagerBoard = this.roles.includes('ROLE_MANAGER');
       this.showUserBoard = this.roles.includes('ROLE_USER');
-    }
+      
+      this.id = user.id
+      this.username = user.username;
+      this.email = user.email;
+      this.name = user.name;
 
+      if (this.userService.getUserAvatar(this.userId) === null)
+        this.img = false;
+      else this.img = true;
+     
+    }
     this.getListNewsRegisters();
     this.getListRatings();
     this.getListHistoriqueLogins();
@@ -142,6 +159,7 @@ export class DashboardComponent implements OnInit {
     this.getNumberOfRating();
     this.getNumberTotalOfAppointmentInYear();
     this.getSumTotalOfJetonInYear();
+    this.getTop10PendingAppointmentOrderByIdDesc(); 
   }
 
   getNumberOfOuvriers(): void {
@@ -176,21 +194,23 @@ export class DashboardComponent implements OnInit {
   }
 
   getListRatings() {
-    this.ratService.getAllRatingOrderByIdDesc().subscribe(
-      (response: Rating[]) => {
-        this.listRatings = response;
+    this.ratService.getAllRatingOrderByIdDesc()
+      .subscribe(res => {
+        this.listRatings = res;
+        $(function () {
+          $("table").DataTable();
+        });
       },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-
+      error => this.errorMessage = <any>error);
   }
 
   getListNewsRegisters() {
     this.userService.getAllNewsUtilisateursOrderByIdDesc().subscribe(
-      (response: Utilisateur[]) => {
+      response => {
         this.listUtilisateurs = response;
+        $(function () {
+          $("table").DataTable();
+        });
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -201,14 +221,31 @@ export class DashboardComponent implements OnInit {
   
   getListHistoriqueLogins() {
     this.histService.getHistoriqueLoginsOrderByIdDesc().subscribe(
-      (response: HistoriqueLogin[]) => {
+      response => {
         this.listHistoriqueLogin = response;
+        $(function () {
+          $("table").DataTable();
+        });
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
 
+  }
+
+  getTop10PendingAppointmentOrderByIdDesc() {
+    this.crudApi.getTop10PendingAppointmentsOderByIdDesc().subscribe(
+      response => {
+        this.listTop10PendingAppointment = response;
+        $(function () {
+          $("table").DataTable();
+        });
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 
 }

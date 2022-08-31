@@ -43,13 +43,9 @@ export class DashboardService {
     return this.http.get<Annonce[]>(`${this.apiServerUrl}/annonces/numberOfAnnonceByYear`);
   }
 
-  public countNumberOfReservationByStatusPending(): Observable<any>  {
-    return this.http.get(`${this.apiServerUrl}/reservations/NumbersOfReservationByStatusPending`);
+  public getNumberOfPendingAppointments(): Observable<any>  {
+    return this.http.get(`${this.apiServerUrl}/appointments/numbersOfAppointmentsByStatusPending`);
   }
-
-  public countNumbersOfReservationInYear(): Observable<any>  {
-    return this.http.get(`${this.apiServerUrl}/reservations/NumbersOfReservationInYear`);
-  } 
 
   public getNumberTotalOfAppointmentsInYear(): Observable<any>  {
     return this.http.get(`${this.apiServerUrl}/appointments/numbersOfAcceptedAppointmentsInYear`);
@@ -93,10 +89,14 @@ export class DashboardService {
 
   public countNumberOfEmails(): Observable<any> {
     return this.http.get(`${this.apiServerUrl}/emails/countNumberOfEmailInMonth`);
-  }
+  } 
 
   public getAllAppointmentsByCustomerId(userId: number): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(`${this.apiServerUrl}/appointments/searchAllAppointmentsByCustomerId/${userId}`);
+  }
+
+  public getTop10PendingAppointmentsOderByIdDesc(): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.apiServerUrl}/appointments/searchTop10PendingAppointmentsOrderByIdDesc`);
   }
 
   public getAllRatingsByCustomerId(userId: number): Observable<Rating[]> {
