@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { CommonServiceService } from '../../../common-service.service';
-import { ToastrService } from 'ngx-toastr';
+import { DashboardService } from 'src/app/services/dashboard.service';
+import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
+import { UtilisateurService } from 'src/app/services/utilisateur.service';
+import { Jeton } from 'src/app/models/jeton';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-blog-details',
@@ -9,69 +11,157 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./blog-details.component.css']
 })
 export class BlogDetailsComponent implements OnInit {
-	id;
-  blogdetails: any = [];
-  blogs: any = [];
-  comments: any = [];
+
+	isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
+
   name = '';
-  email = '';
-  usercomment = '';
-  constructor(
-    private toastr: ToastrService,
-    public commonService: CommonServiceService,
-    private route: ActivatedRoute,
-    public router: Router
+  username = '';
+  email;
+
+  showAdminBoard = false;
+  showManagerBoard = false;
+  showGestionnaireBoard = false;
+  showUserBoard = false;
+  id;
+  userId;
+  img: boolean;
+  sumTotalOfJetonPeerMonth: number[] = [];
+  MonthsOfJeton: Date[] = [];
+  listOfMonth: any = [];
+
+  sumTotalOfJetonPeerYear: number[] = [];
+  YearOfJeton: Date[] = [];
+  listOfYear: any = [];
+
+  Barchart: any = [];
+
+  constructor(private crudApi: DashboardService,
+              public tokenStorage: TokenStorageService,
+              private userService: UtilisateurService,
   ) {}
 
-  ngOnInit(): void {
-    this.id = this.route.snapshot.queryParams['id'];
-    this.getBlogdetails();
-    this.getBlogs();
-    this.getComments();
-    window.scrollTo(0, 0);
-  }
+  ngOnInit(): void {  
+    this.isLoggedIn = !!this.tokenStorage.getToken();
+    if(this.isLoggedIn) {
+      const user = this.tokenStorage.getUser();
+      this.roles = this.tokenStorage.getUser().roles;
+      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      this.showGestionnaireBoard = this.roles.includes("ROLE_GESTIONNAIRE");
+      this.showManagerBoard = this.roles.includes('ROLE_MANAGER');
+      this.showUserBoard = this.roles.includes('ROLE_USER');
+      
+      this.id = user.id
+      this.username = user.username;
+      this.email = user.email;
+      this.name = user.name;
 
-  getBlogdetails() {
-    this.commonService.getBlogsDetails(1).subscribe((res) => {
-      this.blogdetails = res;
-    });
-  }
-
-  getBlogs() {
-    this.commonService.getBlogs().subscribe((result) => {
-      this.blogs = result;
-    });
-  }
-
-  getComments() {
-    this.commonService.getComments().subscribe((result) => {
-      this.comments = result;
-    });
-  }
-
-  navigate(blog) {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigateByUrl('/blog-details?id=' + blog.id);
-    });
-  }
-
-  comment() {
-    if (this.name === '' || this.email === '' || this.usercomment === '') {
-      this.toastr.error('', 'Please enter mandatory field');
-    } else {
-      let params = {
-        id: this.comments.length + 1,
-        name: this.name,
-        email: this.email,
-        comment: this.usercomment,
-      };
-      this.commonService.createComment(params).subscribe((res) => {
-        this.toastr.success('', 'Comment successfully!');
-        this.name = '';
-        this.email = '';
-        this.usercomment = '';
-        this.getComments();
-      });
+      if (this.userService.getUserAvatar(this.userId) === null)
+        this.img = false;
+      else this.img = true;
+     
     }
+    this.getSumTotalOfJetonsPeerMonth();
+    this.getSumOfJetonPeerYear();
   }
+
+  getSumTotalOfJetonsPeerMonth() {
+    this.crudApi.getSumTotalOfJetonsPeerMonth()
+    .subscribe((result: Jeton[]) => {
+      this.listOfMonth = result;
+      const n = 1;
+      const m = 0;
+      for (let i=0; i<this.listOfMonth.length; i++) {
+        this.sumTotalOfJetonPeerMonth.push(this.listOfMonth[i][n]);
+        this.MonthsOfJeton.push(this.listOfMonth[i][m]);
+      }
+ 
+      this.Barchart = new Chart('lineChartJetonPeerMonth', {
+        type: 'line',
+        data: {
+          labels: this.MonthsOfJeton,
+
+          datasets: [
+            {
+              data: this.sumTotalOfJetonPeerMonth,
+              borderColor: '#3cb371',
+              backgroundColor: "#FF7F50",
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          responsive: true,
+          scales: {
+             xAxes: [{
+              display: true,
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+            yAxes: [{
+              display: true,
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+          }
+        }
+      });
+    });
+  
+  }
+
+  getSumOfJetonPeerYear() {
+    this.crudApi.getSumTotalOfJetonsPeerYear()
+    .subscribe((result: Jeton[]) => {
+      this.listOfYear = result;
+      const n = 1;
+      const m = 0;
+      for (let i=0; i<this.listOfYear.length; i++) {
+        this.sumTotalOfJetonPeerYear.push(this.listOfYear[i][n]);
+        this.YearOfJeton.push(this.listOfYear[i][m]);
+      }
+    //  this
+      this.Barchart = new Chart('barChartJetonPeerYear', {
+        type: 'bar',
+        data: {
+          labels: this.YearOfJeton,
+
+          datasets: [
+            {
+              data: this.sumTotalOfJetonPeerYear,
+              borderColor: '#3cb371',
+              backgroundColor: "#5F9EA0",
+
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+            yAxes: [{
+              display: true,
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+          }
+        }
+      });
+    });
+  }
+
 }

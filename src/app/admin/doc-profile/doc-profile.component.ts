@@ -1,9 +1,10 @@
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ProfileInfo } from 'src/app/services/auth/models/profile-info';
+import { Utilisateur } from 'src/app/models/utilisateur';
+import { ProfileInfo, UpdatePasswordInfo } from 'src/app/services/auth/models/profile-info';
 import { AuthService } from 'src/app/services/auth/security/auth.service';
 import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
 import { UtilisateurService } from 'src/app/services/utilisateur.service';
@@ -32,13 +33,14 @@ export class DocProfileComponent implements OnInit {
   currentTime: number = 0;
   id;
   listDataProfil: any;
+  formDataProfile: UpdatePasswordInfo  = new UpdatePasswordInfo();
 
   userId;
   img: boolean;
   changePass = false;
   personalDetails = true;
 
-  constructor(private authService: AuthService, 
+  constructor(private authService: AuthService,
               private tokenService: TokenStorageService,
               public toastr: ToastrService,
               public userService: UtilisateurService,
@@ -88,8 +90,6 @@ export class DocProfileComponent implements OnInit {
   processForm() {
     this.progress = 0;
     this.currentFileUpload = this.selectedFiles.item(0);
-    console.log(this.currentFileUpload);
-    console.log(this.id);
     this.userService.uploadPhotoUtilisateur(this.currentFileUpload, this.id)
       .subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
@@ -103,6 +103,37 @@ export class DocProfileComponent implements OnInit {
       );
     this.selectedFiles = undefined;
   }
+
+  update() {
+    console.log('Data send--', this.listDataProfil);
+    this.userService.updateUtilisateur(this.listDataProfil.id, this.listDataProfil).subscribe(
+      (response: Utilisateur) => {
+        this.toastr.warning('avec succès','Informations Modifiée', {
+          timeOut: 1500,
+          positionClass: 'toast-top-right',
+        });
+        this.router.navigateByUrl("profile/" + this.userId).then(() => {
+          window.location.reload();
+        });
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  } 
+
+  updatePassword() {
+    this.authService.updatePassword(this.formDataProfile).
+    subscribe((data:any) => {
+      this.toastr.warning('veuillez vous reconnectez','Votre Mot de pqsse a ete modifie avec success', {
+        timeOut: 1500,
+        positionClass: 'toast-top-right',
+      });
+      this.logout();
+    });
+
+  }
+
 
   logout(): void {
     this.tokenService.signOut();

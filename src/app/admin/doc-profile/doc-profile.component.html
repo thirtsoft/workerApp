@@ -76,27 +76,56 @@
                                             <a class="edit-link" data-toggle="modal" href="javascript:void(0)"><i class="fa fa-edit mr-1"></i>Edit</a>
                                         </h5>
                                         <div class="row">
-                                            <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Name</p>
-                                            <p class="col-sm-10">{{ listDataProfil.name }}</p>
+                                            <div class="form-group col-sm-6">
+                                                <label>Nom&Prénom</label>
+                                                <input type="text" class="form-control" [(ngModel)]="listDataProfil.name" name="name" id="name" #name="ngModel" required />
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Date of Birth</p>
-                                            <p class="col-sm-10">{{ listDataProfil.id }}</p>
+                                            <div class="form-group col-sm-6">
+                                                <label>Email</label>
+                                                <input type="email" class="form-control" [(ngModel)]="listDataProfil.email" name="email" id="email" #email="ngModel" required />
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Email ID</p>
-                                            <p class="col-sm-10">{{ listDataProfil.email }}</p>
+                                            <div class="form-group col-sm-6">
+                                                <label>Mobile</label>
+                                                <input type="text" class="form-control" [(ngModel)]="listDataProfil.mobile" name="mobile" id="mobile" #mobile="ngModel" required />
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Mobile</p>
-                                            <p class="col-sm-10">{{ listDataProfil.mobile }}</p>
+                                            <div class="form-group col-sm-6">
+                                                <label>Address</label>
+                                                <input type="text" class="form-control" [(ngModel)]="listDataProfil.addressRecruteur" name="addressRecruteur" id="addressRecruteur" #addressRecruteur="ngModel" required />
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <p class="col-sm-2 text-muted text-sm-right mb-0">Address</p>
-                                            <p class="col-sm-10 mb-0">4663 Agriculture Lane,<br> Miami,
-                                                <br> Florida - 33165,<br> United States.</p>
+                                            <div class="form-group col-sm-6">
+                                                <label>Nom utilisateur</label>
+                                                <input type="text" class="form-control" [(ngModel)]="listDataProfil.username" name="username" id="username" #username="ngModel" required />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                                <label>Nom Entreprise</label>
+                                                <input type="text" class="form-control" [(ngModel)]="listDataProfil.nomEntreprise" name="nomEntreprise" id="nomEntreprise" #nomEntreprise="ngModel" required />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                                <label>Secteur activité</label>
+                                                <input type="text" class="form-control" [(ngModel)]="listDataProfil.secteurActivite" name="secteurActivite" id="secteurActivite" #secteurActivite="ngModel" required />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                                <label>Website</label>
+                                                <input type="text" class="form-control" [(ngModel)]="listDataProfil.website" name="website" id="website" #website="ngModel" required />
+                                            </div>
                                         </div>
                                     </div>
+                                    <button (click)="update()" class="btn btn-lg btn-primary" type="submit">Modifier compte
+                                    </button>
                                 </div>
                                 <!-- Change Password Tab -->
                                 <div *ngIf="changePass">
@@ -108,18 +137,18 @@
                                                 <div class="col-md-10 col-lg-6">
                                                     <form>
                                                         <div class="form-group">
-                                                            <label>Old Password</label>
-                                                            <input type="password" class="form-control">
+                                                            <label>Nom utilisateur</label>
+                                                            <input type="text" class="form-control" [(ngModel)]="formDataProfile.username" name="username" id="username" #username="ngModel" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Older Password</label>
+                                                            <input type="password" class="form-control" [(ngModel)]="formDataProfile.oldPassword" name="oldPassword" id="oldPassword" #oldPassword="ngModel" placeholder="votre ancien password" required />
                                                         </div>
                                                         <div class="form-group">
                                                             <label>New Password</label>
-                                                            <input type="password" class="form-control">
+                                                            <input type="password" class="form-control" [(ngModel)]="formDataProfile.newPassword" name="newPassword" id="newPassword" #newPassword="ngModel" placeholder="votre nouveau password" required />
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label>Confirm Password</label>
-                                                            <input type="password" class="form-control">
-                                                        </div>
-                                                        <button class="btn btn-primary" type="submit">Save Changes</button>
+                                                        <button class="btn btn-primary" type="submit" (click)="updatePassword()" style="cursor: pointer;">Modifer mot de Password</button>
                                                     </form>
                                                 </div>
                                             </div>

@@ -104,10 +104,11 @@
                 <!-- Sales Chart -->
                 <div class="card card-chart">
                     <div class="card-header">
-                        <h4 class="card-title">Revenue</h4>
+                        <h4 class="card-title">Nombre de demande par mois</h4>
                     </div>
                     <div class="card-body">
-                        <div id="morrisArea"></div>
+                        <canvas id="barChartNumberDemandePeerMonth"></canvas>
+                        <!-- <div id="morrisArea"></div> -->
                     </div>
                 </div>
                 <!-- /Sales Chart -->
@@ -118,10 +119,11 @@
                 <!-- Invoice Chart -->
                 <div class="card card-chart">
                     <div class="card-header">
-                        <h4 class="card-title">Status</h4>
+                        <h4 class="card-title">Nombre ouvrier inscrit par mois</h4>
                     </div>
                     <div class="card-body">
-                        <div id="morrisLine"></div>
+                        <canvas id="barChartNumberOfOuvrierPeerMonth"></canvas>
+                        <!-- <div id="morrisLine"></div> -->
                     </div>
                 </div>
                 <!-- /Invoice Chart -->
@@ -338,7 +340,7 @@
                 <!-- Recent Orders -->
                 <div class="card card-table">
                     <div class="card-header">
-                        <h4 class="card-title">Appointment List</h4>
+                        <h4 class="card-title">Liste des demandes d'ouvriers</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -370,6 +372,7 @@
                                         </td>
                                         <td>{{appoint.appointmentDate | date : 'dd MMM yyyy'}} <span class="text-primary d-block">{{appoint.time}}</span></td>
                                         <td>
+                                            {{appoint.statusOfAppointment}}
                                             <div class="status-toggle">
                                                 <input type="checkbox" [checked]="appoint.statusOfAppointment=='Accepted'" id="status_1" class="check">
                                                 <label for="status_1" class="checktoggle">checkbox</label>

@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Appointment } from 'src/app/models/appointment';
-import { HistoriqueLogin } from 'src/app/models/historique-login';
-import { Utilisateur } from 'src/app/models/utilisateur';
+import { Chart } from 'chart.js';
+
 import { AuthService } from 'src/app/services/auth/security/auth.service';
 import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
 import { DashboardService } from 'src/app/services/dashboard.service';
@@ -17,6 +17,7 @@ import { RatingService } from 'src/app/services/rating.service';
 import { UtilisateurService } from 'src/app/services/utilisateur.service';
 import * as $ from 'jquery';
 import 'datatables.net';
+import { Ouvrier } from 'src/app/models/ouvrier';
 
 //declare var $: any;
 declare var Morris: any;
@@ -57,6 +58,11 @@ export class DashboardComponent implements OnInit {
   maxRatingValue = 5;
   userId;
   img: boolean;
+  numberOfDemandePeerMonth: number[] = [];
+  MonthsOfDemande: Date[] = [];
+  listOfMonth: any = [];
+
+  Barchart: any = [];
 
   constructor(private crudApi: DashboardService,
               public authService: AuthService,
@@ -67,6 +73,7 @@ export class DashboardComponent implements OnInit {
               public router: Router) {}
 
   ngOnInit(): void {
+    /*
     let chartAreaData = [
       { y: '2006', a: 100, b: 90 },
       { y: '2007', a: 75, b: 65 },
@@ -85,8 +92,10 @@ export class DashboardComponent implements OnInit {
       { y: '2011', a: 75, b: 65 },
       { y: '2012', a: 100, b: 90 },
     ];
+    */
 
     /* Morris Area Chart */
+    /*
     Morris.Area({
       element: 'morrisArea',
       data: [
@@ -110,8 +119,10 @@ export class DashboardComponent implements OnInit {
       resize: true,
       redraw: true,
     });
+    */
 
     /* Morris Line Chart */
+    /*
     Morris.Line({
       element: 'morrisLine',
       data: [
@@ -131,6 +142,7 @@ export class DashboardComponent implements OnInit {
       resize: true,
       redraw: true,
     });
+    */
 
     this.isLoggedIn = !!this.tokenStorage.getToken();
     if(this.isLoggedIn) {
@@ -160,6 +172,8 @@ export class DashboardComponent implements OnInit {
     this.getNumberTotalOfAppointmentInYear();
     this.getSumTotalOfJetonInYear();
     this.getTop10PendingAppointmentOrderByIdDesc(); 
+    this.getNumbersOfAppointmentPeerMonth();
+    this.getNumbersOfOuvriersPeerMonth();
   }
 
   getNumberOfOuvriers(): void {
@@ -246,6 +260,102 @@ export class DashboardComponent implements OnInit {
         alert(error.message);
       }
     );
+  }
+
+  getNumbersOfAppointmentPeerMonth() {
+    this.crudApi.getNumbersOfAppointmentsPeerMonth()
+    .subscribe((result: Appointment[]) => {
+      this.listOfMonth = result;
+      const n = 1;
+      const m = 0;
+      for (let i=0; i<this.listOfMonth.length; i++) {
+        this.numberOfDemandePeerMonth.push(this.listOfMonth[i][n]);
+        this.MonthsOfDemande.push(this.listOfMonth[i][m]);
+      }
+    //  this
+      this.Barchart = new Chart('barChartNumberDemandePeerMonth', {
+        type: 'line',
+        data: {
+          labels: this.MonthsOfDemande,
+
+          datasets: [
+            {
+              data: this.numberOfDemandePeerMonth,
+              borderColor: '#3cb371',
+              backgroundColor: "#5F9EA0",
+
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+            yAxes: [{
+              display: true,
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+          }
+        }
+      });
+    });
+  }
+
+  getNumbersOfOuvriersPeerMonth() {
+    this.crudApi.getNumbersOfOuvriersPeerMonth()
+    .subscribe((result: Ouvrier[]) => {
+      this.listOfMonth = result;
+      const n = 1;
+      const m = 0;
+      for (let i=0; i<this.listOfMonth.length; i++) {
+        this.numberOfDemandePeerMonth.push(this.listOfMonth[i][n]);
+        this.MonthsOfDemande.push(this.listOfMonth[i][m]);
+      }
+    //  this
+      this.Barchart = new Chart('barChartNumberOfOuvrierPeerMonth', {
+        type: 'line',
+        data: {
+          labels: this.MonthsOfDemande,
+
+          datasets: [
+            {
+              data: this.numberOfDemandePeerMonth,
+              borderColor: '#3cb371',
+              backgroundColor: "#5F9EA0",
+
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+            yAxes: [{
+              display: true,
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+          }
+        }
+      });
+    });
   }
 
 }

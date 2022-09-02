@@ -2,7 +2,12 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, TemplateRef } f
 import { CommonServiceService } from '../../common-service.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import * as $ from 'jquery';
-
+import { DashboardService } from 'src/app/services/dashboard.service';
+import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
+import { UtilisateurService } from 'src/app/services/utilisateur.service';
+import { Router } from '@angular/router';
+import { Appointment } from 'src/app/models/appointment';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-invoice-reports',
@@ -10,66 +15,156 @@ import * as $ from 'jquery';
   styleUrls: ['./invoice-reports.component.css']
 })
 export class InvoiceReportsComponent implements OnInit {
-  transactions: any = [];
-  errorMessage: string;
-  modalRef: BsModalRef;
+  
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
+
+  name = '';
+  username = '';
+  email;
+
+  showAdminBoard = false;
+  showManagerBoard = false;
+  showGestionnaireBoard = false;
+  showUserBoard = false;
   id;
-  dtOptions: DataTables.Settings = {};
+  userId;
+  img: boolean;
+  numberOfDemandePeerMonth: number[] = [];
+  MonthsOfDemande: Date[] = [];
+  listOfMonth: any = [];
 
-  constructor(public commonService: CommonServiceService, private modalService: BsModalService) { }
+  numberOfDemandePeerYear: number[] = [];
+  YearOfDemande: Date[] = [];
+  listOfYear: any = [];
 
-  ngOnInit(): void {
-    this.getTransactions();
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 5,
-      processing: true
-    };
+  Barchart: any = [];
+
+  constructor(private crudApi: DashboardService,
+              public tokenStorage: TokenStorageService,
+              private userService: UtilisateurService,
+              public router: Router) {}
+
+  ngOnInit(): void {  
+    this.isLoggedIn = !!this.tokenStorage.getToken();
+    if(this.isLoggedIn) {
+      const user = this.tokenStorage.getUser();
+      this.roles = this.tokenStorage.getUser().roles;
+      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      this.showGestionnaireBoard = this.roles.includes("ROLE_GESTIONNAIRE");
+      this.showManagerBoard = this.roles.includes('ROLE_MANAGER');
+      this.showUserBoard = this.roles.includes('ROLE_USER');
+      
+      this.id = user.id
+      this.username = user.username;
+      this.email = user.email;
+      this.name = user.name;
+
+      if (this.userService.getUserAvatar(this.userId) === null)
+        this.img = false;
+      else this.img = true;
+     
+    }
+    this.getNumbersOfAppointmentPeerMonth();
+    this.getNumbersOfAppointmentPeerYear();
   }
 
-  getTransactions() {
-    this.commonService.getTransactions()
-      .subscribe(res => {
-        this.transactions = res;
-        $(function () {
-          $("table").DataTable();
-        });
-      },
-        error => this.errorMessage = <any>error);
+  getNumbersOfAppointmentPeerMonth() {
+    this.crudApi.getNumbersOfAppointmentsPeerMonth()
+    .subscribe((result: Appointment[]) => {
+      this.listOfMonth = result;
+      const n = 1;
+      const m = 0;
+      for (let i=0; i<this.listOfMonth.length; i++) {
+        this.numberOfDemandePeerMonth.push(this.listOfMonth[i][n]);
+        this.MonthsOfDemande.push(this.listOfMonth[i][m]);
+      }
+    //  this
+      this.Barchart = new Chart('barChartNumberDemandePeerMonth', {
+        type: 'line',
+        data: {
+          labels: this.MonthsOfDemande,
+
+          datasets: [
+            {
+              data: this.numberOfDemandePeerMonth,
+              borderColor: '#3cb371',
+              backgroundColor: "#5F9EA0",
+
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+            yAxes: [{
+              display: true,
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+          }
+        }
+      });
+    });
   }
 
-  deleteModal(template: TemplateRef<any>, trans) {
-    this.id = trans.id;
-    this.modalRef = this.modalService.show(template, { class: 'modal-sm modal-dialog-centered' });
-  }
+  getNumbersOfAppointmentPeerYear() {
+    this.crudApi.getNumbersOfOuvriersPeerMonth()
+    .subscribe((result: Appointment[]) => {
+      this.listOfYear = result;
+      const n = 1;
+      const m = 0;
+      for (let i=0; i<this.listOfYear.length; i++) {
+        this.numberOfDemandePeerYear.push(this.listOfYear[i][n]);
+        this.YearOfDemande.push(this.listOfYear[i][m]);
+      }
+    //  this
+      this.Barchart = new Chart('barChartNumberAppointmentPeerYear', {
+        type: 'bar',
+        data: {
+          labels: this.YearOfDemande,
 
-  deleteReport() {
-    this.transactions = this.transactions.filter(a => a.id !== this.id);
-    this.modalRef.hide();
-    // this.commonService.deleteSpeciality(this.id).subscribe((data : any[])=>{
-    //   this.modalRef.hide();
-    //   this.getTransactions();
-    // })
-  }
+          datasets: [
+            {
+              data: this.numberOfDemandePeerYear,
+              borderColor: '#3cb371',
+              backgroundColor: "#5F9EA0",
 
-  btnColor() {
-    document.getElementById('btn-yes').style.backgroundColor = "#00d0f1";
-    document.getElementById('btn-yes').style.border = "1px solid #00d0f1";
-    document.getElementById('btn-yes').style.color = "#fff";
-
-    document.getElementById('btn-no').style.backgroundColor = "#fff";
-    document.getElementById('btn-no').style.border = "1px solid #fff";
-    document.getElementById('btn-no').style.color = "#000";
-  }
-
-  btnColorNo() {
-    document.getElementById('btn-no').style.backgroundColor = "#00d0f1";
-    document.getElementById('btn-no').style.border = "1px solid #00d0f1";
-    document.getElementById('btn-no').style.color = "#fff";
-
-    document.getElementById('btn-yes').style.backgroundColor = "#fff";
-    document.getElementById('btn-yes').style.border = "1px solid #fff";
-    document.getElementById('btn-yes').style.color = "#000";
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+            yAxes: [{
+              display: true,
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+          }
+        }
+      });
+    });
   }
 
 }
