@@ -194,10 +194,10 @@
                 <li class="submenu">
                     <a href="javascript:void(0)"><i class="fe fe-document"></i> <span> Graphiques</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li [class.active]="page === 'Invoice Report'"><a (click)="change('Invoice Report')" [routerLink]="'/admin/invoice-reports'">Appointment</a></li>
+                        <li [class.active]="page === 'Invoice Report'"><a (click)="change('Invoice Report')" [routerLink]="'invoice-reports'">Appointment</a></li>
                         <li [class.active]="page === 'Blog Details'"><a (click)="change('Blog Details')" [routerLink]="'blog-details'"> Jetons </a></li>
-                        <li><a [class.active]="page === 'Basic Inputs'" (click)="change('Basic Inputs')" [routerLink]="'basic-input'">Visiteur </a></li>
-                        <li><a [class.active]="page === 'Input Groups'" (click)="change('Input Groups')" [routerLink]="'input-groups'">Inscriptions </a></li>
+                        <li><a [class.active]="page === 'Basic Inputs'" (click)="change('Basic Inputs')" [routerLink]="'basic-input'">Inscriptions </a></li>
+                        <li><a [class.active]="page === 'Input Groups'" (click)="change('Input Groups')" [routerLink]="'input-groups'">Ouvriers </a></li>
                     </ul>
                 </li>
                 <!--  <li class="menu-title">
@@ -220,6 +220,11 @@
                 <li [class.active]="page === 'profile'">
                     <a (click)="change('profile')" [routerLink]="'doc-profile'"><i class="fe fe-user-plus"></i> <span>Profile</span></a>
                 </li>
+
+                <li [class.active]="page === 'lock-screen'">
+                    <a (click)="change('lock-screen')" [routerLink]="'lock-screen'">
+                        <i class="fas fa-envelope"></i> <span>Email</span></a>
+                </li>
                 <li class="submenu">
                     <a href="javascript:void(0)"><i class="fe fe-document"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
@@ -228,18 +233,19 @@
                         </li>
                         <li><a [routerLink]="'login-form'"> Login </a></li>
                         <li><a [routerLink]="'register'"> Register </a></li>
-                        <li><a [routerLink]="'forgot-pass'"> Forgot Password </a></li>
-                        <li><a [routerLink]="'lock-screen'"> Lock Screen </a></li>
+                        <!-- <li><a [routerLink]="'forgot-pass'"> Forgot Password </a></li>
+                         <li><a [routerLink]="'lock-screen'"> Lock Screen </a></li> -->
                     </ul>
                 </li>
-                <!-- <li class="submenu">
+                <!--
+                <li class="submenu">
                     <a href="javascript:void(0)"><i class="fe fe-warning"></i> <span> Error Pages </span><span class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li><a [routerLink]="'error-first'">404 Error </a></li>
                         <li><a [routerLink]="'error-second'">500 Error </a></li>
                     </ul>
-                </li> 
-
+                </li>
+                
                 <li class="menu-title">
                     <span>UI Interface</span>
                 </li>
@@ -257,6 +263,7 @@
                         <li><a [class.active]="page === 'Form Validation'" (click)="change('Form Validation')" [routerLink]="'form-validation'"> Form Validation </a></li>
                     </ul>
                 </li> -->
+
                 <li class="submenu">
                     <a href="javascript:void(0)"><i class="fe fe-table"></i> <span> Historiques </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
@@ -264,7 +271,7 @@
                         <li><a [class.active]="page === 'Data Table'" (click)="change('Data Table')" [routerLink]="'admin-data-table'">HistoriqueLogin </a></li>
                     </ul>
                 </li>
-                <li class="submenu">
+                <!-- <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-code"></i> <span>Multi Level</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li class="submenu">
@@ -287,7 +294,7 @@
                             <a href="javascript:void(0);"> <span>Level 1</span></a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>

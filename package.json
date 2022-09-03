@@ -74,6 +74,7 @@
     "slick-carousel": "^1.8.1",
     "snazzy-info-window": "^1.1.0",
     "theia-sticky-sidebar": "^1.7.0",
+    "to-regex-range": "^5.0.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
   },

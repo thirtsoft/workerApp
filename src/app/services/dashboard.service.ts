@@ -25,11 +25,19 @@ export class DashboardService {
   }
   
   public countNumbersOfOuvriersPeerYear(): Observable<any> {
-    return this.http.get(`${this.apiServerUrl}/ouvriers/numberOfOuvrierPeerYee`);
+    return this.http.get(`${this.apiServerUrl}/ouvriers/numberOfOuvriersPeerYear`);
   }
   
   public countNumberOfRecruteurs(): Observable<any> {
     return this.http.get(`${this.apiServerUrl}/utilisateurs/NumbersOfRecruteurs`);
+  }
+
+  public getNumberOfRegisterPeerMonth(): Observable<any> {
+    return this.http.get(`${this.apiServerUrl}/utilisateurs/countNumberTotalOfRegisterPeerMonth`);
+  }
+
+  public getNumberOfRegisterPeerYear(): Observable<any> {
+    return this.http.get(`${this.apiServerUrl}/utilisateurs/countNumberTotalOfRegisterPeerYear`);
   }
 
   public getNumberOfPendingAppointments(): Observable<any>  {
