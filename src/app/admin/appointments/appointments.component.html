@@ -29,13 +29,15 @@
                                 <tbody>
                                     <tr *ngFor="let appoint of appointmentsList">
                                         <td>
-                                            <!-- <h2 class="table-avatar" *ngIf="!appoint">
-                                                <a [routerLink]="'/admin/doc-profile'" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
-                                                <a [routerLink]="'/admin/doc-profile'">Dr. Ruby Perrin</a>
-                                            </h2> -->
-
                                             <h2 class="table-avatar">
-                                                <a [routerLink]="'/admin/doc-profile'" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
+                                                <a [routerLink]="'/admin/doc-profile'" class="avatar avatar-sm mr-2">
+                                                    <!-- <img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"> -->
+                                                    <img class="avatar-img rounded-circle" alt="{{appoint.ouvrier.firstName}}-{{appoint.ouvrier?.lastName}}" src="{{
+                                                        this.ouvService.apiServerUrl +
+                                                        '/ouvriers/photoOuvrierInFolder/' +
+                                                        appoint.ouvrier.id
+                                                        }}">
+                                                </a>
                                                 <a [routerLink]="'/admin/doc-profile'">{{appoint.ouvrier?.firstName}}-{{appoint.ouvrier?.lastName}}</a>
                                             </h2>
                                         </td>

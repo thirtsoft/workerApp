@@ -19,6 +19,6 @@ export class Utilisateur {
     isActive: boolean
     dateInscription: Date;
 
-    roles: Role;
+    roles: Role[];
 
 }

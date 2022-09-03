@@ -6,14 +6,12 @@ import { OuvrierService } from 'src/app/services/ouvrier.service';
 import { Ouvrier } from 'src/app/models/ouvrier';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Metier } from 'src/app/models/metier';
-import { Address } from 'src/app/models/address';
 import { MetierService } from 'src/app/services/metier.service';
-import { AddressService } from 'src/app/services/address.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Locality } from 'src/app/models/locality';
 import { LocalityService } from 'src/app/services/locality.service';
-import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-patients',

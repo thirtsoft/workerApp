@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Annonce } from '../models/annonce';
 import { Appointment } from '../models/appointment';
+import { HistoriqueLogin } from '../models/historique-login';
 import { Rating } from '../models/rating';
 
 @Injectable({
@@ -44,9 +45,20 @@ export class DashboardService {
     return this.http.get(`${this.apiServerUrl}/appointments/numbersOfAppointmentsByStatusPending`);
   }
 
-  
   public getTop10PendingAppointmentsOderByIdDesc(): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(`${this.apiServerUrl}/appointments/searchTop10PendingAppointmentsOrderByIdDesc`);
+  } 
+
+  public getTop30AppointmentsOderByIdDesc(): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.apiServerUrl}/appointments/searchTop30AppointmentsOrderByIdDesc`);
+  }
+
+  public getTop30RatingOrderByIdDesc(): Observable<Rating[]> {
+    return this.http.get<Rating[]>(`${this.apiServerUrl}/ratings/searchTop30RatingOrderByCreatedDateDesc`);
+  }
+
+  public getTop30HistoriqueLoginsOrderByIdDesc(): Observable<HistoriqueLogin[]> {
+    return this.http.get<HistoriqueLogin[]>(`${this.apiServerUrl}/historiqueLogins/searchTop30HistoriqueLoginByIdDesc`);
   }
   
   public getNumberTotalOfAppointmentsInYear(): Observable<any>  {

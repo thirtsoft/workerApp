@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Appointment } from 'src/app/models/appointment';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { OuvrierService } from 'src/app/services/ouvrier.service';
 
 @Component({
   selector: 'app-appointments',
@@ -33,6 +34,7 @@ export class AppointmentsComponent implements OnInit {
 
   constructor(public commonService: CommonServiceService,
               public crudApi: AppointmentService,
+              public ouvService: OuvrierService,
               public router: Router,
               public toastr: ToastrService,
               private modalService: BsModalService,

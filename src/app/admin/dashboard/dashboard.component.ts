@@ -16,11 +16,13 @@ import { HistoriqueLoginService } from 'src/app/services/historique-login.servic
 import { RatingService } from 'src/app/services/rating.service';
 import { UtilisateurService } from 'src/app/services/utilisateur.service';
 import * as $ from 'jquery';
-import 'datatables.net';
+//import 'datatables.net';
 import { Ouvrier } from 'src/app/models/ouvrier';
+import { OuvrierService } from 'src/app/services/ouvrier.service';
+import { Utilisateur } from 'src/app/models/utilisateur';
 
 //declare var $: any;
-declare var Morris: any;
+//declare var Morris: any;
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -32,7 +34,7 @@ export class DashboardComponent implements OnInit {
   listOuvriers: any = [];
   listUtilisateurs: any = [];
   listHistoriqueLogin: any = [];
-  listTop10PendingAppointment: any = [];
+  listTop30Appointments: any = [];
 
   isLoggedIn = false;
   isLoginFailed = false;
@@ -53,8 +55,10 @@ export class DashboardComponent implements OnInit {
   numberOfAcceptedAppointmentInYear: any;
   sumTotalOfJetonInYear: any;
   id;
-  p: number=1;
-  searchText: any;
+  pRating: number=1;
+  searchRatingText: any;
+  pMember: number=1;
+  searchMemberText: any;
   maxRatingValue = 5;
   userId;
   img: boolean;
@@ -62,14 +66,17 @@ export class DashboardComponent implements OnInit {
   MonthsOfDemande: Date[] = [];
   listOfMonth: any = [];
 
+  numNumberTotalOfRegisterPeerMonth: number[] = [];
+  MonthsOfRegister: Date[] = [];
+  listOfMonthRegister: any = [];
+
   Barchart: any = [];
 
   constructor(private crudApi: DashboardService,
               public authService: AuthService,
               public tokenStorage: TokenStorageService,
               private userService: UtilisateurService,
-              private ratService: RatingService,
-              private histService: HistoriqueLoginService,
+              public ouvService: OuvrierService,
               public router: Router) {}
 
   ngOnInit(): void {
@@ -163,7 +170,6 @@ export class DashboardComponent implements OnInit {
       else this.img = true;
      
     }
-    this.getListNewsRegisters();
     this.getListRatings();
     this.getListHistoriqueLogins();
     this.getNumberOfOuvriers();
@@ -171,9 +177,9 @@ export class DashboardComponent implements OnInit {
     this.getNumberOfRating();
     this.getNumberTotalOfAppointmentInYear();
     this.getSumTotalOfJetonInYear();
-    this.getTop10PendingAppointmentOrderByIdDesc(); 
+    this.getTop30AppointmentOrderByIdDesc(); 
     this.getNumbersOfAppointmentPeerMonth();
-    this.getNumbersOfOuvriersPeerMonth();
+    this.getNumberTotalOfRegistersPeerMonth();
   }
 
   getNumberOfOuvriers(): void {
@@ -208,33 +214,18 @@ export class DashboardComponent implements OnInit {
   }
 
   getListRatings() {
-    this.ratService.getAllRatingOrderByIdDesc()
+    this.crudApi.getTop30RatingOrderByIdDesc()
       .subscribe(res => {
         this.listRatings = res;
-        $(function () {
+         $(function () {
           $("table").DataTable();
         });
       },
       error => this.errorMessage = <any>error);
   }
-
-  getListNewsRegisters() {
-    this.userService.getAllNewsUtilisateursOrderByIdDesc().subscribe(
-      response => {
-        this.listUtilisateurs = response;
-        $(function () {
-          $("table").DataTable();
-        });
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-
-  }
   
   getListHistoriqueLogins() {
-    this.histService.getHistoriqueLoginsOrderByIdDesc().subscribe(
+    this.crudApi.getTop30HistoriqueLoginsOrderByIdDesc().subscribe(
       response => {
         this.listHistoriqueLogin = response;
         $(function () {
@@ -248,10 +239,10 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  getTop10PendingAppointmentOrderByIdDesc() {
-    this.crudApi.getTop10PendingAppointmentsOderByIdDesc().subscribe(
+  getTop30AppointmentOrderByIdDesc() {
+    this.crudApi.getTop30AppointmentsOderByIdDesc().subscribe(
       response => {
-        this.listTop10PendingAppointment = response;
+        this.listTop30Appointments = response;
         $(function () {
           $("table").DataTable();
         });
@@ -310,28 +301,27 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getNumbersOfOuvriersPeerMonth() {
-    this.crudApi.getNumbersOfOuvriersPeerMonth()
-    .subscribe((result: Ouvrier[]) => {
-      this.listOfMonth = result;
+  getNumberTotalOfRegistersPeerMonth() {
+    this.crudApi.getNumberOfRegisterPeerMonth()
+    .subscribe((result: Utilisateur[]) => {
+      this.listOfMonthRegister = result;
       const n = 1;
       const m = 0;
-      for (let i=0; i<this.listOfMonth.length; i++) {
-        this.numberOfDemandePeerMonth.push(this.listOfMonth[i][n]);
-        this.MonthsOfDemande.push(this.listOfMonth[i][m]);
+      for (let i=0; i<this.listOfMonthRegister.length; i++) {
+        this.numNumberTotalOfRegisterPeerMonth.push(this.listOfMonthRegister[i][n]);
+        this.MonthsOfRegister.push(this.listOfMonthRegister[i][m]);
       }
-    //  this
-      this.Barchart = new Chart('barChartNumberOfOuvrierPeerMonth', {
+ 
+      this.Barchart = new Chart('lineChartRegisterPeerMonth', {
         type: 'line',
         data: {
-          labels: this.MonthsOfDemande,
+          labels: this.MonthsOfRegister,
 
           datasets: [
             {
-              data: this.numberOfDemandePeerMonth,
+              data: this.numNumberTotalOfRegisterPeerMonth,
               borderColor: '#3cb371',
-              backgroundColor: "#5F9EA0",
-
+              backgroundColor: "#FF7F50",
             }
           ]
         },
@@ -339,8 +329,9 @@ export class DashboardComponent implements OnInit {
           legend: {
             display: false
           },
+          responsive: true,
           scales: {
-            xAxes: [{
+             xAxes: [{
               display: true,
               ticks: {
                 beginAtZero: true
@@ -356,6 +347,7 @@ export class DashboardComponent implements OnInit {
         }
       });
     });
+  
   }
 
 }

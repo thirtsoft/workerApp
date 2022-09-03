@@ -7,6 +7,8 @@ import { ForgotPasswordModule } from './../../forgot-password/forgot-password.mo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgxPaginationModule } from 'ngx-pagination' ;
 import { NbreAppointmentPeerMonthComponent } from './nbre-appointment-peer-month/nbre-appointment-peer-month.component';
 import { NbreAppointmentPeerYearComponent } from './nbre-appointment-peer-year/nbre-appointment-peer-year.component';
 
@@ -19,7 +21,9 @@ import { NbreAppointmentPeerYearComponent } from './nbre-appointment-peer-year/n
     FormsModule, 
     ReactiveFormsModule,
     NgbModule,
-    DataTablesModule
+    DataTablesModule,
+    Ng2SearchPipeModule,
+    NgxPaginationModule
     // MorrisJsModule,
   ],
 })
