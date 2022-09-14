@@ -1,437 +1,512 @@
-<!-- Page Content -->
 <div class="content">
     <div class="container">
-
-        <!-- Doctor Widget -->
         <div class="card">
             <div class="card-body">
                 <div class="doctor-widget">
                     <div class="doc-info-left">
                         <div class="doctor-img">
-                            <!--                    <img *ngIf="!doctorDetails" src="assets/img/doctors/doctor-thumb-02.jpg" class="img-fluid" alt="User Image">
-                            <img *ngIf="doctorDetails" src="assets/img/doctors/doctor-thumb-02.jpg" class="img-fluid" alt="User Image"> -->
-                            <img *ngIf="!ouvrierDetails" src="assets/img/doctors/doctor-thumb-02.jpg" class="img-fluid" alt="User Image">
+                            <img *ngIf="!ouvrierDetails" src="assets/img/doctors/doctor-thumb-02.jpg" class="img-fluid" alt="User Image" />
                             <img *ngIf="ouvrierDetails" class="img-fluid w-100" alt="User Image" src="{{
-                                this.ouvService.apiServerUrl +
-                                '/ouvriers/photoOuvrierInFolder/' +
-                                ouvrierDetails.id
-                                }}">
+                  this.ouvService.apiServerUrl +
+                    '/ouvriers/photoOuvrierInFolder/' +
+                    ouvrierDetails.id
+                }}" />
                         </div>
                         <div class="doc-info-cont">
-                            <!--  <h4 class="doc-name" *ngIf="!doctorDetails">Dr. Darren Elder</h4>
-                            <h4 class="doc-name" *ngIf="doctorDetails">{{doctorDetails.doctor_name}}</h4>
-                            <p class="doc-speciality" *ngIf="!doctorDetails">BDS, MDS - Oral & Maxillofacial Surgery</p>
-                            <p class="doc-speciality" *ngIf="doctorDetails">{{doctorDetails.Education}}</p>
-                            <p class="doc-department" *ngIf="!doctorDetails"><img src="assets/img/specialities/specialities-05.png" class="img-fluid" alt="Speciality">
-                                <span> Dentist </span>
-                            </p> -->
-
                             <h4 class="doc-name" *ngIf="!ouvrierDetails">Dr. Darren Elder</h4>
-                            <h4 class="doc-name" *ngIf="ouvrierDetails">{{ouvrierDetails.firstName}}-{{ouvrierDetails.lastName}}</h4>
-                            <p class="doc-speciality" *ngIf="!ouvrierDetails">BDS, MDS - Oral & Maxillofacial Surgery</p>
-                            <p class="doc-speciality" *ngIf="ouvrierDetails">{{ouvrierDetails.education}}</p>
-                            <p class="doc-department" *ngIf="!ouvrierDetails"><img src="assets/img/specialities/specialities-05.png" class="img-fluid" alt="Speciality">
+                            <h4 class="doc-name" *ngIf="ouvrierDetails">
+                                {{ ouvrierDetails.firstName }}-{{ ouvrierDetails.lastName }}
+                            </h4>
+                            <p class="doc-speciality" *ngIf="!ouvrierDetails">
+                                BDS, MDS - Oral & Maxillofacial Surgery
+                            </p>
+                            <p class="doc-speciality" *ngIf="ouvrierDetails">
+                                {{ ouvrierDetails.education }}
+                            </p>
+                            <p class="doc-department" *ngIf="!ouvrierDetails">
+                                <img src="assets/img/specialities/specialities-05.png" class="img-fluid" alt="Speciality" />
                                 <span> Dentist </span>
                             </p>
-
-                            <!-- <p class="doc-department" *ngIf="doctorDetails"><img [src]="doctorDetails.speciality_profile" class="img-fluid" alt="Speciality">
-                                <span> {{doctorDetails.speciality}} </span>
-                            </p> -->
-
                             <p class="doc-department" *ngIf="ouvrierDetails">
                                 <img *ngIf="ouvrierDetails" class="img-fluid" alt="Metier" src="{{
-                                    this.ouvService.apiServerUrl +
-                                    '/ouvriers/photoOuvrierInFolder/' +
-                                    ouvrierDetails.id
-                                    }}">
-                                <span> {{ouvrierDetails.reference}} </span>
+                    this.ouvService.apiServerUrl +
+                      '/ouvriers/photoOuvrierInFolder/' +
+                      ouvrierDetails.id
+                  }}" />
+                                <span> {{ ouvrierDetails.reference }} </span>
                             </p>
                             <div class="rating">
                                 <ngb-rating [max]="5" [(rate)]="currentRating" [readonly]="true" class="text-warning mr-1 filled">
                                 </ngb-rating>
-                                <!-- <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star"></i> -->
-                                <span class="d-inline-block average-rating">({{numberOfRatingToOuvrier}})</span>
-                            </div>
-                            <div class="clinic-details">
-                                <!--  <p class="doc-location" *ngIf="!doctorDetails"><i class="fas fa-map-marker-alt"></i> Newyork, USA - <a href="javascript:void(0);">Get Directions</a></p>
-                                <p class="doc-location" *ngIf="doctorDetails"><i class="fas fa-map-marker-alt"></i> {{doctorDetails.location}} - <a href="javascript:void(0);">Get Directions</a></p>
-                               -->
-                                <p class="doc-location" *ngIf="!ouvrierDetails"><i class="fas fa-map-marker-alt"></i> Newyork, USA - <a href="javascript:void(0);">Get Directions</a></p>
-                                <p class="doc-location" *ngIf="ouvrierDetails"><i class="fas fa-map-marker-alt"></i> {{ouvrierDetails.addressActuel}} - <a href="javascript:void(0);">Get Directions</a></p>
-
-                                <ul class="clinic-gallery" lightbox-group>
-                                    <li *ngFor="let image of images">
-                                        <a><img [src]="image.path" lightbox></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="clinic-services">
-                                <span>Dental Fillings</span>
-                                <span>Teeth Whitneing</span>
-                            </div>
+                                <span class="d-inline-block average-rating">({{ numberOfRatingToOuvrier }})</span
+                >
+              </div>
+              <div class="clinic-details">
+                <p class="doc-location" *ngIf="!ouvrierDetails">
+                  <i class="fas fa-map-marker-alt"></i> Newyork, USA -
+                  <a href="javascript:void(0);">Get Directions</a>
+                </p>
+                <p class="doc-location" *ngIf="ouvrierDetails">
+                  <i class="fas fa-map-marker-alt"></i>
+                  {{ ouvrierDetails.addressActuel }} 
+                </p>
+                <p><i class="far fa-clock"></i> {{ouvrierDetails.disponibity}}</p>
+              </div>
                         </div>
                     </div>
                     <div class="doc-info-right">
                         <div class="clini-infos">
                             <ul>
                                 <li><i class="far fa-thumbs-up"></i> 99%</li>
-                                <li><i class="far fa-comment"></i> 35 Feedback</li>
-                                <!-- <li><i class="fas fa-map-marker-alt"></i>
-                                    <span *ngIf="!doctorDetails">Newyork,USA</span>
-                                    <span *ngIf="doctorDetails">{{doctorDetails.location}}</span>
-                                </li> -->
-
-                                <li><i class="fas fa-map-marker-alt"></i>
-                                    <span *ngIf="!ouvrierDetails">Newyork,USA</span>
-                                    <span *ngIf="ouvrierDetails">{{ouvrierDetails.addressActuel}}</span>
-                                </li>
-
-                                <!--                                 <li><i class="far fa-money-bill-alt"></i>
-                                    <span *ngIf="!doctorDetails">$100 per hour</span>
-                                    <span *ngIf="doctorDetails">{{doctorDetails.Price}} per hour</span>
-                                </li> -->
-
-                                <li><i class="far fa-money-bill-alt"></i>
-                                    <span *ngIf="!ouvrierDetails">$100 per hour</span>
-                                    <span *ngIf="ouvrierDetails">{{ouvrierDetails.pretentionSalaire}} per hour</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="doctor-action">
-                            <a (click)="addFav()" id="fav-btn" class="btn btn-white fav-btn">
-                                <i class="far fa-bookmark"></i>
-                            </a>
-                            <a [routerLink]="'/doctor/message'" class="btn btn-white msg-btn">
-                                <i class="far fa-comment-alt"></i>
-                            </a>
-                            <a [routerLink]="'/voice-call'" class="btn btn-white call-btn" data-toggle="modal" data-target="#voice_call">
-                                <i class="fas fa-phone"></i>
-                            </a>
-                            <a [routerLink]="'/video-call'" class="btn btn-white call-btn" data-toggle="modal" data-target="#video_call">
-                                <i class="fas fa-video"></i>
-                            </a>
-                        </div>
-                        <div class="clinic-booking">
-                            <!--  <a class="apt-btn" [routerLink]="'/patients/booking'" [queryParams]="{id: doctorDetails?.id}">Book Appointment</a> -->
-                            <a class="apt-btn" [routerLink]="'/patients/booking'" [queryParams]="{id: ouvrierDetails?.id}">Book Appointment</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Doctor Widget -->
-
-        <!-- Doctor Details Tab -->
-        <div class="card">
-            <div class="card-body pt-0">
-
-                <!-- Tab Menu -->
-                <nav class="user-tabs mb-4">
-                    <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#doc_overview" data-toggle="tab">Détails</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#doc_locations" data-toggle="tab">Prestations</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#doc_reviews" data-toggle="tab">({{numberOfRatingToOuvrier}})Reviews</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#doc_business_hours" data-toggle="tab">Heures de travail</a>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- /Tab Menu -->
-
-                <!-- Tab Content -->
-                <div class="tab-content pt-0">
-
-                    <!-- Overview Content -->
-                    <div role="tabpanel" id="doc_overview" class="tab-pane fade show active">
-                        <div class="row">
-                            <div class="col-md-12 col-lg-9">
-                                <div class="widget about-widget">
-                                    <h4 class="widget-title">A Propos</h4>
-                                    <p *ngIf="ouvrierDetails">{{ouvrierDetails.description}}</p>
-                                </div>
-                                <div class="widget education-widget">
-                                    <h4 class="widget-title">Prestations</h4>
-                                    <div class="experience-box">
-                                        <ul class="experience-list">
-                                            <li *ngFor="let prest of prestationList; let i=index;">
-                                                <div class="experience-user">
-                                                    <div class="before-circle"></div>
-                                                </div>
-                                                <div class="experience-content">
-                                                    <div class="timeline-content">
-                                                        <a href="#" class="name">{{prest.locality?.name}}, {{prest.locality?.address?.country}} </a>
-                                                        <div>{{prest.title}}</div>
-                                                        <span class="time">{{prest.createdDate | date:'dd-MMM-yyyy'}}</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- /Education Details -->
-
-                                <!-- Experience Details -->
-                                <div class="widget experience-widget">
-                                    <h4 class="widget-title">Services</h4>
-                                    <div class="service-list">
-                                        <ul class="clearfix">
-                                            <li *ngFor="let serv of serviceOffertList; let i=index;">
-                                                <div class="experience-content">
-                                                    <div class="timeline-content">
-                                                        <a href="#/" class="name">{{serv.designation}}</a>
-                                                        <!--  <span class="time">2010 - Present (5 years)</span> -->
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- /Experience Details -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /Overview Content -->
-
-                    <!-- Locations Content -->
-                    <div role="tabpanel" id="doc_locations" class="tab-pane fade">
-                        <!-- Location List -->
-                        <div class="location-list">
-                            <div class="row">
-                                <!-- Clinic Content -->
-                                <div class="col-md-6" *ngFor="let prest of top8PrestationList; let i=index;">
-                                    <div class="clinic-content">
-                                        <h4 class="clinic-name">
-                                            <a href="#" class="name">{{prest.locality?.name}}, {{prest.locality?.address?.country}} </a></h4>
-                                        <p class="doc-speciality">{{prest.title}}</p>
-                                        <span class="time">{{prest.createdDate | date:'dd-MMM-yyyy'}}</span>
-                                    </div>
-                                </div>
-                                <!-- /Clinic Content -->
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- /Locations Content -->
-
-                    <!-- Reviews Content -->
-                    <div role="tabpanel" id="doc_reviews" class="tab-pane fade">
-                        <!-- Review Listing -->
-                        <div class="widget review-listing">
-                            <ul class="comments-list">
-                                <!-- Comment List -->
+                                <li><i class="far fa-comment"></i> {{ numberOfRatingToOuvrier }} Feedback</li>
                                 <li>
-                                    <div class="comment" *ngFor="let rat of ratingListDTOs; let i=index;">
-                                        <img class="avatar avatar-sm rounded-circle" alt="User Image" src="assets/img/patients/patient.jpg">
-                                        <div class="comment-body">
-                                            <div class="meta-data">
-                                                <span class="comment-author">{{ rat.utilisateur?.name }}</span>
-                                                <span class="comment-date">{{ rat.createdDate | date:'dd-MM-yyyy' }}</span>
-                                                <div class="review-count">
-                                                    <ngb-rating [(rate)]="rat.nbreEtoile" [id]="'rating3'" [readonly]="true" [max]="maxRatingValue" class="text-warning mr-1">
-                                                    </ngb-rating>
-                                                </div>
-                                            </div>
-                                            <p class="recommended"><i class="far fa-thumbs-up"></i> je recommande cet ouvrier</p>
-                                            <p class="comment-content">
-                                                {{ rat.observation }}
-                                            </p>
-                                        </div>
-                                    </div>
-
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span *ngIf="!ouvrierDetails">Newyork,USA</span>
+                                <span *ngIf="ouvrierDetails">{{
+                    ouvrierDetails.addressActuel
+                  }}</span>
                                 </li>
-                            </ul>
 
+                                <li>
+                                    <i class="far fa-money-bill-alt"></i>
+                                    <span *ngIf="!ouvrierDetails">$100 per hour</span>
+                                    <span *ngIf="ouvrierDetails">{{ ouvrierDetails.pretentionSalaire }} per hour</span
+                  >
+                </li>
+              </ul>
+            </div>  
+            <div class="doctor-action">
+
+                <a (click)="addFav()" id="fav-btn" class="btn btn-white fav-btn">
+                    <i class="far fa-bookmark"></i>
+                  </a> 
+                  <a class="btn btn-white msg-btn">
+                    <i class="far fa-comment-alt"></i>
+                  </a>
+                  <a href="https://wa.me/+221779440310"
+                    class="btn btn-white call-btn"
+                  >
+                    <i class="fas fa-phone"></i>
+                  </a>
+                  <a class="btn btn-white call-btn">
+                    <i class="fas fa-video"></i>
+                  </a>
+
+              <!-- <a (click)="addFav()" id="fav-btn" class="btn btn-white fav-btn">
+                <i class="far fa-bookmark"></i>
+              </a> 
+              <a [routerLink]="'/doctor/message'" class="btn btn-white msg-btn">
+                <i class="far fa-comment-alt"></i>
+              </a>
+              <a
+                [routerLink]="'/voice-call'"
+                class="btn btn-white call-btn"
+                data-toggle="modal"
+                data-target="#voice_call"
+              >
+                <i class="fas fa-phone"></i>
+              </a>
+              <a
+                [routerLink]="'/video-call'"
+                class="btn btn-white call-btn"
+                data-toggle="modal"
+                data-target="#video_call"
+              >
+                <i class="fas fa-video"></i>
+              </a> -->
+            </div>
+            <div class="clinic-booking">
+              <a
+                class="apt-btn"
+                [routerLink]="'/patients/booking'"
+                [queryParams]="{ id: ouvrierDetails?.id }"
+                >Reserver </a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Doctor Widget -->
+
+    <!-- Doctor Details Tab -->
+    <div class="card">
+      <div class="card-body pt-0">
+        <!-- Tab Menu -->
+        <nav class="user-tabs mb-4">
+          <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+            <li class="nav-item">
+              <a class="nav-link active" href="#doc_overview" data-toggle="tab"
+                >Détails</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#doc_locations" data-toggle="tab"
+                >Prestations</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#doc_reviews" data-toggle="tab"
+                >({{ numberOfRatingToOuvrier }})Reviews</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#doc_business_hours" data-toggle="tab"
+                >Heures de travail</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <!-- /Tab Menu -->
+
+        <!-- Tab Content -->
+        <div class="tab-content pt-0">
+          <!-- Overview Content -->
+          <div
+            role="tabpanel"
+            id="doc_overview"
+            class="tab-pane fade show active"
+          >
+            <div class="row">
+              <div class="col-md-12 col-lg-9">
+                <div class="widget about-widget">
+                  <h4 class="widget-title">A Propos</h4>
+                  <p *ngIf="ouvrierDetails">{{ ouvrierDetails.description }}</p>
+                </div>
+                <div class="widget education-widget">
+                  <h4 class="widget-title">Prestations</h4>
+                  <div class="experience-box">
+                    <ul class="experience-list">
+                      <li *ngFor="let prest of prestationList; let i = index">
+                        <div class="experience-user">
+                          <div class="before-circle"></div>
                         </div>
-
-                        <!-- Write Review -->
-                        <div class="write-review">
-                            <h4>Votre avis pour <strong *ngIf="ouvrierDetails">{{ouvrierDetails.firstName}}-{{ouvrierDetails.lastName}}</strong></h4>
-
-                            <!-- Write Review Form -->
-                            <form [formGroup]="this.formData">
-                                <div class="form-group">
-                                    <label>Review</label>
-                                    <br>
-                                    <ngb-rating class="text-warning mr-1" formControlName="nbreEtoile" [(rate)]="currentRating" [max]="maxRatingValue" [readonly]="false" [id]="'rating3'" [readonly]="false" (rateChange)="onRateChange($event)">
-                                    </ngb-rating>
-                                    <div *ngIf="
-                                                f['nbreEtoile'].invalid &&
-                                                (f['nbreEtoile'].dirty || f['nbreEtoile'].touched)
-                                            " class="alert alert-danger">
-                                        <span *ngIf="f['nbreEtoile'].errors.required">Le choix du nombre d'étoiles est obligatoire.</span
-                                            >
-
-                                        </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Votre message</label>
-                                    <textarea id="review_desc" 
-                                    formControlName="observation"
-                                    name="observation"
-                                    required=""
-                                    maxlength="100" class="form-control"></textarea>
-                                    <div
-                                    *ngIf="
-                                      f['observation'].invalid &&
-                                      (f['observation'].dirty || f['observation'].touched)
-                                    "
-                                    class="alert alert-danger"
-                                  >
-                                    <span *ngIf="f['observation'].errors.required"
-                                      >Le commentaire de est obligatoire.</span
-                                    >
-                
-                                  </div>
-
-                                    <div class="d-flex justify-content-between mt-3"><small class="text-muted"><span id="chars">100</span> characters remaining</small>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="submit-section">
-                                    <button type="submit" [disabled]="!this.formData.valid" (click)="onAddRating()" class="btn btn-primary submit-btn">Envoyer</button>
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
-                    <div role="tabpanel" id="doc_business_hours" class="tab-pane fade">
-                        <div class="row">
-                            <div class="col-md-6 offset-md-3">
-                                <div class="widget business-widget">
-                                    <div class="widget-content">
-                                        <div class="listing-hours">
-                                            <div class="listing-day current">
-                                                <div class="day">Today <span>5 Nov 2019</span></div>
-                                                <div class="time-items">
-                                                    <span class="open-status"><span class="badge bg-success-light">Open Now</span></span>
-                                                    <span class="time">07:00 AM - 09:00 PM</span>
-                                                </div>
-                                            </div>
-                                            <div class="listing-day">
-                                                <div class="day">Monday</div>
-                                                <div class="time-items">
-                                                    <span class="time">07:00 AM - 09:00 PM</span>
-                                                </div>
-                                            </div>
-                                            <div class="listing-day">
-                                                <div class="day">Tuesday</div>
-                                                <div class="time-items">
-                                                    <span class="time">07:00 AM - 09:00 PM</span>
-                                                </div>
-                                            </div>
-                                            <div class="listing-day">
-                                                <div class="day">Wednesday</div>
-                                                <div class="time-items">
-                                                    <span class="time">07:00 AM - 09:00 PM</span>
-                                                </div>
-                                            </div>
-                                            <div class="listing-day">
-                                                <div class="day">Thursday</div>
-                                                <div class="time-items">
-                                                    <span class="time">07:00 AM - 09:00 PM</span>
-                                                </div>
-                                            </div>
-                                            <div class="listing-day">
-                                                <div class="day">Friday</div>
-                                                <div class="time-items">
-                                                    <span class="time">07:00 AM - 09:00 PM</span>
-                                                </div>
-                                            </div>
-                                            <div class="listing-day">
-                                                <div class="day">Saturday</div>
-                                                <div class="time-items">
-                                                    <span class="time">07:00 AM - 09:00 PM</span>
-                                                </div>
-                                            </div>
-                                            <div class="listing-day closed">
-                                                <div class="day">Sunday</div>
-                                                <div class="time-items">
-                                                    <span class="time"><span class="badge bg-danger-light">Closed</span></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Business Hours Widget -->
-
+                        <div class="experience-content">
+                          <div class="timeline-content">
+                            <a href="#" class="name"
+                              >{{ prest.locality?.name }},
+                              {{ prest.locality?.address?.country }}
+                            </a>
+                            <div>{{ prest.title }}</div>
+                            <span class="time">{{
+                              prest.createdDate | date: "dd-MM-yyyy"
+                            }}</span>
                             </div>
                         </div>
+                        </li>
+                        </ul>
                     </div>
-                    <!-- /Business Hours Content -->
+                </div>
+                <!-- /Education Details -->
 
+                <!-- Experience Details -->
+                <div class="widget experience-widget">
+                    <h4 class="widget-title">Services</h4>
+                    <div class="service-list">
+                        <ul class="clearfix">
+                            <li *ngFor="let serv of serviceOffertList; let i = index">
+                                <div class="experience-content">
+                                    <div class="timeline-content">
+                                        <a href="#/" class="name">{{ serv.designation }}</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /Experience Details -->
+            </div>
+        </div>
+    </div>
+    <!-- /Overview Content -->
+
+    <!-- Locations Content -->
+    <div role="tabpanel" id="doc_locations" class="tab-pane fade">
+        <div class="location-list">
+            <div class="row">
+                <div class="col-md-6" *ngFor="let prest of top8PrestationList; let i = index">
+                    <div class="clinic-content">
+                        <h4 class="clinic-name">
+                            <a href="#" class="name">{{ prest.locality?.name }},
+                        {{ prest.locality?.address?.country }}
+                      </a>
+                        </h4>
+                        <p class="doc-speciality">{{ prest.title }}</p>
+                        <span class="time">{{
+                      prest.createdDate | date: "dd-MMM-yyyy"
+                    }}</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- /Doctor Details Tab -->
-
     </div>
+    <!-- /Locations Content -->
+
+    <!-- Reviews Content -->
+    <div role="tabpanel" id="doc_reviews" class="tab-pane fade">
+        <!-- Review Listing -->
+        <div class="widget review-listing">
+            <ul class="comments-list">
+                <!-- Comment List -->
+                <li>
+                    <div class="comment" *ngFor="let rat of ratingListDTOs; let i = index">
+                        <img class="avatar avatar-sm rounded-circle" alt="User Image" src="assets/img/patients/patient.jpg" />
+                        <div class="comment-body">
+                            <div class="meta-data">
+                                <span class="comment-author">{{
+                          rat.utilisateur?.name
+                        }}</span>
+                                <span class="comment-date">{{
+                          rat.createdDate | date: "dd-MM-yyyy"
+                        }}</span>
+                                <div class="review-count">
+                                    <ngb-rating [(rate)]="rat.nbreEtoile" [id]="'rating3'" [readonly]="true" [max]="maxRatingValue" class="text-warning mr-1">
+                                    </ngb-rating>
+                                </div>
+                            </div>
+                            <p class="recommended">
+                                <i class="far fa-thumbs-up"></i> je recommande cet ouvrier
+                            </p>
+                            <p class="comment-content">
+                                {{ rat.observation }}
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Write Review -->
+        <div class="write-review">
+            <h4>
+                Votre avis pour
+                <strong *ngIf="ouvrierDetails">{{ ouvrierDetails.firstName }}-{{
+                    ouvrierDetails.lastName
+                  }}</strong
+                >
+              </h4>
+              <form [formGroup]="this.formData">
+                <div class="form-group">
+                  <label>Review</label>
+                  <br />
+                  <ngb-rating
+                    class="text-warning mr-1"
+                    formControlName="nbreEtoile"
+                    [(rate)]="currentRating"
+                    [max]="maxRatingValue"
+                    [readonly]="false"
+                    [id]="'rating3'"
+                    [readonly]="false"
+                    (rateChange)="onRateChange($event)"
+                  >
+                  </ngb-rating>
+                  <div
+                    *ngIf="
+                      f['nbreEtoile'].invalid &&
+                      (f['nbreEtoile'].dirty || f['nbreEtoile'].touched)
+                    "
+                    class="alert alert-danger"
+                  >
+                    <span *ngIf="f['nbreEtoile'].errors.required"
+                      >Le choix du nombre d'étoiles est obligatoire.</span
+                    >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Votre message</label>
+                  <textarea
+                    id="review_desc"
+                    formControlName="observation"
+                    name="observation"
+                    required=""
+                    maxlength="100"
+                    class="form-control"
+                  ></textarea>
+                  <div
+                    *ngIf="
+                      f['observation'].invalid &&
+                      (f['observation'].dirty || f['observation'].touched)
+                    "
+                    class="alert alert-danger"
+                  >
+                    <span *ngIf="f['observation'].errors.required"
+                      >Le commentaire est obligatoire.</span
+                    >
+                  </div>
+
+                  <div class="d-flex justify-content-between mt-3">
+                    <small class="text-muted"
+                      ><span id="chars">100</span> characters remaining</small
+                    >
+                  </div>
+                </div>
+                <hr />
+                <div class="submit-section">
+                  <button
+                    type="submit"
+                    [disabled]="!this.formData.valid"
+                    (click)="onAddRating()"
+                    class="btn btn-primary submit-btn"
+                  >
+                    Envoyer
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div role="tabpanel" id="doc_business_hours" class="tab-pane fade">
+            <div class="row">
+              <div class="col-md-6 offset-md-3">
+                <div class="widget business-widget">
+                  <div class="widget-content">
+                    <div class="listing-hours">
+                      <div class="listing-day current">
+                        <div class="day">Today <span>5 Nov 2019</span></div>
+                        <div class="time-items">
+                          <span class="open-status"
+                            ><span class="badge bg-success-light"
+                              >Open Now</span
+                            ></span
+                          >
+                          <span class="time">07:00 AM - 09:00 PM</span>
+                        </div>
+                      </div>
+                      <div class="listing-day">
+                        <div class="day">Monday</div>
+                        <div class="time-items">
+                          <span class="time">07:00 AM - 09:00 PM</span>
+                        </div>
+                      </div>
+                      <div class="listing-day">
+                        <div class="day">Tuesday</div>
+                        <div class="time-items">
+                          <span class="time">07:00 AM - 09:00 PM</span>
+                        </div>
+                      </div>
+                      <div class="listing-day">
+                        <div class="day">Wednesday</div>
+                        <div class="time-items">
+                          <span class="time">07:00 AM - 09:00 PM</span>
+                        </div>
+                      </div>
+                      <div class="listing-day">
+                        <div class="day">Thursday</div>
+                        <div class="time-items">
+                          <span class="time">07:00 AM - 09:00 PM</span>
+                        </div>
+                      </div>
+                      <div class="listing-day">
+                        <div class="day">Friday</div>
+                        <div class="time-items">
+                          <span class="time">07:00 AM - 09:00 PM</span>
+                        </div>
+                      </div>
+                      <div class="listing-day">
+                        <div class="day">Saturday</div>
+                        <div class="time-items">
+                          <span class="time">07:00 AM - 09:00 PM</span>
+                        </div>
+                      </div>
+                      <div class="listing-day closed">
+                        <div class="day">Sunday</div>
+                        <div class="time-items">
+                          <span class="time"
+                            ><span class="badge bg-danger-light"
+                              >Closed</span
+                            ></span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /Business Hours Widget -->
+              </div>
+            </div>
+          </div>
+          <!-- /Business Hours Content -->
+        </div>
+      </div>
+    </div>
+    <!-- /Doctor Details Tab -->
+  </div>
 </div>
 <!-- Voice Call Modal -->
 <div class="modal fade call-modal" id="voice_call">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-
-                <!-- Outgoing Call -->
-                <div class="call-box incoming-box">
-                    <div class="call-wrapper">
-                        <div class="call-inner">
-                            <div class="call-user">
-                                <img alt="User Image" src="assets/img/patients/patient.jpg" class="call-avatar">
-                                <h4>Richard Wilson</h4>
-                                <span>Connecting...</span>
-                            </div>
-                            <div class="call-items">
-                                <a href="javascript:void(0);" class="btn call-item call-end" data-dismiss="modal" aria-label="Close"><i class="material-icons">call_end</i></a>
-                                <a [routerLink]="'/voice-call'" class="btn call-item call-start"><i class="material-icons">call</i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Outgoing Call -->
-
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <!-- Outgoing Call -->
+        <div class="call-box incoming-box">
+          <div class="call-wrapper">
+            <div class="call-inner">
+              <div class="call-user">
+                <img
+                  alt="User Image"
+                  src="assets/img/patients/patient.jpg"
+                  class="call-avatar"
+                />
+                <h4>Richard Wilson</h4>
+                <span>Connecting...</span>
+              </div>
+              <div class="call-items">
+                <a
+                  href="javascript:void(0);"
+                  class="btn call-item call-end"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  ><i class="material-icons">call_end</i></a
+                >
+                <a [routerLink]="'/voice-call'" class="btn call-item call-start"
+                  ><i class="material-icons">call</i></a
+                >
+              </div>
             </div>
+          </div>
         </div>
+        <!-- Outgoing Call -->
+      </div>
     </div>
+  </div>
 </div>
 <!-- /Voice Call Modal -->
 
 <!-- Video Call Modal -->
 <div class="modal fade call-modal" id="video_call">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-
-                <!-- Incoming Call -->
-                <div class="call-box incoming-box">
-                    <div class="call-wrapper">
-                        <div class="call-inner">
-                            <div class="call-user">
-                                <img class="call-avatar" src="assets/img/patients/patient.jpg" alt="User Image">
-                                <h4>Richard Wilson</h4>
-                                <span>Calling ...</span>
-                            </div>
-                            <div class="call-items">
-                                <a href="javascript:void(0);" class="btn call-item call-end" data-dismiss="modal" aria-label="Close"><i class="material-icons">call_end</i></a>
-                                <a [routerLink]="'/video-call'" class="btn call-item call-start"><i class="material-icons">videocam</i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Incoming Call -->
-
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <!-- Incoming Call -->
+        <div class="call-box incoming-box">
+          <div class="call-wrapper">
+            <div class="call-inner">
+              <div class="call-user">
+                <img
+                  class="call-avatar"
+                  src="assets/img/patients/patient.jpg"
+                  alt="User Image"
+                />
+                <h4>Richard Wilson</h4>
+                <span>Calling ...</span>
+              </div>
+              <div class="call-items">
+                <a
+                  href="javascript:void(0);"
+                  class="btn call-item call-end"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  ><i class="material-icons">call_end</i></a
+                >
+                <a [routerLink]="'/video-call'" class="btn call-item call-start"
+                  ><i class="material-icons">videocam</i></a
+                >
+              </div>
             </div>
+          </div>
         </div>
+        <!-- /Incoming Call -->
+      </div>
     </div>
+  </div>
 </div>
 <!-- Video Call Modal -->

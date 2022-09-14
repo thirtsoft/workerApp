@@ -1,47 +1,3 @@
-<!-- <div class="card card-table">
-    <div class="card-body">
-        <h4 class="card-title" style="margin-left: 15px; margin-top:15px;">Liste de vos Jetons</h4>
-        <div class="table-responsive">
-            <table class="table table-hover table-center mb-0">
-                <thead>
-                    <tr>
-                        <th>Jeton No</th>
-                        <th>Montant</th>
-                        <th>Etat</th>
-                        <th>Date dépot</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let jet of jetonList">
-                        <td>
-                            <a [routerLink]="'/invoice-details'">{{
-                                jet.id
-              }}</a>
-                        </td>
-                        <td>{{ jet.montant }}</td>
-                        <td>{{ jet.etat }}</td>
-                        <td>{{ jet.createdDate | date: 'dd-MM-yyyy' }}</td>
-                        <td class="text-right">
-                            <div class="table-action">
-                                <a [routerLink]="'/invoice-details'" class="btn btn-sm bg-info-light">
-                                    <i class="far fa-eye"></i> View
-                                </a>
-                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-                                    <i class="fas fa-print"></i> Print
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="pagination">
-                <pagination-controls (pageChange)="p = $event"></pagination-controls>
-            </div>
-        </div>
-    </div>
-</div> -->
-
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="page-header">
@@ -70,18 +26,18 @@
                                 <tbody>
                                     <tr *ngFor="let jet of jetonList">
                                         <td>{{jet.id}}</td>
-                                        <td>{{jet.id}}</td>
+                                        <td>{{jet.numero}}</td>
                                         <td>{{ jet.montant }}</td>
                                         <td>{{ jet.etat }}</td>
                                         <td>{{ jet.createdDate | date: 'dd-MM-yyyy' }}</td>
 
                                         <td class="text-right">
                                             <div class="table-action">
-                                                <a [routerLink]="'/invoice-details'" class="btn btn-sm bg-info-light">
+                                                <!-- <a [routerLink]="'/invoice-details'" class="btn btn-sm bg-info-light">
                                                     <i class="far fa-eye"></i> View
-                                                </a>
+                                                </a> -->
                                                 <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-                                                    <i class="fas fa-print"></i> Print
+                                                    <i class="fas fa-print"></i> Imprimer
                                                 </a>
                                             </div>
                                         </td>

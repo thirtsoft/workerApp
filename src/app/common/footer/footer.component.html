@@ -1,11 +1,8 @@
 <footer class="footer">
-    <!-- Footer Top -->
     <div class="footer-top">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-6">
-
-                    <!-- Footer Widget -->
                     <div class="footer-widget footer-about">
                         <div class="footer-logo">
                             <img src="assets/img/footer-logo.png" alt="logo">
@@ -44,7 +41,9 @@
                         <h2 class="footer-title">Pour Canditats</h2>
                         <ul>
                             <li><a [routerLink]="'/patients/search-doctor'">Chercher Candidats</a></li>
-                            <li><a [routerLink]="'/patients/booking'">Booking</a></li>
+                            <!--                   <li><a [routerLink]="'/patients/booking'">Booking</a></li> -->
+                            <li><a [routerLink]="'/about'">A Propos</a></li>
+                            <li><a [routerLink]="'/about'">Contact</a></li>
                         </ul>
                     </div>
                     <!-- /Footer Widget -->
@@ -57,13 +56,14 @@
                     <div class="footer-widget footer-menu">
                         <h2 class="footer-title">Pour Employeur</h2>
                         <ul>
-                            <li><a [routerLink]="'/doctor/appointment'">Appointments</a></li>
+                            <li *ngIf="!this.isLoggedIn"><a [routerLink]="'/login-page'">Appointments</a></li>
+                            <li *ngIf="this.isLoggedIn"><a [routerLink]="'/doctor/appointment'">Appointments</a></li>
                             <li><a [routerLink]="'/patients/search-doctor'">Liste Candidats</a></li>
-                            <li><a [routerLink]="'/patients/booking'">Booking</a></li>
-                            <!-- <li><a [routerLink]="'/doctor/message'">Chat</a></li> -->
+                            <!--                           <li><a [routerLink]="'/patients/booking'">Booking</a></li> -->
                             <li><a [routerLink]="'/login-page'">Se conneccter</a></li>
                             <li><a [routerLink]="'/Register'">s'inscrire</a></li>
-                            <li><a [routerLink]="'/doctor/dashboard'">Tableau de bord</a></li>
+                            <li *ngIf="!this.isLoggedIn"><a [routerLink]="'/login-page'">Tableau de bord</a></li>
+                            <li *ngIf="this.isLoggedIn"><a [routerLink]="'/doctor/dashboard'">Tableau de bord</a></li>
                         </ul>
                     </div>
                     <!-- /Footer Widget -->

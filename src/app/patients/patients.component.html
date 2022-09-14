@@ -1,4 +1,4 @@
-<div class="breadcrumb-bar" *ngIf= "breadcrum">
+<div class="breadcrumb-bar" *ngIf="breadcrum">
     <div class="container-fluid">
         <div class="row align-items-center">
             <div class="col-md-8 col-12">
@@ -10,7 +10,7 @@
                 </nav>
                 <h2 class="breadcrumb-title">{{page | titlecase}}</h2>
             </div>
-            <div class="col-md-4 col-12 d-md-block d-none" *ngIf= "showSelect">
+            <div class="col-md-4 col-12 d-md-block d-none" *ngIf="showSelect">
                 <div class="sort-by">
                     <span class="sort-title">Sort by</span>
                     <span class="sortby-fliter">
@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<div class="content"  *ngIf="patientSidebar" >
+<div class="content" *ngIf="patientSidebar">
     <div class="container-fluid">
         <div class="row">
             <div *ngIf="patientSidebar" class="col-md-12 col-lg-12 col-xl-12">
@@ -41,6 +41,6 @@
         </div>
     </div>
 </div>
-<div  *ngIf="!patientSidebar" >
+<div *ngIf="!patientSidebar">
     <router-outlet></router-outlet>
 </div>

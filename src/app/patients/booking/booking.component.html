@@ -1,196 +1,3 @@
-<!-- Page Content -->
-<!-- <div class="content">
-    <div class="container">
-
-        <div class="row">
-            <div class="col-12">
-
-                <div class="card">
-                    <div class="card-body">
-                        <div class="booking-doc-info" *ngIf="doctorDetails">
-                            <a [routerLink]="'/patients/doctor-profile'" class="booking-doc-img">
-                                <img src={{doctorDetails.profile}} alt="User Image">
-                            </a>
-                            <div class="booking-info">
-                                <h4><a [routerLink]="'/patients/doctor-profile'">{{doctorDetails.doctor_name}}</a></h4>
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span class="d-inline-block average-rating">35</span>
-                                </div>
-                                <p class="text-muted mb-0"><i class="fas fa-map-marker-alt"></i> {{doctorDetails.location}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-sm-4 col-md-6">
-                        <h4 class="mb-1">11 November 2019</h4>
-                        <p class="text-muted">Monday</p>
-                    </div>
-                    <div class="col-12 col-sm-8 col-md-6 text-sm-right">
-                        <div class="bookingrange btn btn-white btn-sm mb-3">
-                            <i class="far fa-calendar-alt mr-2"></i>
-                            <span></span>
-                            <i class="fas fa-chevron-down ml-2"></i>
-                        </div>
-                    </div>
-                </div>
-     
-                <div class="card booking-schedule schedule-widget">
-                    <div class="schedule-header">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="day-slot">
-                                    <ul>
-                                        <li class="left-arrow">
-                                            <a>
-                                                <i class="fa fa-chevron-left"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <span>Mon</span>
-                                            <span class="slot-date">11 Nov <small class="slot-year">2019</small></span>
-                                        </li>
-                                        <li>
-                                            <span>Tue</span>
-                                            <span class="slot-date">12 Nov <small class="slot-year">2019</small></span>
-                                        </li>
-                                        <li>
-                                            <span>Wed</span>
-                                            <span class="slot-date">13 Nov <small class="slot-year">2019</small></span>
-                                        </li>
-                                        <li>
-                                            <span>Thu</span>
-                                            <span class="slot-date">14 Nov <small class="slot-year">2019</small></span>
-                                        </li>
-                                        <li>
-                                            <span>Fri</span>
-                                            <span class="slot-date">15 Nov <small class="slot-year">2019</small></span>
-                                        </li>
-                                        <li>
-                                            <span>Sat</span>
-                                            <span class="slot-date">16 Nov <small class="slot-year">2019</small></span>
-                                        </li>
-                                        <li>
-                                            <span>Sun</span>
-                                            <span class="slot-date">17 Nov <small class="slot-year">2019</small></span>
-                                        </li>
-                                        <li class="right-arrow">
-                                            <a>
-                                                <i class="fa fa-chevron-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="schedule-cont">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="time-slot">
-                                    <ul class="clearfix">
-                                        <li>
-                                            <a class="timing">
-                                                <span>9:00</span> <span>AM</span>
-                                            </a>
-                                            <a class="timing">
-                                                <span>10:00</span> <span>AM</span>
-                                            </a>
-                                            <a class="timing">
-                                                <span>11:00</span> <span>AM</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="timing">
-                                                <span>12:00</span> <span>AM</span>
-                                            </a>
-                                            <a class="timing">
-                                                <span>01:00</span> <span>PM</span>
-                                            </a>
-                                            <a class="timing">
-                                                <span>02:00</span> <span>PM</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="timing">
-                                                <span>03:00</span> <span>PM</span>
-                                            </a>
-                                            <a class="timing">
-                                                <span>04:00</span> <span>PM</span>
-                                            </a>
-                                            <a class="timing">
-                                                <span>05:00</span> <span>PM</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="timing">
-                                                <span>06:00</span> <span>PM</span>
-                                            </a>
-                                            <a class="timing">
-                                                <span>07:00</span> <span>PM</span>
-                                            </a>
-                                            <a class="timing">
-                                                <span>08:00</span> <span>PM</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="timing">
-                                                <span>09:00</span> <span>PM</span>
-                                            </a>
-                                            <a class="timing selected">
-                                                <span>10:00</span> <span>PM</span>
-                                            </a>
-                                            <a class="timing">
-                                                <span>11:00</span> <span>PM</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="timing">
-                                                <span>9:00</span> <span>AM</span>
-                                            </a>
-                                            <a class="timing">
-                                                <span>10:00</span> <span>AM</span>
-                                            </a>
-                                            <a class="timing">
-                                                <span>11:00</span> <span>AM</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="timing">
-                                                <span>9:00</span> <span>AM</span>
-                                            </a>
-                                            <a class="timing">
-                                                <span>10:00</span> <span>AM</span>
-                                            </a>
-                                            <a class="timing">
-                                                <span>11:00</span> <span>AM</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="submit-section proceed-btn text-right">
-                    <a [routerLink]="'/patients/checkout'" [queryParams]="{id: doctorDetails?.id}" class="btn btn-primary submit-btn">Proceed to Pay</a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-</div> -->
-<!-- /Page Content -->
-
-<!-- Page Content -->
 <div class="content">
     <div class="container">
         <div class="card">
@@ -247,11 +54,6 @@
                                 Mobilité :
                                 <span class="d-inline-block average-rating">{{ouvrierDetails.mobilite}}</span>
                             </div>
-
-                            <!-- <div class="clinic-services">
-                                <span>Dental Fillings</span>
-                                <span>Teeth Whitneing</span>
-                            </div> -->
                         </div>
                     </div>
                     <div class="doc-info-right">
@@ -282,19 +84,13 @@
                                 </form>
                             </ul>
                         </div>
-                        <!-- <div class="clinic-booking">
-                            <a class="apt-btn" [routerLink]="'/patients/booking'" [queryParams]="{id: ouvrierDetails?.id}">Book Appointment</a>
-                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
 
-
-        <!-- Doctor Details Tab -->
         <div class="card">
             <div class="card-body pt-0">
-
                 <!-- Tab Menu -->
                 <nav class="user-tabs mb-4">
                     <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
@@ -318,14 +114,11 @@
                                 <!-- About Details -->
                                 <div class="widget about-widget">
                                     <h4 class="widget-title">A Propos</h4>
-                                    <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                                        est laborum.</p> -->
                                     <p *ngIf="ouvrierDetails">{{ouvrierDetails.description}}</p>
                                 </div>
 
                                 <div class="widget education-widget">
-                                    <h4 class="widget-title">Les (04) dernières Prestations</h4>
+                                    <h4 class="widget-title">Les dernières Prestations</h4>
                                     <div class="experience-box">
                                         <ul class="experience-list">
                                             <li *ngFor="let prest of prestationList; let i=index;">
@@ -374,14 +167,10 @@
                                             </div>
                                         </div>
                                     </li>
-
                                 </ul>
                             </div>
                         </div>
-
                     </div>
-
-
                     <div role="tabpanel" id="doc_business_hours" class="tab-pane fade">
                         <div class="row">
                             <div class="col-md-12 col-lg-9">
@@ -391,62 +180,6 @@
                                         <li>{{serv.designation}} </li>
                                     </ul>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-        <!-- /Doctor Details Tab -->
-
-    </div>
-</div>
-<!-- Voice Call Modal -->
-<div class="modal fade call-modal" id="voice_call">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-
-                <!-- Outgoing Call -->
-                <div class="call-box incoming-box">
-                    <div class="call-wrapper">
-                        <div class="call-inner">
-                            <div class="call-user">
-                                <img alt="User Image" src="assets/img/patients/patient.jpg" class="call-avatar">
-                                <h4>Richard Wilson</h4>
-                                <span>Connecting...</span>
-                            </div>
-                            <div class="call-items">
-                                <a href="javascript:void(0);" class="btn call-item call-end" data-dismiss="modal" aria-label="Close"><i class="material-icons">call_end</i></a>
-                                <a [routerLink]="'/voice-call'" class="btn call-item call-start"><i class="material-icons">call</i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /Voice Call Modal -->
-
-<!-- Video Call Modal -->
-<div class="modal fade call-modal" id="video_call">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="call-box incoming-box">
-                    <div class="call-wrapper">
-                        <div class="call-inner">
-                            <div class="call-user">
-                                <img class="call-avatar" src="assets/img/patients/patient.jpg" alt="User Image">
-                                <h4>Richard Wilson</h4>
-                                <span>Calling ...</span>
-                            </div>
-                            <div class="call-items">
-                                <a href="javascript:void(0);" class="btn call-item call-end" data-dismiss="modal" aria-label="Close"><i class="material-icons">call_end</i></a>
-                                <a [routerLink]="'/video-call'" class="btn call-item call-start"><i class="material-icons">videocam</i></a>
                             </div>
                         </div>
                     </div>

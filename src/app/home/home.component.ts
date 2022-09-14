@@ -9,7 +9,6 @@ import { SlickCarouselComponent } from 'ngx-slick-carousel';
 import { MetierService } from '../services/metier.service';
 import { OuvrierService } from '../services/ouvrier.service';
 import { Ouvrier } from '../models/ouvrier';
-import { Metier } from '../models/metier';
 import { TokenStorageService } from '../services/auth/security/token-storage.service';
 declare const $: any;
 
@@ -31,8 +30,6 @@ export class HomeComponent implements OnInit {
   @ViewChild('slickModal1') slickModal1: SlickCarouselComponent;
   @ViewChild('slickModal2') slickModal2: SlickCarouselComponent;
   @ViewChild('slickModal3') slickModal3: SlickCarouselComponent;
-  specialityList: any = [];
-  doctors: any = [];
   ouvriersList: any = [];
   metiersList: any = [];
   slidepage: any;
@@ -106,17 +103,17 @@ export class HomeComponent implements OnInit {
   
   constructor(
     public router: Router,
-    public commonService: CommonServiceService,
     public ouvService: OuvrierService,
     public metService: MetierService,
     private tokenService: TokenStorageService
   ) {
+    /*
     this.filteredEmployee = this.employeeCtrl.valueChanges.pipe(
       startWith(''),
       map((employee) =>
         employee ? this._filterEmployees(employee) : this.doctors.slice()
       )
-    );
+    );*/
 
     this.filteredOuvriers = this.ouvrierCtrl.valueChanges.pipe(
       startWith(''),
@@ -129,9 +126,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     window.scrollTo(0, 0);
-    this.getspeciality();
-    this.getDoctors();
-    this.getblogs();
     this.getListOfMetiers();
     this.getListOfOuvriers();
 
@@ -192,12 +186,14 @@ export class HomeComponent implements OnInit {
       this.username = user.username;
     }
   }
+  /*
   private _filterEmployees(value: string): Doctors[] {
     const filterValue = value.toLowerCase();
     return this.doctors.filter(
       (state) => state.doctor_name.toLowerCase().indexOf(filterValue) === 0
     );
   }
+  */
 
   private _filterOuvriers(value: string): Ouvrier[] {
     const filterValue = value.toLowerCase();
@@ -337,12 +333,6 @@ export class HomeComponent implements OnInit {
     this.slickModal1.slickPrev();
   }
 
-  getspeciality() {
-    this.commonService.getSpeciality().subscribe((res) => {
-      this.specialityList = res;
-    });
-  }
-
   getListOfMetiers() {
     this.metService.getMetiers().subscribe((res) => {
       this.metiersList = res;
@@ -378,15 +368,16 @@ export class HomeComponent implements OnInit {
         ],
       };
       this.countries = [];
+      /*
       this.doctors.forEach((index, i) => {
         this.countries.push({
           id: index.id,
           name: index.ouvrier_name,
         });
-      });
+      });*/
     });
   }
-
+/*
   getDoctors() {
     this.commonService.getDoctors().subscribe((res) => {
       this.doctors = res;
@@ -423,12 +414,8 @@ export class HomeComponent implements OnInit {
       });
     });
   }
+  */
 
-  getblogs() {
-    this.commonService.getBlogs().subscribe((res) => {
-      this.blogs = res;
-    });
-  }
 
   selectEvent(item) {
     let filter = this.countries.filter((a) => a.name === item.name);

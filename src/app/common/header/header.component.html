@@ -48,70 +48,61 @@
             <ul class="main-nav" [ngClass]="[base === 'home-seven' ? 'white-font' : '' ]">
                 <li [class.active]="base === 'home' || base === 'home-two' || base === 'home-slider-one'  || base === 'home-one' || base === 'home-slider-two' || base === 'home-four' || base === 'home-six' || base === 'home-seven' || base === 'home-eight' " (click)="addStyle('home')"
                     class="has-submenu" style="cursor: pointer;">
-                    <a href="javascript:void(0);">Accueil <!-- <i class="fas fa-chevron-down"></i> --></a>
+                    <a (click)="home()">Accueil <!-- <i class="fas fa-chevron-down"></i> --></a>
                     <!--  <ul class="submenu" id="home">
-
                             <li [class.active]="base === 'home'" ><a [routerLink]="'home'">Accueil</a></li>
                             <li [class.active]="base === 'home-one'" ><a [routerLink]="'home-one'">Home 1</a></li>
-                            <li [class.active]="base === 'home-two'" ><a [routerLink]="'home-two'">Home 2</a></li>
-                            <li [class.active]="base === 'home-slider-one'" ><a [routerLink]="'home-slider-one'">Home 3</a></li>
-                            <li [class.active]="base === 'home-four'" ><a [routerLink]="'home-four'">Home 4</a></li>
-                            <li [class.active]="base === 'home-slider-two'" ><a [routerLink]="'home-slider-two'">Home 5</a></li>
-                            <li [class.active]="base === 'home-six'" ><a [routerLink]="'home-six'">Home 6</a></li>
-                            <li [class.active]="base === 'home-seven'" ><a [routerLink]="'home-seven'">Home 7</a></li>
-                            <li [class.active]="base === 'home-eight'" ><a [routerLink]="'home-eight'">Home 8</a></li>
                         </ul> -->
                 </li>
                 <li [class.active]="base === 'doctor' || (base === 'patients' && page === 'patient-profile')" (click)="addStyle('doctor')" class="has-submenu" style="cursor: pointer;">
                     <!--  <a href="javascript:void(0)" (click)="doctor('doctor')">Doctors <i class="fas fa-chevron-down"></i></a> -->
                     <a href="javascript:void(0)" (click)="doctor('doctor')">Employeur <i class="fas fa-chevron-down"></i></a>
                     <ul class="submenu" id="doctor">
-                        <!--  <li [class.active]="base === 'doctor' && page === 'dashboard'"><a [routerLink]="'doctor/dashboard'">Dashboard</a></li> -->
-                        <li [class.active]="base === 'doctor' && page === 'appointment'"><a [routerLink]="'doctor/appointment'">Appointments</a></li>
-                        <!--                         <li [class.active]="base === 'doctor' && page === 'scheduletiming'"><a [routerLink]="'doctor/scheduletiming'">Schedule Timing</a></li> -->
+                        <!--                         <li [class.active]="base === 'doctor' && page === 'appointment'"><a [routerLink]="'doctor/appointment'">Appointments</a></li> -->
                         <li [class.active]="base === 'patients' && page === 'search-doctor'"><a [routerLink]="'patients/search-doctor'">Liste Candidats</a></li>
-                        <!--   <li [class.active]="base === 'patients' && page === 'doctor-profile'"><a [routerLink]="'patients/doctor-profile'">Candidat Profile</a></li> -->
+                        <!--   <li [class.active]="base === 'patients' && page === 'doctor-profile'"><a [routerLink]="'patients/doctor-profile'">Candidat Profile</a></li> 
                         <li [class.active]="base === 'patients' && page === 'booking'"><a [routerLink]="'patients/booking'">Booking</a></li>
-                        <li [class.active]="base === 'patients' && page === 'checkout'"><a [routerLink]="'patients/checkout'">Checkout</a></li>
+                        <li [class.active]="base === 'patients' && page === 'checkout'"><a [routerLink]="'patients/checkout'">Checkout</a></li> -->
                         <!--    <li [class.active]="base === 'patients' && page === 'success'"><a [routerLink]="'patients/success'">Booking Success</a></li>
                         <li [class.active]="base === 'patients' && page === 'favourites'"><a [routerLink]="'patients/favourites'">Favourites</a></li>
                          <li [class.active]="base === 'doctor' && page === 'patients'"><a [routerLink]="'doctor/patients'">Patients List</a></li>
-                        <li [class.active]="base === 'doctor' && page === 'message'"><a [routerLink]="'doctor/message'">Chat</a></li> -->
-                        <li [class.active]="base === 'doctor' && page === 'invoice'"><a [routerLink]="'doctor/invoice'">Facture</a></li>
+                        <li [class.active]="base === 'doctor' && page === 'message'"><a [routerLink]="'doctor/message'">Chat</a></li> 
+                        <li [class.active]="base === 'doctor' && page === 'invoice'"><a [routerLink]="'doctor/invoice'">Facture</a></li>-->
                         <!--  <li [class.active]="base === 'doctor' && page === 'settings'"><a [routerLink]="'doctor/settings'">Profile Settings</a></li> -->
                         <!--  <li [class.active]="base === 'doctor' && page === 'reviews'"><a [routerLink]="'doctor/reviews'">Reviews</a></li> -->
                         <li [class.active]="base === 'doctor' && page === 'Register'"><a [routerLink]="'/Register'">Créer Compte</a></li>
                         <!-- <li [class.active]="base === 'doctor' && page === 'Register'"><a [routerLink]="'doctor/doctor-register'">Créer Compte</a></li> -->
                         <li [class.active]="base === 'login-page'"><a [routerLink]="'login-page'">Login</a></li>
-                        <li class="has-submenu" [class.active]="(page === 'doctor-add-blog') || (page === 'doctor-edit-blog') || (page === 'doctor-blog')">
+                        <!--  <li class="has-submenu" [class.active]="(page === 'doctor-add-blog') || (page === 'doctor-edit-blog') || (page === 'doctor-blog')">
                             <a href="javascript:void(0)">Blog</a>
                             <ul class="submenu">
                                 <li [class.active]="page === 'doctor-blog'"><a [routerLink]="'doctor/doctor-blog'">Blog</a></li>
                                 <li [class.active]="base === 'blog'"><a [routerLink]="'blog'">Blog view</a></li>
                                 <li [class.active]="page === 'doctor-add-blog'"><a [routerLink]="'doctor/doctor-add-blog'">Add Blog</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>
+                <!--
                 <li [class.active]="(base === 'map-grid') || (base === 'map-list') " class="has-submenu" (click)="addStyle('patient')" routerLinkActive="active">
-                    <!--  <a href="javascript:void(0)">Patients <i class="fas fa-chevron-down"></i></a> -->
+                      <a href="javascript:void(0)">Patients <i class="fas fa-chevron-down"></i></a>
                     <a href="javascript:void(0)">Candidats <i class="fas fa-chevron-down"></i></a>
                     <ul class="submenu" id="patient">
-                        <!--  <li [class.active]="(base === 'map-grid') || (base === 'map-list')" class="has-submenu">
+                          <li [class.active]="(base === 'map-grid') || (base === 'map-list')" class="has-submenu">
                             <a href="javascript:void(0);">Doctors</a>
                             <ul class="submenu">
                                 <li [class.active]="base === 'map-grid'"><a (click)="mapGrid()">Map Grid</a></li>
                                 <li [class.active]="base === 'map-list'"><a (click)="mapList()">Map List</a></li>
                             </ul>
-                        </li> -->
+                        </li> 
                         <li [class.active]="base === 'patients' && page === 'search-doctor'"><a [routerLink]="'patients/search-doctor'">Liste Candidats</a></li>
-                        <!-- <li [class.active]="base === 'patients' && page === 'doctor-profile'"><a [routerLink]="'patients/doctor-profile'">Doctor Profile</a></li> -->
+                         <li [class.active]="base === 'patients' && page === 'doctor-profile'"><a [routerLink]="'patients/doctor-profile'">Doctor Profile</a></li> 
                         <li [class.active]="base === 'patients' && page === 'booking'"><a [routerLink]="'patients/booking'">Booking</a></li>
                         <li [class.active]="base === 'patients' && page === 'checkout'"><a [routerLink]="'patients/checkout'">Checkout</a></li>
                         <li [class.active]="base === 'patients' && page === 'success'"><a [routerLink]="'patients/success'">Booking Success</a></li>
                         <li [class.active]="base === 'patients' && page === 'favourites'"><a [routerLink]="'patients/favourites'">Favourites</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <!--  <li [class.active]="base === 'voice-call' || base === 'video-call' || base === 'calender' || base === 'blank' || base === 'login-page'
                     || base === 'Register' || base === 'forgot-password' || (base === 'patients' && page === 'search-doctor')
                     || (base === 'patients' && page === 'component') || (base === 'doctor' && page === 'invoice') || base === 'invoice-details'" (click)="addStyle('pages')" class="has-submenu" pharmacy>

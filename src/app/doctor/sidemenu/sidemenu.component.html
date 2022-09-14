@@ -1,16 +1,23 @@
-<!-- Profile Sidebar -->
 <div class="profile-sidebar">
     <div class="widget-profile pro-widget-content">
         <div class="profile-info-widget">
             <a href="javascript:void(0)" class="booking-doc-img">
-                <img src="assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
+                <img *ngIf="!img" src="assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
+                <img [src]="
+                        this.userService.apiServerUrl +
+                            '/utilisateurs/avatar/' +
+                            this.userId +
+                            '?ts=' +
+                            getTS()
+                        " class="rounded-circle" alt="User Image" *ngIf="img" />
             </a>
             <div class="profile-det-info">
-                <!-- <h3>Dr. Darren Elder</h3> -->
-                <h3>{{username}}</h3>
+                <h3 *ngIf="!this.userDetails">Dr. Darren Elder</h3>
+                <h3 *ngIf="this.userDetails">{{username}}</h3>
 
                 <div class="patient-details">
-                    <h5 class="mb-0">BDS, MDS - Oral & Maxillofacial Surgery</h5>
+                    <h5 *ngIf="!this.userDetails" class="mb-0">BDS, MDS - Oral & Maxillofacial Surgery</h5>
+                    <h5 *ngIf="this.userDetails" class="mb-0">{{userDetails.name}}-, {{userDetails.addressRecruteur}} - {{userDetails.mobile}} & {{userDetails.email}}</h5>
                 </div>
             </div>
         </div>

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CommonServiceService } from './../../common-service.service'
-import { FormsModule } from '@angular/forms';
 import { MetierService } from 'src/app/services/metier.service';
 import { OuvrierService } from 'src/app/services/ouvrier.service';
 import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
@@ -49,7 +48,7 @@ export class SearchDoctorComponent implements OnInit {
   id;
 
   constructor(
-          public commonService: CommonServiceService,
+    //      public commonService: CommonServiceService,
           public metService: MetierService,
           public ouvService: OuvrierService,
           private ratService: RatingService,
@@ -73,19 +72,16 @@ export class SearchDoctorComponent implements OnInit {
   ];
   
   ngOnInit(): void {
-    this.getDoctors();
-    this.getspeciality();
+    this.isLoggedIn = !!this.tokenService.getToken();
+    if (this.isLoggedIn) {
+      const user = this.tokenService.getUser();
+      this.username = user.username;
+    }
     this.getAllMetiers();
-    this.countNumberOfRatingToOuvrier();
     this.route.paramMap.subscribe(()=> {
       this.finishOuvriers();
+      this.countNumberOfRatingToOuvrier();
     });
-  //  this.finishOuvriers();
-  this.isLoggedIn = !!this.tokenService.getToken();
-  if (this.isLoggedIn) {
-    const user = this.tokenService.getUser();
-    this.username = user.username;
-  }
   }
 
   finishOuvriers(){
@@ -139,18 +135,19 @@ export class SearchDoctorComponent implements OnInit {
     this.ouvService.getOuvriersByKey(disponibility,this.page-1,this.pageLength).subscribe(
       data => {
         this.ouvrierList = data;
-        console.log(this.ouvrierList);
       }
     )
   }
 
   countNumberOfRatingToOuvrier() {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.ratService.countNumberOfRatingOfOuvriers(this.id)
-      .subscribe((res) => {
-        this.numberOfRatingToOuvrier = res;
-        console.log(this.numberOfRatingToOuvrier);
-    });
+    for (let i=0; i<this.ouvrierList.length; i++) {
+      this.ratService.countNumberOfRatingOfOuvriers(this.ouvrierList[i].id)
+        .subscribe((res) => {
+          this.numberOfRatingToOuvrier = res;
+          console.log(this.numberOfRatingToOuvrier);
+      });
+    }
   }
 
   doing() {
@@ -180,18 +177,6 @@ export class SearchDoctorComponent implements OnInit {
     })
   }
 
-  getDoctors() {
-    this.commonService.getSearchDoctors().subscribe(res => {
-      this.doctors = res;
-    })
-  }
-
-  getspeciality() {
-    this.commonService.getSpeciality().subscribe(res => {
-      this.specialityList = res;
-    })
-  }
-
   checkType(event) {
     if (event.target.checked) {
       this.type = event.target.value;
@@ -200,6 +185,7 @@ export class SearchDoctorComponent implements OnInit {
     }
   }
 
+  /*
   search() {
     if (this.type && this.speciality) {
       this.doctors = this.doctors.filter(a => a.type === this.type && a.speciality === this.speciality)
@@ -207,6 +193,7 @@ export class SearchDoctorComponent implements OnInit {
       this.getDoctors();
     }
   }
+  */
 
   checkSpeciality(event) {
     if (event.target.checked) {

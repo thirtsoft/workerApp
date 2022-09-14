@@ -9,6 +9,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth/security/auth.service';
 import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
+import { UtilisateurService } from 'src/app/services/utilisateur.service';
 
 import { CommonServiceService } from './../../common-service.service';
 
@@ -24,7 +25,7 @@ export class SidemenuComponent implements OnInit {
   page;
 
   info: any;
-  private roles: string[];
+  roles: string[];
 
   currentTime: number = 0;
 
@@ -34,6 +35,7 @@ export class SidemenuComponent implements OnInit {
   showModeratorBoard = false;
   showUserBoard = false;
 
+  userDetails: any;
   username: string;
   email: String;
   userId;
@@ -43,6 +45,7 @@ export class SidemenuComponent implements OnInit {
   constructor(private toastr: ToastrService,
             private tokenService: TokenStorageService,
             public autService: AuthService,
+            public userService: UtilisateurService,
             private modalService: BsModalService,
     private router: Router,
     public commonService: CommonServiceService
@@ -71,6 +74,16 @@ export class SidemenuComponent implements OnInit {
       this.userId = user.id;
       this.photo = user.photo;
     }
+    this.getEmploye();
+  }
+
+  getEmploye() {
+    const user = this.tokenService.getUser();
+    this.userService.getUtilisateurById(user.id).subscribe(
+      response => {
+        this.userDetails = response;
+      }
+    );
   }
 
   getUserOrder() {
@@ -95,13 +108,6 @@ export class SidemenuComponent implements OnInit {
       window.location.reload();
     });
   }
-/*
-  logout() {
-    localStorage.clear();
-    this.commonService.nextmessage('logout');
-    this.router.navigate(['/']);
-  }
-  */
 
   navigate(name) {
     this.name = name;

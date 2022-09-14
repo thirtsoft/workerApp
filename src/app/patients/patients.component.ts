@@ -10,8 +10,8 @@ import { CommonServiceService } from './../common-service.service';
 })
 export class PatientsComponent implements OnInit {
   splitVal;
-  base = 'Patients';
-  page = 'Dashboard';
+  base = 'Ouvriers';
+  page = 'Détails';
   patientSidebar: boolean = false;
   breadcrum = true
   showSelect = false

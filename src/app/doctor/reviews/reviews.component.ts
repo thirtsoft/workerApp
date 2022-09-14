@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
+import { OuvrierService } from 'src/app/services/ouvrier.service';
 import { RatingService } from 'src/app/services/rating.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class ReviewsComponent implements OnInit {
   ratingsList: any = [];
 
   info: any;
-  private roles: string[];
+  roles: string[];
   currentTime: number = 0;
   isLoggedIn = false;
   showAdminBoard = false;
@@ -24,8 +25,10 @@ export class ReviewsComponent implements OnInit {
   userId;
   maxRatingValue = 5;
 
-  constructor(private rat:RatingService,
+  constructor(
+    private rat:RatingService,
     private tokenService: TokenStorageService,
+    public ouvService: OuvrierService
   ) { }
 
   ngOnInit(): void {

@@ -5,11 +5,11 @@
             <div class="banner-wrapper">
                 <div class="banner-header text-center">
                     <h1>Chercher un Ouvrier, Pour votre service</h1>
-                    <p>Trouver un ouvrier pour vous servir, partout dans le Sénégal.</p>
+                    <p>Réserver un ouvrier pour vos réparations, partout dans le Sénégal.</p>
                 </div>
 
                 <!-- Search -->
-                <div class="search-box">
+                <!-- <div class="search-box">
                     <form>
                         <div class="form-group search-location">
                             <input type="text" class="form-control" placeholder="Search Location">
@@ -32,59 +32,13 @@
                         <button type="submit" class="btn btn-primary search-btn mt-0" [routerLink]="'/patients/search-doctor'"><i class="fas fa-search"></i>
                             <span>Chercher</span></button>
                     </form>
-                </div>
+                </div> -->
                 <!-- /Search -->
 
             </div>
         </div>
     </section>
     <!-- /Home Banner -->
-    <!--  <section class="section home-tile-section">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-9 m-auto">
-                    <div class="section-header text-center">
-                        <h2>What are you looking for?</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 mb-3">
-                            <div class="card text-center doctor-book-card">
-                                <img src="assets/img/doctors/doctor-07.jpg" alt="" class="img-fluid">
-                                <div class="doctor-book-card-content tile-card-content-1">
-                                    <div>
-                                        <h3 class="card-title mb-0">Visit a Doctor</h3>
-                                        <a [routerLink]="'/patients/search-doctor'" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">Book Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 mb-3">
-                            <div class="card text-center doctor-book-card">
-                                <img src="assets/img/doctors/doctor-07.jpg" alt="" class="img-fluid">
-                                <div class="doctor-book-card-content tile-card-content-1">
-                                    <div>
-                                        <h3 class="card-title mb-0">Find a Pharmacy</h3>
-                                        <a [routerLink]="'/doctor/patients'" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">Find Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 mb-3">
-                            <div class="card text-center doctor-book-card">
-                                <img src="assets/img/lab-image.jpg" alt="" class="img-fluid">
-                                <div class="doctor-book-card-content tile-card-content-1">
-                                    <div>
-                                        <h3 class="card-title mb-0">Find a Lab</h3>
-                                        <a href="javascript:void(0);" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">Coming Soon</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
     <!-- Clinic and Specialities -->
     <section class="section section-specialities">
         <div class="container-fluid">
@@ -98,16 +52,6 @@
 
                     <div class="specialities-slider slider">
                         <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig3">
-                            <!--  <div ngxSlickItem *ngFor="let slide of slides" class="speicality-item text-center">
-                                <div class="">
-                                    <div class="speicality-img">
-                                        <img src="{{slide.img}}" class="img-fluid" alt="Speciality">
-                                        <span><i class="fa fa-circle" aria-hidden="true"></i></span>
-                                    </div>
-                                    <p>{{slide.name}}</p>
-                                </div>
-                            </div> -->
-
                             <div ngxSlickItem *ngFor="let slide of metiersList" class="speicality-item text-center">
                                 <div class="">
                                     <div class="speicality-img">
@@ -145,68 +89,17 @@
                 <div class="col-lg-2">
                     <div class="section-header ">
                         <h2>Engagez un ouvrier</h2>
-                        <p>Lorem Ipsum is simply dummy text </p>
+                        <!--  <p>Lorem Ipsum is simply dummy text </p> -->
                     </div>
                     <div class="about-content">
                         <p>Nous vous proposons plusieurs profiles d'Ouvriers qui vous accompagnerons dans vos travaux.</p>
                         <p>Des Ouvriers compétents, rigoureux, et sérieux prets à se déplacer chez vous et vous faire votre réparation en un clien d'oeil</p>
-                        <a href="javascript:;">Lire plus..</a>
+                        <a routerLink="/about" href="javascript:;">Lire plus..</a>
                     </div>
                 </div>
                 <div class="col-lg-10">
                     <div class="doctor-slider">
                         <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfigure">
-                            <!--  <div class="slick-slide" *ngFor="let doctor of doctors;let i=index">
-                                <div ngxSlickItem>
-                                    <div class="profile-widget" style="width: 100%; display: inline-block;">
-                                        <div class="doc-img">
-                                            <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}" tabindex="-1">
-                                                <img class="img-fluid" alt="User Image" [src]="doctor.profile">
-                                            </a>
-                                            <a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-                                                <i class="far fa-bookmark"></i>
-                                            </a>
-                                        </div>
-                                        <div class="pro-content">
-                                            <h3 class="title">
-                                                <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}" tabindex="-1">{{doctor.doctor_name}}</a>
-                                                <i class="fas fa-check-circle verified"></i>
-                                            </h3>
-                                            <p class="speciality">{{doctor.Education}}</p>
-                                            <div class="rating">
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star"></i>
-                                                <span class="d-inline-block average-rating">({{doctor.span}})</span>
-                                            </div>
-                                            <ul class="available-info">
-                                                <li>
-                                                    <i class="fas fa-map-marker-alt"></i> {{doctor.location}}
-                                                </li>
-                                                <li>
-                                                    <i class="far fa-clock"></i> {{doctor.Available}}
-                                                </li>
-                                                <li>
-                                                    <i class="far fa-money-bill-alt"></i> {{doctor.Price}}
-                                                    <a href="javascript:void(0)" tooltip="Lorem Ipsum" placement="top"><i class="fas fa-info-circle"></i></a>
-                                                </li>
-                                            </ul>
-                                            <div class="row row-sm">
-                                                <div class="col-6">
-                                                    <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}" class="btn view-btn" tabindex="-1">View Profile</a>
-                                                </div>
-                                                <div class="col-6">
-                                                    <a [routerLink]="'/patients/booking'" [queryParams]="{id: doctor.id}" class="btn book-btn" tabindex="-1">Book
-                                                        Now</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-
                             <div class="slick-slide" *ngFor="let doctor of ouvriersList;let i=index">
                                 <div ngxSlickItem>
                                     <div class="profile-widget" style="width: 100%; display: inline-block;">
@@ -225,8 +118,7 @@
                                         </div>
                                         <div class="doc-img" *ngIf="this.isLoggedIn">
                                             <a [routerLink]="'/patients/doctor-profile'" [queryParams]="{id: doctor.id}" tabindex="-1">
-                                                <!-- <img class="img-fluid" alt="User Image" [src]="doctor.profile"> -->
-                                                <img class="img-fluid w-100" alt="User Image" src="{{
+                                                <img class="img-fluid w-100" alt="{{doctor.firstName}}-{{doctor.lastName}}" src="{{
                                                     this.ouvService.apiServerUrl +
                                                     '/ouvriers/photoOuvrierInFolder/' +
                                                     doctor.id
@@ -245,16 +137,11 @@
                                             <div class="rating">
                                                 <ngb-rating [max]="maxRatingValue" [(rate)]="currentRating" [readonly]="true" class="text-warning mr-1 filled">
                                                 </ngb-rating>
-                                                <!-- <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star"></i> -->
-                                                <span class="d-inline-block average-rating">({{doctor.reference}})</span>
+                                                <span class="d-inline-block average-rating">({{doctor.metier?.designation}})</span>
                                             </div>
                                             <ul class="available-info">
                                                 <li>
-                                                    <i class="fas fa-map-marker-alt"></i> {{doctor.addressActuel}}
+                                                    <i class="fas fa-map-marker-alt"></i> {{doctor.locality?.name}}
                                                 </li>
                                                 <li>
                                                     <i class="far fa-clock"></i> {{doctor.disponibity}}
@@ -296,34 +183,6 @@
     <div class="view-all text-center" *ngIf="this.isLoggedIn">
         <a [routerLink]="'/patients/search-doctor'" class="btn btn-primary">Voir plus d'Ouvriers</a>
     </div>
-
-    <!-- <section class="section section-features">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-5 features-img">
-                    <img src="assets/img/features/feature.png" class="img-fluid" alt="Feature">
-                </div>
-                <div class="col-md-7">
-                    <div class="section-header">
-                        <h2 class="mt-2">Available Features in Our Clinic</h2>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                    </div>
-                    <div class="features-slider slider">
-
-                        <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig2">
-                            <div ngxSlickItem *ngFor="let slide of sliderContent">
-                                <div class="feature-item text-center">
-                                    <img src="{{slide.img}}" class="img-fluid" alt="Feature">
-                                    <p>{{slide.name}}</p>
-                                </div>
-                            </div>
-                        </ngx-slick-carousel>
-                       
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
 
     <section class="section section-blogs">
         <div class="container-fluid">

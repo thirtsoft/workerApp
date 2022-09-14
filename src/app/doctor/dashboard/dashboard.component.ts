@@ -3,13 +3,10 @@ import { Component, OnInit,TemplateRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 import {CommonServiceService  } from './../../common-service.service';
-
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth/security/auth.service';
 import { TokenStorageService } from 'src/app/services/auth/security/token-storage.service';
 import { DashboardService } from 'src/app/services/dashboard.service';
-import { AppointmentService } from 'src/app/services/appointment.service';
 
 
 @Component({
@@ -23,6 +20,7 @@ export class DashboardComponent implements OnInit {
   appointmentId;
   appointments :any = [];
   appointmentList: any = [];
+  ratinsList: any = [];
   patients:any = [];
   patientsLength ;
   appointmentsLength;
@@ -40,7 +38,6 @@ export class DashboardComponent implements OnInit {
   username: string;
   email: String;
   userId;
-  photo;
   img: boolean;
 
   numbersOfOuvriers: any;
@@ -50,7 +47,6 @@ export class DashboardComponent implements OnInit {
   constructor(private toastr: ToastrService,
               private tokenService: TokenStorageService,
               private crudApi: DashboardService,
-              private router: Router,
               public commonService:CommonServiceService,
               private modalService: BsModalService) { }
 
@@ -68,7 +64,6 @@ export class DashboardComponent implements OnInit {
       this.showUserBoard = this.roles.includes('ROLE_USER');
       this.username = user.username;
       this.userId = user.id;
-      this.photo = user.photo;
     }
     this.getNumberOfAppointmentByCustumerId();
     this.getNumberOfAppointmentByCustumerIdAndStatusAccepted();
@@ -107,7 +102,7 @@ export class DashboardComponent implements OnInit {
   getListRatingsByCustumerIdOrderByIdDesc() {
     this.crudApi.getAllRatingsByCustomerId(this.userId)
     .subscribe(res=>{
-      this.appointmentList = res;
+      this.ratinsList = res;
     })
   }
 
