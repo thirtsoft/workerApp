@@ -43,7 +43,7 @@ const routes: Routes = [
     import('./patients/patients.module').then((m) => m.PatientsModule),
   },
   {
-    path: 'blank',
+    path: 'contact',
     loadChildren: () =>
     import('./blank/blank.module').then((m) => m.BlankModule),
   },
@@ -123,7 +123,7 @@ const routes: Routes = [
     import('./privacy-policy/privacy-policy.module').then((m) => m.PrivacyPolicyModule),
   },
   {
-    path: 'terms-conditions',
+    path: 'about',
     loadChildren: () =>
     import('./terms-conditions/terms-conditions.module').then((m) => m.TermsConditionsModule),
   },

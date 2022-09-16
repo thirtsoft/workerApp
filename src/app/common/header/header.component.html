@@ -126,20 +126,27 @@
                         <li [class.active]="base === 'forgot-password'"><a [routerLink]="'forgot-password'">Forgot Password</a></li>
                     </ul>
                 </li> -->
-                <li class="has-submenu" (click)="addStyle('blog')" [class.active]="base === 'blog' || base === 'blog-grid' || base === 'blog-details'">
+                <!--  <li class="has-submenu" (click)="addStyle('blog')" [class.active]="base === 'blog' || base === 'blog-grid' || base === 'blog-details'">
                     <a href="javascript:void(0)">Blog <i class="fas fa-chevron-down"></i></a>
                     <ul class="submenu" id="blog">
                         <li [class.active]="base === 'blog'"><a [routerLink]="'blog'">Blog List</a></li>
                         <li [class.active]="base === 'blog-grid'"><a [routerLink]="'blog-grid'">Blog Grid</a></li>
                         <li [class.active]="base === 'blog-details'"><a [routerLink]="'blog-details'">Blog Details</a></li>
                     </ul>
+                </li> -->
+                <li [class.active]="base === 'terms-conditions'" (click)="addStyle('home')" class="has-submenu" style="cursor: pointer;">
+                    <a [routerLink]="'/about'">A Propos</a>
+
                 </li>
-                <li *ngIf="admin_submenu" class="has-submenu" (click)="addStyle('admin')" [class.active]="base === 'admin' || base === 'pharmacy-admin'">
+                <li [class.active]="base === 'blank'" (click)="addStyle('blank')" class="has-submenu" style="cursor: pointer;">
+                    <a [routerLink]="'/contact'">Contact </a>
+                </li>
+                <!--  <li *ngIf="admin_submenu" class="has-submenu" (click)="addStyle('admin')" [class.active]="base === 'admin' || base === 'pharmacy-admin'">
                     <a href="javascript:void(0)">Admin <i class="fas fa-chevron-down"></i></a>
                     <ul class="submenu" id="admin">
                         <li [class.active]="base === 'admin'"><a (click)="navigate('Admin')">Admin</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <li *ngIf="admin_menu"><a [routerLink]="'/admin/dashboard'">Admin</a></li>
                 <li class="login-link">
                     <a [routerLink]="'login-page'">Login / Signup</a>

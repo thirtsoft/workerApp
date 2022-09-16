@@ -41,7 +41,6 @@ export class RegisterComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private toastr: ToastrService,
-    public commonService: CommonServiceService,
     public router: Router
   ) {}
 
@@ -49,19 +48,23 @@ export class RegisterComponent implements OnInit {
     /*
     this.getpatients();
     this.getDoctors();
+    */
     if($('.floating').length > 0 ){
       $('.floating').on('focus blur', function (e) {
       $(this).parents('.form-focus').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
       }).trigger('blur');
-    } */
+    } 
 
     this.registrationForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),
       username: new FormControl(null, [Validators.required]),
+      mobile: new FormControl(null, [Validators.required]),
+      /*
       email: new FormControl(null, [
         Validators.required, 
         Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')
       ]),
+      */
       password: new FormControl(null, [
         Validators.required,
         Validators.minLength(6)
@@ -142,7 +145,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  signup() {
+ /*  signup() {
     if (this.name === '' || this.mobile === '' || this.password === '') {
       this.toastr.error('', 'Please enter mandatory field!');
     } else {
@@ -168,17 +171,7 @@ export class RegisterComponent implements OnInit {
         });
       }
     }
-  }
+  } */
 
-  getDoctors() {
-    this.commonService.getDoctors().subscribe((res) => {
-      this.doctors = res;
-    });
-  }
-
-  getpatients() {
-    this.commonService.getpatients().subscribe((res) => {
-      this.patients = res;
-    });
-  }
+ 
 }

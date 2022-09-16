@@ -3,8 +3,6 @@
 
         <div class="row">
             <div class="col-md-8 offset-md-2">
-
-                <!-- Register Content -->
                 <div class="account-content">
                     <div class="row align-items-center justify-content-center">
                         <div class="col-md-7 col-lg-6 login-left">
@@ -12,13 +10,13 @@
                         </div>
                         <div class="col-md-12 col-lg-6 login-right">
                             <div class="login-header">
-                                <!--<h3>Création de compte<a href="javascript:void(0)" [routerLink]="'/doctor/doctor-register'">Are you a Doctor?</a></h3> -->
-                                <h3>Création de compte</h3>
+                                <h3>Etes-vous à la recherche d'un Ouvrier ?
+                                </h3>
+                                <span> Créer un compte</span>
                             </div>
-                            <!-- Register Form -->
+
                             <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
                                 <div class="form-group form-focus">
-                                    <!--  <input type="text" name="name" class="form-control floating" [(ngModel)]="name"> -->
                                     <input name="name" id="name" formControlName="name" required="" class="form-control floating" placeholder="Votre Nom" type="text" />
                                     <div class="alert alert-danger" *ngIf="
                                         registrationForm.get('name').invalid &&
@@ -28,13 +26,8 @@
                                             Votre nom est obligatoire
                                         </div>
                                     </div>
-                                    <label class="focus-label">Name</label>
+                                    <label class="focus-label">Nom complet</label>
                                 </div>
-
-                                <!--  <div class="form-group form-focus">
-                                    <input type="text" name="mobile" class="form-control floating" [(ngModel)]="mobile" max="9">
-                                    <label class="focus-label">Mobile Number</label>
-                                </div> -->
 
                                 <div class="form-group form-focus">
                                     <!--  <input type="text" name="mobile" class="form-control floating" [(ngModel)]="mobile" max="9"> -->
@@ -51,24 +44,22 @@
                                 </div>
 
                                 <div class="form-group form-focus">
-                                    <!--  <input type="text" name="mobile" class="form-control floating" [(ngModel)]="mobile" max="9"> -->
-                                    <input name="email" id="email" formControlName="email" required="" class="form-control floating" placeholder="Votre Email" type="email" />
+                                    <input name="mobile" id="mobile" formControlName="mobile" class="form-control floating" required="" min="9" max="15" placeholder="Votre numéro téléphone" />
                                     <div class="alert alert-danger" *ngIf="
-                                        registrationForm.get('email').invalid &&
-                                        registrationForm.get('email').touched
+                                        registrationForm.get('mobile').invalid &&
+                                        registrationForm.get('mobile').touched
                                     ">
-                                        <div *ngIf="registrationForm.get('email').errors.required">
-                                            Votre email est obligatoire
+                                        <div *ngIf="registrationForm.get('mobile').errors.required">
+                                            Votre numéro téléphone est obligatoire
                                         </div>
-                                        <div *ngIf="registrationForm.get('email').errors.pattern">
-                                            Donner un email valide
+                                        <div *ngIf="registrationForm.get('mobile').errors.pattern">
+                                            Donner un numéro téléphone valide
                                         </div>
                                     </div>
-                                    <label class="focus-label">Email Address</label>
+                                    <label class="focus-label">Mobile</label>
                                 </div>
 
                                 <div class="form-group form-focus">
-                                    <!--  <input type="password" name="password" class="form-control floating" [(ngModel)]="password"> -->
                                     <input name="password" required="" class="form-control floating" placeholder="Votre mot de Password" id="password" formControlName="password" type="password" />
                                     <div class="alert alert-danger" *ngIf="
                                         registrationForm.get('password').invalid &&
@@ -78,35 +69,33 @@
                                             Votre mot de passe est obligatoire
                                         </div>
                                         <div *ngIf="registrationForm.get('password').errors.minlength">
-                                            Votre mot Password doit contenir au moins 6 caractères
+                                            Votre mot de passe doit contenir au moins 6 caractères
                                         </div>
                                     </div>
                                     <label class="focus-label">Mot de Passe</label>
                                 </div>
-                                <div class="text-right">
-                                    <a class="forgot-link" [routerLink]="'/login-page'">Vous avez déjà un compte alors?</a>
-                                </div>
-                                <!--                                 <button class="btn btn-primary btn-block btn-lg login-btn" type="submit" (click)="signup()">Signup</button> -->
+
                                 <button class="btn btn-primary btn-block btn-lg login-btn" type="submit">S'inscrire</button>
                                 <div class="login-or">
                                     <span class="or-line"></span>
                                     <span class="span-or">or</span>
                                 </div>
-                                <div class="row form-row social-login">
+                                <div class="text-center dont-have"> Vous avez déjà un compte alors ?
+                                    <a [routerLink]="'/login-page'" style="cursor: pointer;">Se connecter</a></div>
+
+                                <!-- <div class="row form-row social-login">
                                     <div class="col-6">
                                         <a href="javascript:void(0)" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f mr-1"></i> Se Connecter</a>
                                     </div>
                                     <div class="col-6">
                                         <a href="javascript:void(0)" class="btn btn-google btn-block"><i class="fab fa-google mr-1"></i> Login</a>
                                     </div>
-                                </div>
+                                </div> -->
                             </form>
-                            <!-- /Register Form -->
 
                         </div>
                     </div>
                 </div>
-                <!-- /Register Content -->
 
             </div>
         </div>

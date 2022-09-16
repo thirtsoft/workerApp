@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('slickModal1') slickModal1: SlickCarouselComponent;
   @ViewChild('slickModal2') slickModal2: SlickCarouselComponent;
   @ViewChild('slickModal3') slickModal3: SlickCarouselComponent;
+
   ouvriersList: any = [];
   metiersList: any = [];
   slidepage: any;
@@ -131,6 +132,7 @@ export class HomeComponent implements OnInit {
 
     // User's voice slider
     $('.testi-slider').each(function () {
+
       var $show = $(this).data('show');
       var $arr = $(this).data('arrow');
       var $dots = !$arr;
@@ -179,8 +181,8 @@ export class HomeComponent implements OnInit {
         ],
       });
     });
-    this.isLoggedIn = !!this.tokenService.getToken();
 
+    this.isLoggedIn = !!this.tokenService.getToken();
     if (this.isLoggedIn) {
       const user = this.tokenService.getUser();
       this.username = user.username;
@@ -201,6 +203,15 @@ export class HomeComponent implements OnInit {
       (state) => state.ouvrier_name.toLowerCase().indexOf(filterValue) === 0
     );
   }
+
+  slide4 = [
+    {
+      img: 'assets/img/slide1.jpg',
+    },
+    {
+      img: 'assets/img/slide2.jpg',
+    }
+  ]
 
   slides = [
     {
@@ -252,16 +263,34 @@ export class HomeComponent implements OnInit {
       name: 'Urology',
       position: 'CEO of VoidCoders',
     },
-    {
-      img: 'assets/img/specialities/specialities-05.png',
-      msg:
-        '"Lorem Ipsum is simply dummy text of the printing and typesetting industry."',
-      name: 'Dentist',
-      position: 'CEO of VoidCoders',
-    },
-   
-    
   ];
+
+  slideConfig4 = {
+    dots: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
   slideConfig = {
     slidesToShow: 5,
     slidesToScroll: 1,
