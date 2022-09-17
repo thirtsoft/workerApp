@@ -152,7 +152,7 @@
 						<span style="color: #fff">Dashboard</span></a>
                 </li>
                 <li [class.active]="page === 'Appointments'">
-                    <a (click)="change('Appointments')" [routerLink]="'/admin/appointment'"><i class="fe fe-layout"></i> <span>Appointments</span></a>
+                    <a (click)="change('Appointments')" [routerLink]="'/admin/appointment'"><i class="fas fa-calendar-check"></i> <span>Appointments</span></a>
                 </li>
                 <li [class.active]="page === 'Specialities'">
                     <a (click)="change('Specialities')" [routerLink]="'/admin/specialities'"> <i class="fe fe-vector"></i> <span>Métiers</span></a>
@@ -175,7 +175,7 @@
                     </ul>
                 </li>
                 <li class="submenu">
-                    <a href="javascript:void(0)"><i class="fe fe-layout"></i> <span> Addresse</span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0)"><i class="fas fa-map-marker-alt"></i> <span> Addresse</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li [class.active]="page === 'Product List'">
                             <a (click)="change('Product List')" [routerLink]="'product-list'"> <span>Ville</span></a>
@@ -187,12 +187,12 @@
                     <a (click)="change('Doctors')" [routerLink]="'/admin/doctor'"><i class="fe fe-user-plus"></i> <span>Internautes</span></a>
                 </li>
                 <li [class.active]="page === 'Transactions'">
-                    <a (click)="change('Transactions')" [routerLink]="'/admin/transactions'"><i class="fe fe-activity"></i> <span>Jetons</span></a>
+                    <a (click)="change('Transactions')" [routerLink]="'/admin/transactions'"><i class="fe fe-money"></i> <span>Jetons</span></a>
                 </li>
 
 
                 <li class="submenu">
-                    <a href="javascript:void(0)"><i class="fe fe-document"></i> <span> Graphiques</span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0)"><i class="fe fe-activity"></i> <span> Graphiques</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li [class.active]="page === 'Invoice Report'"><a (click)="change('Invoice Report')" [routerLink]="'invoice-reports'">Appointment</a></li>
                         <li [class.active]="page === 'Blog Details'"><a (click)="change('Blog Details')" [routerLink]="'blog-details'"> Jetons </a></li>
@@ -221,12 +221,13 @@
                     <a (click)="change('profile')" [routerLink]="'doc-profile'"><i class="fe fe-user-plus"></i> <span>Profile</span></a>
                 </li>
 
-                <li [class.active]="page === 'lock-screen'">
-                    <a (click)="change('lock-screen')" [routerLink]="'lock-screen'">
-                        <i class="fas fa-envelope"></i> <span>Email</span></a>
+                <li>
+                    <a [class.active]="page === 'Vertical Form'" [routerLink]="'vertical-form'">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email</span> </a>
                 </li>
                 <li class="submenu">
-                    <a href="javascript:void(0)"><i class="fe fe-document"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0)"><i class="fas fa-lock"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li [class.active]="page === 'Components'">
                             <a (click)="change('Components')" [routerLink]="'components'"><span>Utilisateurs</span></a>
@@ -265,7 +266,7 @@
                 </li> -->
 
                 <li class="submenu">
-                    <a href="javascript:void(0)"><i class="fe fe-table"></i> <span> Historiques </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0)"><i class="fas fa-cog"></i> <span> Historiques </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li><a [class.active]="page === 'Basic Tables'" (click)="change('Basic Tables')" [routerLink]="'basic-tables'">HistoriqueAppointment </a></li>
                         <li><a [class.active]="page === 'Data Table'" (click)="change('Data Table')" [routerLink]="'admin-data-table'">HistoriqueLogin </a></li>

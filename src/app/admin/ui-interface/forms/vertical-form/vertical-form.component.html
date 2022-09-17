@@ -1,316 +1,166 @@
-<!-- Page Wrapper -->
-<div class="page-wrapper">			
+<div class="page-wrapper">
     <div class="content container-fluid">
-        <!-- Page Header -->
         <div class="page-header">
             <div class="row">
-                <div class="col">
-                    <h3 class="page-title">Vertical Form</h3>
+                <div class="col-sm-7">
+                    <h3 class="page-title">Email-Address</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a>Dashboard</a></li>
-                        <li class="breadcrumb-item active">Vertical Form</li>
+                        <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Email-Addresse</li>
                     </ul>
                 </div>
             </div>
         </div>
-        <!-- /Page Header -->
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Basic Form</h4>
-                    </div>
                     <div class="card-body">
-                        <form action="#">
-                            <div class="form-group">
-                                <label>First Name</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Last Name</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Email Address</label>
-                                <input type="email" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Username</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Repeat Password</label>
-                                <input type="password" class="form-control">
-                            </div>
-                            <div class="text-right">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Address Form</h4>
-                    </div>
-                    <div class="card-body">
-                        <form action="#">
-                            <div class="form-group">
-                                <label>Address Line 1</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Address Line 2</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>City</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>State</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Country</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Postal Code</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="text-right">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Two Column Vertical Form</h4>
-                    </div>
-                    <div class="card-body">
-                        <form action="#">
-                            <h4 class="card-title">Personal Information</h4>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>First Name</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Last Name</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Blood Group</label>
-                                        <ng-select2  width="100%">
-                                            <option>Select</option>
-                                            <option value="1">A+</option>
-                                            <option value="2">O+</option>
-                                            <option value="3">B+</option>
-                                            <option value="4">AB+</option>
-                                        </ng-select2>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="d-block">Gender:</label>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="gender" id="gender_male" value="option1">
-                                            <label class="form-check-label" for="gender_male">Male</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="gender" id="gender_female" value="option2">
-                                            <label class="form-check-label" for="gender_female">Female</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Username</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input type="text" class="form-control">
-                                    </div>
+                        <div class="table-responsive">
+                            <table class="datatable table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
 
-                                    <div class="form-group">
-                                        <label>Password</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Repeat Password</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <h4 class="card-title">Postal Address</h4>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Address Line 1</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Address Line 2</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>State</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>City</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Country</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Postal Code</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
+                                        <th>#</th>
+                                        <th>Client</th>
+                                        <th>Recepteur</th>
+                                        <th>Object</th>
+                                        <th>Message</th>
+                                        <th>Date Envoi</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let mail of emailAddressList">
+                                        <td><a [routerLink]="'/admin/admin-invoice'">{{mail.id}}</a></td>
+                                        <td>{{mail.customerName}}</td>
+                                        <td>
+                                            {{mail.recipient}}
+                                        </td>
+                                        <td>{{mail.subject}}</td>
+                                        <td>{{mail.message}}</td>
+                                        <td>{{mail.createDate | date: 'd-MMMM-y'}}</td>
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                <a class="btn btn-sm bg-success-light" data-toggle="modal" style="cursor: pointer;">
+                                                    <i class="fe fe-pencil"></i> Edit
+                                                </a>
+                                                <a data-toggle="modal" class="btn btn-sm bg-danger-light">
+                                                    <i class="fe fe-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Two Column Vertical Form</h4>
-                    </div>
-                    <div class="card-body">
-                        <form action="#">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h4 class="card-title">Personal details</h4>
-                                    <div class="form-group">
-                                        <label>Name:</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Password:</label>
-                                        <input type="password" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>State:</label>
-                                        <ng-select2  width="100%">
-                                            <option>Select State</option>
-                                            <option value="1">California</option>
-                                            <option value="2">Texas</option>
-                                            <option value="3">Florida</option>
-                                        </ng-select2>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Your Message:</label>
-                                        <textarea rows="5" cols="5" class="form-control" placeholder="Enter message"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <h4 class="card-title">Personal details</h4>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>First Name:</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Last Name:</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Email:</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Phone:</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Address line:</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Country:</label>
-                                                <ng-select2  width="100%">
-                                                    <option>Select Country</option>
-                                                    <option value="1">USA</option>
-                                                    <option value="2">France</option>
-                                                    <option value="3">India</option>
-                                                    <option value="4">Spain</option>
-                                                </ng-select2>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>State/Province:</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>ZIP code:</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>City:</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
     </div>
 </div>
-<!-- /Page Wrapper -->
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Réponse au email</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+		<span aria-hidden="true">&times;</span>
+	  </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="col-12 col-sm-12">
+                <div class="form-group">
+                    <label>Client</label>
+                    <input type="text" name="customerName" [(ngModel)]="formDataEmail.customerName" #customerName="ngModel" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 ">
+                <div class="form-group ">
+                    <label>Destinataire</label>
+                    <input type="text" name="recipient" [(ngModel)]=" formDataEmail.recipient" #recipient="ngModel" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12">
+                <div class="form-group ">
+                    <label>Object</label>
+                    <input type="text" name="subject" [(ngModel)]=" formDataEmail.subject" #subject="ngModel" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12">
+                <div class="form-group ">
+                    <label>Message</label>
+                    <textarea name="message" [(ngModel)]=" formDataEmail.message" #message="ngModel" cols="5" rows="5"></textarea>
+                </div>
+            </div>
+            <button type="submit " class="btn btn-primary btn-block ">
+		  Save Changes
+		</button>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #edittemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Modifier Email</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+		<span aria-hidden="true">&times;</span>
+	  </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="editForm">
+            <div class="col-12 col-sm-12">
+                <div class="form-group">
+                    <label>Client</label>
+                    <input type="text" name="customerName" formControlName="customerName" class="form-control ">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 ">
+                <div class="form-group ">
+                    <label>Destinataire</label>
+                    <input type="text" name="recipient" formControlName="recipient" class="form-control ">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12">
+                <div class="form-group ">
+                    <label>Object</label>
+                    <input type="text" name="subject" formControlName="subject" class="form-control ">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12">
+                <div class="form-group ">
+                    <label>Message</label>
+                    <textarea name="message" formControlName="message" cols="5" rows="5"></textarea>
+                </div>
+            </div>
+            <button type="submit " class="btn btn-primary btn-block ">
+		  Update Changes
+		</button>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #delete>
+    <div class="modal-header ">
+        <h4 class="modal-title pull-left ">Delete</h4>
+        <button type="button " class="close " data-dismiss="modal " aria-label="Close " (click)="modalRef.hide() ">
+		<span aria-hidden="true ">&times;</span>
+	  </button>
+    </div>
+    <div class="modal-body text-center ">
+        Etes vous sur de supprimer cet email ??
+        <div style="margin-top: 25px ">
+            <button type="button " class="btn btn-default " (mouseover)="btnColor() " id="btn-yes " (click)="deleteEmailAddress() ">
+		  Yes
+		</button>
+            <button type="button " class="btn btn-primary " (mouseover)="btnColorNo() " id="btn-no " (click)="decline() ">
+		  No
+		</button>
+        </div>
+    </div>
+</ng-template>
