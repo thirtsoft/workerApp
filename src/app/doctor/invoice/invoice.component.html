@@ -33,12 +33,14 @@
 
                                         <td class="text-right">
                                             <div class="table-action">
-                                                <!-- <a [routerLink]="'/invoice-details'" class="btn btn-sm bg-info-light">
-                                                    <i class="far fa-eye"></i> View
-                                                </a> -->
-                                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-                                                    <i class="fas fa-print"></i> Imprimer
+                                                <a (click)="OpenPdf()" style="cursor: pointer" class="btn btn-warning btn-sm">
+                                                    <i class="fa fa-folder-open" aria-hidden="true"></i>Open</a>&nbsp;
+                                                <a (click)="PrintPdf()" class="btn btn-sm bg-primary-light">
+                                                    <i class="fas fa-print"></i> Print
                                                 </a>
+                                                <a type="button" (click)="DownloadPdf()" style="cursor: pointer" class="btn btn-sm bg-danger-light">
+                                                    <i class="far fa-eye" aria-hidden="true"></i>Download
+                                                </a>&nbsp;
                                             </div>
                                         </td>
                                     </tr>

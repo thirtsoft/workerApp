@@ -14,6 +14,7 @@ export class JetonService {
 
   choixmenu : string  = 'A';
   formData: FormGroup;
+  listData : Jeton[];
 
   constructor(private http: HttpClient) {
   }

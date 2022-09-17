@@ -5,7 +5,7 @@ export class Jeton {
     numero: number;
     montant: number;
 	etat: string;
-    createDate: Date;
+    createdDate: Date;
 
     utilisateur: Utilisateur;
 
