@@ -118,7 +118,7 @@ const routes: Routes = [
     import('./invoice-details/invoice-details.module').then((m) => m.InvoiceDetailsModule),
   },
   {
-    path: 'privacy-policy',
+    path: 'termes-conditions',
     loadChildren: () =>
     import('./privacy-policy/privacy-policy.module').then((m) => m.PrivacyPolicyModule),
   },
@@ -155,11 +155,14 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-    onSameUrlNavigation: 'reload',
-    preloadingStrategy: PreloadAllModules,
-    relativeLinkResolution: 'legacy'
-}),
+      onSameUrlNavigation: 'reload',
+      preloadingStrategy: PreloadAllModules,
+      relativeLinkResolution: 'legacy',
+      scrollPositionRestoration: 'enabled'
+      }
+    ),
   ],
+  
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
