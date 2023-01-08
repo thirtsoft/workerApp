@@ -6,7 +6,15 @@ const routes: Routes = [
 	{
 		path : '',
 		component : ComponentComponent
-	}
+	},
+	{
+		path: 'localite/:id',
+		component: ComponentComponent
+	},
+	{
+		path: 'localite',
+		component: ComponentComponent
+	},
 ];
 
 @NgModule({

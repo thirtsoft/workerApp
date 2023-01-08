@@ -160,6 +160,15 @@ export class OuvrierService {
     )
   }
 
+  public getAllOuvriersByLocalityIdByPageable(id,page,size): Observable<Ouvrier[]> {
+    return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchAllOuvriersByLocalitiesByPageable?id=${id}&page=${page}&size=${size}`)
+    .pipe(
+      map(
+        response => response
+      )
+    )
+  }
+
   public getAllOuvriersByMetierIdByPageable(id,page,size): Observable<Ouvrier[]> {
     return this.http.get<Ouvrier[]>(`${this.apiServerUrl}/ouvriers/searchAllOuvriersByMetiersByPageable?id=${id}&page=${page}&size=${size}`)
     .pipe(
