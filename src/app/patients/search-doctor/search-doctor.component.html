@@ -31,11 +31,11 @@
                         </div> -->
                         <div class="filter-widget">
                             <h4>Selectionner Metier</h4>
-                            <div *ngFor="let specialit of metierList">
+                            <div *ngFor="let specialit of metierList; let i=index;">
                                 <label class="custom_check">
-                                     <a [routerLink]="['/patients/search-doctor/metier', specialit.id]" class="nav-link " style="cursor: pointer;">
-									<!-- <input [routerLink]="['/search-doctor/metier', specialit.id]" type="checkbox" (click)="checkSpeciality($event)" name="select_specialist" [value]="specialit.designation" [checked]="specialit.checked"> -->
-									<span class="checkmark"></span> {{specialit.designation}}  </a> 
+                                     <!-- <a [routerLink]="['/patients/search-doctor/metier', specialit.id]" class="nav-link " style="cursor: pointer;"> -->
+									 <input [routerLink]="['/patients/search-doctor/metier', specialit.id]" type="checkbox" id="ckb" name="metier" value="metier" (change)="checkMetier($event, 'metier')"> 
+									<span class="checkmark"></span> {{specialit.designation}}  <!-- </a> --> 
 								</label>
                             </div>
 

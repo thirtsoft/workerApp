@@ -47,6 +47,9 @@ export class SearchDoctorComponent implements OnInit {
   numberOfRatingToOuvrier: any;
   id;
 
+  filterKey: string = '';
+  searchKeyWord: string = '';
+
   constructor(
     //      public commonService: CommonServiceService,
           public metService: MetierService,
@@ -105,7 +108,6 @@ export class SearchDoctorComponent implements OnInit {
     this.ouvService.getAllOuvriersByPageables(this.page-1,this.pageLength).subscribe(
       data => {
         this.ouvrierList = data;
-        console.log(this.ouvrierList);
       }
     )
   }
@@ -145,7 +147,6 @@ export class SearchDoctorComponent implements OnInit {
       this.ratService.countNumberOfRatingOfOuvriers(this.ouvrierList[i].id)
         .subscribe((res) => {
           this.numberOfRatingToOuvrier = res;
-          console.log(this.numberOfRatingToOuvrier);
       });
     }
   }
@@ -182,6 +183,14 @@ export class SearchDoctorComponent implements OnInit {
       this.type = event.target.value;
     } else {
       this.type = "";
+    }
+  }
+
+  checkMetier(event, $value) {
+    if ( event.target.checked ) {
+      this.filterKey= $value;
+    }else{
+      this.filterKey= '';
     }
   }
 
